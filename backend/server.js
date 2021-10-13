@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 // MongoDB stuff
@@ -24,6 +25,11 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+// Dynamically load in API endpoints
+const endpoints = fs.readdirSync(path.join(__dirname, 'api')).filter(file => file.endsWith('.js'));
+for (const file of endpoints) {
+    let endpoint = require(path.join(__dirname, 'api', file));
+    app.use('/api', endpoint);
+}
+
 app.listen(PORT, () => console.log('Server listening on port ' + PORT));
-
-
