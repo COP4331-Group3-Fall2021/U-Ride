@@ -2,12 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 
 // MongoDB stuff
-const uri = "mongodb+srv://root:NNjSnwUieiom2UXV8LrkrH3Q0shhKW8h@u-ride.pi8bx.mongodb.net/uride?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// client.connect();
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
+client.connect();
 
 const PORT = process.env.PORT || 5000; 
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+// Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {  
     // Set static folder
     app.use(express.static(path.join(__dirname, '..', 'web', 'build')));
