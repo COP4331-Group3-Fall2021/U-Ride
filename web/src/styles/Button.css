@@ -2,10 +2,9 @@ button {
     background-color: #F6E386;
     color: #000000;
     border: none;
-    font-size: 22px;
     border-radius: 6px;
-    padding: .5em 1.5em;
-    font-family: 'Open Sans', sans-serif;
+    padding: .4em 1.5em;
+    font: 700 22px 'Nunito', sans-serif;
     color: #2B2B2B;
     margin-top: 5%;
 }

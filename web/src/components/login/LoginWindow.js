@@ -21,7 +21,7 @@ function LoginWindow () {
             var res = JSON.parse(await response.text());
 
             if (res.id <= 0) {
-                setMessage('User/Password combination incorrect');
+                setMessage('Invalid login');
             }
             else {
                 var user = {firstName:res.firstName, lastName:res.lastName, id:res.id}
@@ -41,7 +41,7 @@ function LoginWindow () {
         <div id="login-box">
             <h2 className="splash-window-title">Log In</h2>
             <form onSubmit={login}> 
-                <p id="form-result">{message}Invalid credentials [test]</p>
+                <p id="form-result">{message}Invalid login [test]</p>
                 <input type="text" id="loginName" placeholder="Email" ref={(c) => loginName = c} onChange={e => setEmail(e.target.value)} /><br />
                 <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
                 <Button text="Log In" />

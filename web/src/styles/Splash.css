@@ -6,6 +6,10 @@ body {
     margin: 3% 15%;
 }
 
+.splash-container h1 {
+    margin: 0 0 0 0;
+}
+
 .splash-container button {
     margin: 1.25em 0;
     font-size: 1.2em;
@@ -19,36 +23,8 @@ body {
     border-radius: 0.25em;
 }
 
-.splash-page-paragraph {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 2.5em;
-    text-align: left;
-    color: #2B2B2B;
-}
-
-#login-box {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    background-color: #ED7A7A;
-    border: 3px solid rgba(145, 8, 8, 0.4);
-    border-radius: 17.3039px;
-    padding-bottom: 1em;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.splash-window-title {
-    color: #461515;
-    font-family: 'Racing Sans One', cursive;
-    font-size: 3em;
-}
-
-.hyperlink {
-    color: #FAF1C2;
-    margin: 4px 0px;
-    font-size: 1.1em;
+.splash-page-img {
+    transform: translate(0px, -40px);
 }
 
 .splash-row {
@@ -61,9 +37,51 @@ body {
 
 #left {
     flex: 2;
-    margin-right: 5%; 
+    margin-right: 5%;
 }
 
 #right {
     flex: 1;
+}
+
+.splash-page-paragraph {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.5em;
+    text-align: left;
+    color: #2B2B2B;
+    margin-right: 20%;
+    margin-bottom: 0;
+}
+
+#login-box {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #ED7A7A;
+    border: 3px solid rgba(145, 8, 8, 0.4);
+    border-radius: 17.3039px;
+    padding-bottom: 1em;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+#form-result {
+    color: #910808;
+    font-size: 1.1em;
+    margin-bottom: 0em;
+}
+
+.splash-window-title {
+    color: #461515;
+    font-family: 'Racing Sans One', cursive;
+    font-size: 3em;
+    margin-top: 0.3em;
+    margin-bottom: 0;
+}
+
+.hyperlink {
+    color: #FAF1C2;
+    margin: 0.2em 0;
+    font-size: 1.1em;
 }
