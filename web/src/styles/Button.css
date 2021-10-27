@@ -11,4 +11,5 @@ button {
 
 button:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
