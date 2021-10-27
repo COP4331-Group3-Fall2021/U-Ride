@@ -24,6 +24,47 @@
     "http"
   ],
   "paths": {
+    "/auth/getUser": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "gets information about a user",
+        "description": "gets informaiton about a user",
+        "operationId": "getUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userInformation",
+            "description": "All information about a user",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AuthUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucess",
+            "schema": {
+              "$ref": "#/definitions/AuthFullInfo"
+            }
+          },
+          "400": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/AuthError"
+            }
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": [
@@ -41,8 +82,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "inventoryItem",
-            "description": "Inventory item to add",
+            "name": "userCredentials",
+            "description": "Credentials for loggin in",
             "required": false,
             "schema": {
               "$ref": "#/definitions/AuthInput"
@@ -50,7 +91,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "login is a success",
             "schema": {
               "$ref": "#/definitions/AuthResponse"
@@ -67,6 +108,14 @@
     }
   },
   "definitions": {
+    "AuthUser": {
+      "type": "object",
+      "properties": {
+        "idToken": {
+          "type": "string"
+        }
+      }
+    },
     "AuthInput": {
       "type": "object",
       "properties": {
