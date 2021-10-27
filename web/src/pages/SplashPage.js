@@ -1,11 +1,13 @@
 import React from 'react';
 import TitleLogo from '../components/TitleLogo'
 import LoginWindow from '../components/login/LoginWindow';
+import RegisterWindow from '../components/login/RegisterWindow';
 import '../styles/Splash.css';
 import { ReactComponent as Car } from '../images/car.svg';
 
 // The "&#8209;" character is necessary for to prevent word wrap
 const SplashPage = () => {
+
     return (
         <div className="splash-container">
             <TitleLogo />

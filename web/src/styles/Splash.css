@@ -66,10 +66,29 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-#form-result {
+#register-box {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #ED7A7A;
+    border: 3px solid rgba(145, 8, 8, 0.4);
+    border-radius: 17.3039px;
+    padding-bottom: 1em;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+
+#login-box #form-result {
     color: #910808;
     font-size: 1.1em;
     margin-bottom: 0em;
+}
+
+.input-headers {
+    text-align: left;
+    margin: 0.5em 0 0 0;
 }
 
 .splash-window-title {
@@ -81,7 +100,11 @@ body {
 }
 
 .hyperlink {
-    color: #FAF1C2;
+    color: #FAF1C2  ;
     margin: 0.2em 0;
     font-size: 1.1em;
+}
+
+#login-box .input-invalid {
+    border: 2px solid rgb(255, 30, 30);
 }
