@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
 
 // MongoDB stuff
@@ -32,6 +34,9 @@ for (const file of endpoints) {
     let endpoint = require(path.join(__dirname, 'api', file));
     app.use('/api', endpoint);
 }
+
+// Creating /api-docs path
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Creating /auth path 
 const AuthAPI = require('./api/auth');

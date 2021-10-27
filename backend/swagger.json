@@ -1,0 +1,222 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a simple API",
+    "version": "1.0.0",
+    "title": "POOSD Big Project",
+    "contact": {
+      "email": "you@your-company.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5000",
+  "tags": [
+    {
+      "name": "authentication",
+      "description": "Operations that allow us to sign in / sign up a user with firebase authentication by REST API"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "allows a user to login",
+        "description": "Adds an item to the system",
+        "operationId": "doLogin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "inventoryItem",
+            "description": "Inventory item to add",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AuthInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "login is a success",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "400": {
+            "description": "there was an error while logging in",
+            "schema": {
+              "$ref": "#/definitions/AuthError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AuthInput": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "email@domain.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      }
+    },
+    "AuthError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/AuthError_error"
+        }
+      }
+    },
+    "AuthResponse": {
+      "type": "object",
+      "required": [
+        "email",
+        "expiresIn",
+        "idToken",
+        "localId",
+        "refreshToken",
+        "registered"
+      ],
+      "properties": {
+        "idToken": {
+          "type": "string",
+          "example": "[ID_TOKEN]"
+        },
+        "email": {
+          "type": "string",
+          "example": "email@domain.com"
+        },
+        "refreshToken": {
+          "type": "string",
+          "example": "[REFRESH_TOKEN]"
+        },
+        "expiresIn": {
+          "type": "string",
+          "example": "3600"
+        },
+        "localId": {
+          "type": "string",
+          "format": "uid",
+          "example": "[LOCAL_ID]"
+        },
+        "registered": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Carpool": {
+      "type": "object",
+      "required": [
+        "_id",
+        "destination",
+        "driverID",
+        "maxParticipants",
+        "numParticipants",
+        "origin",
+        "poolDate",
+        "riderID"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "[MONGO_ID]"
+        },
+        "numParticipants": {
+          "type": "number",
+          "example": 2
+        },
+        "maxParticipants": {
+          "type": "number",
+          "example": 5
+        },
+        "poolDate": {
+          "type": "string"
+        },
+        "origin": {
+          "$ref": "#/definitions/Carpool_origin"
+        },
+        "destination": {
+          "$ref": "#/definitions/Carpool_origin"
+        },
+        "riderID": {
+          "type": "string"
+        },
+        "driverID": {
+          "type": "string"
+        }
+      }
+    },
+    "AuthError_error_errors": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "EMAIL_NOT_FOUND"
+        },
+        "domain": {
+          "type": "string",
+          "example": "global"
+        },
+        "reason": {
+          "type": "string",
+          "example": "invalid"
+        }
+      }
+    },
+    "AuthError_error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "400"
+        },
+        "message": {
+          "type": "string",
+          "example": "EMAIL_NOT_FOUND"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AuthError_error_errors"
+          }
+        }
+      }
+    },
+    "Carpool_origin": {
+      "type": "object",
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "properties": {
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,8 @@
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "mongodb": "^3.6.9",
+        "request": "^2.88.2",
+        "swagger-ui-express": "^4.1.6",
         "u-ride": "file:.."
     }
 }

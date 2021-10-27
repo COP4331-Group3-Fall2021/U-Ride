@@ -3,7 +3,7 @@ const router = express.Router();
 const request = require("request");
 const path = require("path");
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
 		password: req.body["password"],
