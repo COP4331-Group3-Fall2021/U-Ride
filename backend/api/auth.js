@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const request = require("request");
-const path = require("path");
 
 router.get("/login", async (req, res) => {
 	const credentials = {
