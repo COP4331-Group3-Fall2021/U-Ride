@@ -3,7 +3,31 @@ const router = express.Router();
 const request = require("request");
 const path = require("path");
 
-
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: allows a user to login
+ *     operationId: doLogin
+ *     description: Adds an item to the system 
+ *     consumes:
+ *     - application/json
+ *     produces:
+ *     - application/json
+ *     parameters:
+ *     - in: body
+ *       names: userCredentials
+ *       description: Credentials for logging in
+ *       schema:
+ *         type: object
+ *         properties:
+ *           email:
+ *             type: string
+ *             example: "email@domain.com"
+ *           password:
+ *             type: string
+ *             example: "password"
+ */
 router.post("/login", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],

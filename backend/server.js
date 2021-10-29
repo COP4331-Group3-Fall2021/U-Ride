@@ -4,7 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+
+
 require('dotenv').config();
 
 // MongoDB stuff
@@ -36,8 +37,39 @@ for (const file of endpoints) {
     app.use('/api', endpoint);
 }
 
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+      title: 'U-Ride',
+      version: '1.0.0',
+      description:
+        'U-Ride API Docs',
+      license: {
+        name: 'Licensed Under MIT',
+        url: 'https://spdx.org/licenses/MIT.html',
+      },
+      contact: {
+        name: 'JSONPlaceholder',
+        url: 'https://jsonplaceholder.typicode.com',
+      },
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000',
+        description: 'Development server',
+      },
+    ],
+  };
+
+  const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ['./api/*.js'],
+  };
+
+const swaggerSpec = swaggerJSDoc(options);
 // Creating /api-docs path
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Creating /auth path 
 const AuthAPI = require('./api/auth');
