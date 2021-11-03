@@ -30,9 +30,22 @@ router.delete("/delete", async (req, res) => {
     });
 })
 
+// Search Carpool
 router.get("/find", async (req, res) => {
     db = mongoUtil.get();
     db.db("root").collection("uride").find({}).toArray(function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+            throw err;
+        }
+        res.status(200).send(result);
+    });
+})
+
+// Update Carpool
+router.get("/update", async (req, res) => {
+    db = mongoUtil.get();
+    db.db("root").collection("uride").updateOne(req.body, function (err) {
         if (err) {
             res.status(400).send(err);
             throw err;
