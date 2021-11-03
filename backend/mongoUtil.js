@@ -1,33 +1,25 @@
-const MongoClient = require( 'mongodb' ).MongoClient;
+const mongoClient = require('mongodb').MongoClient;
+
 
 var _db;
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
- 
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
+
+function connect(callback){
+    mongoClient.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+        _db = db;
+        callback();
+    });
+        
+}
+function get(){
+    return _db;
+}
+
+function close(){
+    _db.close();
+}
 
 module.exports = {
-
-  connectToServer: async function connectDb (){
-	const uri = process.env.DATABASE_URI;
-    const client = new MongoClient(uri,{ useNewUrlParser: true, useUnifiedTopology: true });
-    
-    try {
-        await client.connect();
-        _db = client.db().admin();
-     
-    } catch (e) {
-        console.error(e);
-    }
-    finally {
-        console.log("Database has been connected");
-        await client.close();
-    }
-},
-
-  getDb: function() {
-    return _db;
-  }
+    connect,
+    get,
+    close
 };

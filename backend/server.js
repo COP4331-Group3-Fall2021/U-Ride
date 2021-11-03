@@ -31,8 +31,7 @@ for (const file of endpoints) {
     app.use('/api', endpoint);
 }
 
-// Creating MongoDB Connections
-mongoUtil.connectToServer();
+
 // Creating /auth path 
 const AuthAPI = require('./api/auth');
 app.use('/auth', AuthAPI);
@@ -41,4 +40,6 @@ app.use('/auth', AuthAPI);
 const CarpoolAPI = require('./api/carpool');
 app.use('/carpool', CarpoolAPI);
 
-app.listen(PORT, () => console.log('Server listening on port ' + PORT));
+mongoUtil.connect(() => {
+    app.listen(PORT, () => console.log('Server listening on port ' + PORT));
+})
