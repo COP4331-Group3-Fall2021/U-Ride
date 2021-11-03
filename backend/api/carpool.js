@@ -9,10 +9,9 @@ const mongoUtil = require("../mongoUtil");
 router.put("/insert", async (req, res) => {
     
     db = mongoUtil.get();
-    db.db("root").collection("uride").insertOne(req.body, function (err, response) {
+    db.db("root").collection("uride").insertOne(req.body, function (err) {
         if (err) 
         {
-           console.log("Error", err);
            res.status(400).send(err);
         }
         else
@@ -22,9 +21,33 @@ router.put("/insert", async (req, res) => {
     });
 })
 
-// db.db("root").collection("uride").find({}).toArray(function(err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//     db.close();
-//   });
+// Delete Carpool 
+router.delete("/delete", async(req,res) => 
+{
+    db = mongoUtil.get();
+    db.db("root").collection("uride").deleteOne(req.body, function(err){
+        if (err)
+        {
+            res.status(400).send(err);
+        }
+        else
+        {
+            res.status(200).send("Carpool deleted!");
+        }
+    });
+})
+
+router.get("/find", async(req,res) =>
+{
+    db = mongoUtil.get();
+    db.db("root").collection("uride").find({}).toArray(function(err, result) {
+        if (err) 
+        {
+            res.status(400).send(err);
+            throw err;
+        }
+        res.status(200).send(result);
+      });
+})
+
 module.exports = router;
