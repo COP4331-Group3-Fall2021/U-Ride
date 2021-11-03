@@ -2,14 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const mongoUtil = require("./mongoUtil");
+
+
 require('dotenv').config();
 
-// MongoDB stuff
-const uri = "mongodb+srv://root:NNjSnwUieiom2UXV8LrkrH3Q0shhKW8h@u-ride.pi8bx.mongodb.net/uride?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// client.connect();
-
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5005; 
 
 const app = express();
 app.set('port', PORT);
@@ -33,9 +31,15 @@ for (const file of endpoints) {
     app.use('/api', endpoint);
 }
 
+
 // Creating /auth path 
 const AuthAPI = require('./api/auth');
 app.use('/auth', AuthAPI);
 
+// Creating /carpool path 
+const CarpoolAPI = require('./api/carpool');
+app.use('/carpool', CarpoolAPI);
 
-app.listen(PORT, () => console.log('Server listening on port ' + PORT));
+mongoUtil.connect(() => {
+    app.listen(PORT, () => console.log('Server listening on port ' + PORT));
+})
