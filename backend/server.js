@@ -37,4 +37,5 @@ for (const file of endpoints) {
 const AuthAPI = require('./api/auth');
 app.use('/auth', AuthAPI);
 
+
 app.listen(PORT, () => console.log('Server listening on port ' + PORT));
