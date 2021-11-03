@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '../Button';
 const sha256 = require('js-sha256');
 
-function RegisterWindow () {
+function RegisterWindow ({goToLogin, goToForgotPassword}) {
     var firstName;
     var lastName;
     var email;
@@ -77,15 +77,15 @@ const register = async event => {
                 <Button text="Register" />
                 <br />
             </form>
-            <a href="/register.html" className="hyperlink" id="loginLink">Log In</a><br />
-            <a href="/register.html" className="hyperlink" id="forgotPasswordLink">Forgot Password?</a>
+            <button onClick={goToLogin} className="hyperlink">Log In</button>
+            <button onClick={goToForgotPassword} className="hyperlink">Forgot Password?</button>
         </div>
     );
 }
 
 // Validates a string
 function validateInput (input) {
-    if (input == undefined || input == "") {
+    if (input === undefined || input === "") {
         return 0;
     }
     else {

@@ -10,7 +10,7 @@ body {
     margin: 0 0 0 0;
 }
 
-.splash-container button {
+.splash-container .action-button {
     margin: 1.25em 0;
     font-size: 1.2em;
 }
@@ -19,8 +19,23 @@ body {
     font-size: 1.2em;
     padding: 0.5em 1em;
     margin: 0.3em 0;
-    border: 2px solid rgb(233, 233, 233);
     border-radius: 0.25em;
+}
+
+.splash-container .star1 {
+    width: 508px;
+    position: absolute;
+    left: -11%;
+    top: 10%;
+    z-index: -1;
+}
+
+.splash-container .star2 {
+    width: 680px;
+    position: absolute;
+    right: -16%;
+    top: 20%;
+    z-index: -1;
 }
 
 .splash-page-img {
@@ -37,7 +52,6 @@ body {
 
 #left {
     flex: 2;
-    margin-right: 5%;
 }
 
 #right {
@@ -49,7 +63,7 @@ body {
     font-size: 2.5em;
     text-align: left;
     color: #2B2B2B;
-    margin-right: 20%;
+    margin-right: 23%;
     margin-bottom: 0;
 }
 
@@ -79,8 +93,20 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+#forgotpassword-box {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #ED7A7A;
+    border: 3px solid rgba(145, 8, 8, 0.4);
+    border-radius: 17.3039px;
+    padding-bottom: 1em;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+}
 
-#login-box #form-result {
+.form-result {
     color: #910808;
     font-size: 1.1em;
     margin-bottom: 0em;
@@ -100,11 +126,22 @@ body {
 }
 
 .hyperlink {
-    color: #FAF1C2  ;
+    color: #FAF1C2;
     margin: 0.2em 0;
     font-size: 1.1em;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
-#login-box .input-invalid {
+.input-invalid {
     border: 2px solid rgb(255, 30, 30);
+}
+
+#forgotpassword-box .fgtpwd-success {
+    color: #55FF70;
+    font-size: 1.1em;
+    margin-bottom: 0em;
 }

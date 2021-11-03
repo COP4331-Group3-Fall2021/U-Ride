@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TitleLogo from '../components/TitleLogo'
 import LoginWindow from '../components/login/LoginWindow';
 import RegisterWindow from '../components/login/RegisterWindow';
 import '../styles/Splash.css';
 import { ReactComponent as Car } from '../images/car.svg';
+import Star from '../images/decoration-star.svg';
+import ForgotPasswordWindow from '../components/login/ForgotPasswordWindow';
 
-// The "&#8209;" character is necessary for to prevent word wrap
-const SplashPage = () => {
+export default function SplashPage() {
+    // Use useState to switch login modals.
+    const [showLogin, setShowLogin] = useState(true);
+    const [showRegister, setShowRegister] = useState(false);
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
 
+    function goToLogin() {
+        setShowLogin(true);
+        setShowRegister(false);
+        setShowForgotPassword(false);
+    }
+    function goToRegister() {
+        setShowLogin(false);
+        setShowRegister(true);
+        setShowForgotPassword(false);
+    }
+    function goToForgotPassword() {
+        setShowLogin(false);
+        setShowRegister(false);
+        setShowForgotPassword(true);
+    }
+
+    // The "&#8209;" character is necessary to prevent word wrap
     return (
         <div className="splash-container">
+            <img className="star1" src={Star} />
+            <img className="star2" src={Star} />
             <TitleLogo />
             <div className="splash-row">
                 <div className="column" id="left">
@@ -17,11 +41,14 @@ const SplashPage = () => {
                     <Car style={{width: 800}} className="splash-page-img"/>
                 </div>
                 <div className="column" id="right">
-                    <LoginWindow />
+                    {showLogin && <LoginWindow goToRegister={() => goToRegister()}
+                                               goToForgotPassword={() => goToForgotPassword()}/>}
+                    {showRegister && <RegisterWindow goToLogin={() => goToLogin()}
+                                               goToForgotPassword={() => goToForgotPassword()}/>}
+                    {showForgotPassword && <ForgotPasswordWindow goToLogin={() => goToLogin()}
+                                                                 goToRegister={() => goToRegister()}/>}
                 </div>
             </div>
         </div>
     );
 }
-
-export default SplashPage;

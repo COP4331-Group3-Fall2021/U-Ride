@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '../Button';
 const sha256 = require('js-sha256');
 
-function LoginWindow () {
+export default function LoginWindow ({goToRegister, goToForgotPassword}) {
     var loginEmail;
     var loginPassword;
     const [message, setMessage] = useState('');
@@ -11,6 +11,11 @@ function LoginWindow () {
     const login = async event => {
         event.preventDefault();
 
+        /* Check for the following input errors:
+            - Invalid email (already covered by HTML5 form)
+            - Blank email field
+            - Blank password field
+        */
         // Validate input fields
         if (!validateInput(loginEmail.value) || !validateInput(loginPassword.value)) {
             setMessage('Missing a field.');
@@ -18,10 +23,14 @@ function LoginWindow () {
             if (!validateInput(loginEmail.value)) {
                 // Draw red border on input field
                 document.getElementById("loginEmail").classList.add('input-invalid');
+            } else {
+                document.getElementById("loginEmail").classList.remove('input-invalid');
             }
             if (!validateInput(loginPassword.value)) {
                 // Draw red border on input field
                 document.getElementById("loginPassword").classList.add('input-invalid');
+            } else {
+                document.getElementById("loginPassword").classList.remove('input-invalid');
             }
             return;
         } else {
@@ -66,23 +75,23 @@ function LoginWindow () {
         <div id="login-box">
             <h2 className="splash-window-title">Log In</h2>
             <form onSubmit={login}> 
-                <p id="form-result">{message}</p>
+                <p className="form-result">{message}</p>
                 <p className="input-headers">Email</p>
                 <input type="email" id="loginEmail" placeholder="Email" ref={(c) => loginEmail = c} /><br />
                 <p className="input-headers">Password</p>
                 <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
-                <Button text="Log In" />
+                <Button text="Log In" className="action-button"/>
                 <br />
             </form>
-            <a href="/register.html" onclick="" className="hyperlink" id="registerLink">Register an account</a><br />
-            <a href="/register.html" className="hyperlink" id="forgotPasswordLink">Forgot Password?</a>
+            <button onClick={goToRegister} className="hyperlink">Register an account</button>
+            <button onClick={goToForgotPassword} className="hyperlink">Forgot Password?</button>
         </div>
     );
 }
 
 // Validates a string
 function validateInput (input) {
-    if (input == undefined || input == "") {
+    if (input === undefined || input === "") {
         return 0;
     }
     else {
@@ -90,5 +99,3 @@ function validateInput (input) {
         return 1;
     }
 }
-
-export default LoginWindow;
