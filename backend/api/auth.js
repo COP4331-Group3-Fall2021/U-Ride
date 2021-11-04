@@ -26,9 +26,9 @@ router.post("/login", async (req, res) => {
 		if (err) {
 			res.status(400).send(err);
 		}
-		
+
 		const result = JSON.parse(response.body);
-		
+
 		if (result.error !== null && result.error !== undefined) {
 			res.status(result.error.code).send(result.error.message);
 			return;
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
 
 		const query =
 		{
-			uid:result.localId,
+			uid: result.localId,
 		}
 
 		db = mongoUtil.get();
@@ -49,6 +49,7 @@ router.post("/login", async (req, res) => {
 		});
 	});
 });
+
 
 router.post("/register", async (req, res) => {
 	const credentials = {
@@ -74,9 +75,9 @@ router.post("/register", async (req, res) => {
 			throw err;
 		}
 		const result = JSON.parse(response.body);
-		
+
 		if (result.error !== null && result.error !== undefined) {
-			
+
 			res.status(result.error.code).send(result.error.message);
 			return;
 		}
@@ -86,7 +87,7 @@ router.post("/register", async (req, res) => {
 			displayName: req.body["name"],
 			email: req.body["email"],
 		}
-		
+
 		db = mongoUtil.get();
 		db.db("root").collection("users").insertOne(userCredentials, function (err) {
 			if (err) {
@@ -98,5 +99,33 @@ router.post("/register", async (req, res) => {
 		});
 	});
 });
+
+router.post("/emailReset", async (req, res) => {
+
+	const credentials = {
+		requestType: "PASSWORD_RESET",
+		email: req.body["email"],
+	};
+
+	const options = {
+		url:
+			"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" +
+			process.env.FIREBASEKEY,
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(credentials),
+	};
+
+	request.post(options, function (err, response) {
+		if (err) {
+			res.status(400).send(err);
+		}
+
+		res.status(200).send("Reset email Sent");
+	});
+
+})
 
 module.exports = router;
