@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const request = require("request");
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
 		password: req.body["password"],
@@ -29,7 +29,7 @@ router.get("/login", async (req, res) => {
 	});
 });
 
-router.get("/register", async (req, res) => {
+router.post("/register", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
 		password: req.body["password"],
