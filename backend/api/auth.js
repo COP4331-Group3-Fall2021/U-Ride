@@ -1,4 +1,5 @@
 const express = require("express");
+const { ObjectId } = require("mongodb");
 const router = express.Router();
 const request = require("request");
 const mongoUtil = require("../mongoUtil");
@@ -80,19 +81,6 @@ router.post("/register", async (req, res) => {
 			res.status(400).send("Registration error: " + err);
 			throw err;
 		}
-		const result = JSON.parse(response.body);
-
-		if (result.error !== null && result.error !== undefined) {
-
-			res.status(result.error.code).send(result.error.message);
-			return;
-		}
-		const userCredentials =
-		{
-			uid: result.localId,
-			displayName: req.body["name"],
-			email: req.body["email"],
-		}
 
 		db = mongoUtil.get();
 		db.db("root").collection("users").insertOne(userCredentials, function (err) {
@@ -136,5 +124,21 @@ router.post("/emailReset", async (req, res) => {
 	});
 
 })
+
+/**
+ * Get User
+ */
+router.get("/getUser", async (req, res) => {
+
+	db = mongoUtil.get();
+	db.db("root").collection("users").find({_id: ObjectId(req.body["_id"])}).toArray(function (err, result) {
+		if (err) {
+			res.status(400).send(err);
+			throw err;
+		}
+		res.status(200).send(result[0]);
+	});
+});
+
 
 module.exports = router;
