@@ -22,12 +22,31 @@ router.post("/login", async (req, res) => {
 		body: JSON.stringify(credentials),
 	};
 
-	request.post(options, function (err, response, body) {
+	request.post(options, function (err, response) {
 		if (err) {
-			res.status(400).send("Error while logging in " + error);
+			res.status(400).send(err);
 		}
-		console.log("Login Sucessful", body);
-		res.status(201).send(response.body);
+		
+		const result = JSON.parse(response.body);
+		
+		if (result.error !== null && result.error !== undefined) {
+			res.status(result.error.code).send(result.error.message);
+			return;
+		}
+
+		const query =
+		{
+			uid:result.localId,
+		}
+
+		db = mongoUtil.get();
+		db.db("root").collection("users").find(query).toArray(function (err, result) {
+			if (err) {
+				res.status(400).send(err);
+				throw err;
+			}
+			res.status(200).send(result);
+		});
 	});
 });
 
@@ -49,34 +68,34 @@ router.post("/register", async (req, res) => {
 		body: JSON.stringify(credentials),
 	};
 
-	request.post(options, function (err, response, body) {
+	request.post(options, function (err, response) {
 		if (err) {
 			res.status(400).send("Registration error: " + err);
 			throw err;
 		}
-		if (response.body["error"] !== null && response.body["error"] !== undefined) {
-			const result = JSON.parse(response.body);
-			console.log(result.error.code);
-			res.status(result.error.code).send("Error" + result.error.message);
+		const result = JSON.parse(response.body);
+		
+		if (result.error !== null && result.error !== undefined) {
+			
+			res.status(result.error.code).send(result.error.message);
+			return;
 		}
-
-		const nameCredentials =
+		const userCredentials =
 		{
-			idToken: response["idToken"],
+			uid: result.localId,
 			displayName: req.body["name"],
-			returnSecureToken: true,
+			email: req.body["email"],
 		}
 		
 		db = mongoUtil.get();
-		db.db("root").collection("users").insertOne(nameCredentials, function (err) {
+		db.db("root").collection("users").insertOne(userCredentials, function (err) {
 			if (err) {
-				res.status(400).send("DB" + err);
+				res.status(400).send(err);
 			}
 			else {
-				res.status(200).send("Registration successful!");
+				res.status(200).send(userCredentials);
 			}
 		});
-
 	});
 });
 
