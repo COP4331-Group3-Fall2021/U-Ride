@@ -45,7 +45,7 @@ router.get("/find", async (req, res) => {
 
 router.get("/findbyId", async (req, res) => {
     db = mongoUtil.get();
-    db.db("root").collection("uride").find({_id: ObjectId(req.body["_id"])}).toArray(function (err, result) {
+    db.db("root").collection("uride").find({ _id: ObjectId(req.body["_id"]) }).toArray(function (err, result) {
         if (err) {
             res.status(400).send(err);
             throw err;
@@ -57,7 +57,7 @@ router.get("/findbyId", async (req, res) => {
 router.put("/update", async (req, res) => {
     db = mongoUtil.get();
 
-    db.db("root").collection("uride").updateOne(req.body["query"],req.body["update"], function (err) {
+    db.db("root").collection("uride").updateOne(req.body["query"], req.body["update"], function (err) {
         if (err) {
             res.status(400).send(err);
             throw err;
