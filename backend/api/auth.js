@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const request = require("request");
+const mongoUtil = require("../mongoUtil");
+
 
 router.post("/login", async (req, res) => {
 	const credentials = {
@@ -49,10 +51,32 @@ router.post("/register", async (req, res) => {
 
 	request.post(options, function (err, response, body) {
 		if (err) {
-			res.status(400).send("Registration error: " + error);
+			res.status(400).send("Registration error: " + err);
+			throw err;
 		}
-		console.log("Registration Sucessful", body);
-		res.status(201).send(response.body);
+		if (response.body["error"] !== null && response.body["error"] !== undefined) {
+			const result = JSON.parse(response.body);
+			console.log(result.error.code);
+			res.status(result.error.code).send("Error" + result.error.message);
+		}
+
+		const nameCredentials =
+		{
+			idToken: response["idToken"],
+			displayName: req.body["name"],
+			returnSecureToken: true,
+		}
+		
+		db = mongoUtil.get();
+		db.db("root").collection("users").insertOne(nameCredentials, function (err) {
+			if (err) {
+				res.status(400).send("DB" + err);
+			}
+			else {
+				res.status(200).send("Registration successful!");
+			}
+		});
+
 	});
 });
 
