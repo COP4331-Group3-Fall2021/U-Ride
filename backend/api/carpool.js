@@ -4,7 +4,7 @@ const mongoUtil = require("../mongoUtil");
 
 
 // Create Carpool 
-router.put("/insert", async (req, res) => {
+router.post("/insert", async (req, res) => {
 
     db = mongoUtil.get();
     db.db("root").collection("uride").insertOne(req.body, function (err) {
@@ -43,14 +43,15 @@ router.get("/find", async (req, res) => {
 })
 
 // Update Carpool
-router.get("/update", async (req, res) => {
+router.put("/update", async (req, res) => {
     db = mongoUtil.get();
-    db.db("root").collection("uride").updateOne(req.body, function (err) {
+
+    db.db("root").collection("uride").updateOne(req.body["query"],req.body["update"], function (err) {
         if (err) {
             res.status(400).send(err);
             throw err;
         }
-        res.status(200).send(result);
+        res.status(200).send("Carpool updated!");
     });
 })
 
