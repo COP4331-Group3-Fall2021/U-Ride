@@ -4,6 +4,10 @@ const request = require("request");
 const mongoUtil = require("../mongoUtil");
 
 
+
+/**
+ * Allows a user to log into the application
+ */
 router.post("/login", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
@@ -50,7 +54,9 @@ router.post("/login", async (req, res) => {
 	});
 });
 
-
+/**
+ * Allows a user to create a new account
+ */
 router.post("/register", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
@@ -100,6 +106,9 @@ router.post("/register", async (req, res) => {
 	});
 });
 
+/**
+ * Allows a user to reset their password
+ */
 router.post("/emailReset", async (req, res) => {
 
 	const credentials = {
