@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const request = require("request");
+const mongoUtil = require("../mongoUtil");
 
-router.get("/login", async (req, res) => {
+
+
+/**
+ * Allows a user to log into the application
+ */
+router.post("/login", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
 		password: req.body["password"],
@@ -20,16 +26,38 @@ router.get("/login", async (req, res) => {
 		body: JSON.stringify(credentials),
 	};
 
-	request.post(options, function (err, response, body) {
+	request.post(options, function (err, response) {
 		if (err) {
-			res.status(400).send("Error while logging in " + error);
+			res.status(400).send(err);
 		}
-		console.log("Login Sucessful", body);
-		res.status(201).send(response.body);
+
+		const result = JSON.parse(response.body);
+
+		if (result.error !== null && result.error !== undefined) {
+			res.status(result.error.code).send(result.error.message);
+			return;
+		}
+
+		const query =
+		{
+			uid: result.localId,
+		}
+
+		db = mongoUtil.get();
+		db.db("root").collection("users").find(query).toArray(function (err, result) {
+			if (err) {
+				res.status(400).send(err);
+				throw err;
+			}
+			res.status(200).send(result);
+		});
 	});
 });
 
-router.get("/register", async (req, res) => {
+/**
+ * Allows a user to create a new account
+ */
+router.post("/register", async (req, res) => {
 	const credentials = {
 		email: req.body["email"],
 		password: req.body["password"],
@@ -47,13 +75,66 @@ router.get("/register", async (req, res) => {
 		body: JSON.stringify(credentials),
 	};
 
-	request.post(options, function (err, response, body) {
+	request.post(options, function (err, response) {
 		if (err) {
-			res.status(400).send("Registration error: " + error);
+			res.status(400).send("Registration error: " + err);
+			throw err;
 		}
-		console.log("Registration Sucessful", body);
-		res.status(201).send(response.body);
+		const result = JSON.parse(response.body);
+
+		if (result.error !== null && result.error !== undefined) {
+
+			res.status(result.error.code).send(result.error.message);
+			return;
+		}
+		const userCredentials =
+		{
+			uid: result.localId,
+			displayName: req.body["name"],
+			email: req.body["email"],
+		}
+
+		db = mongoUtil.get();
+		db.db("root").collection("users").insertOne(userCredentials, function (err) {
+			if (err) {
+				res.status(400).send(err);
+			}
+			else {
+				res.status(200).send(userCredentials);
+			}
+		});
 	});
 });
+
+/**
+ * Allows a user to reset their password
+ */
+router.post("/emailReset", async (req, res) => {
+
+	const credentials = {
+		requestType: "PASSWORD_RESET",
+		email: req.body["email"],
+	};
+
+	const options = {
+		url:
+			"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" +
+			process.env.FIREBASEKEY,
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(credentials),
+	};
+
+	request.post(options, function (err, response) {
+		if (err) {
+			res.status(400).send(err);
+		}
+
+		res.status(200).send("Reset email Sent");
+	});
+
+})
 
 module.exports = router;
