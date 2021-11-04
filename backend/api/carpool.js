@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { ObjectId } = require("mongodb");
 const mongoUtil = require("../mongoUtil");
 
 
@@ -33,7 +34,7 @@ router.delete("/delete", async (req, res) => {
 // Search Carpool
 router.get("/find", async (req, res) => {
     db = mongoUtil.get();
-    db.db("root").collection("uride").find({}).toArray(function (err, result) {
+    db.db("root").collection("uride").find(req.body).toArray(function (err, result) {
         if (err) {
             res.status(400).send(err);
             throw err;
@@ -42,11 +43,21 @@ router.get("/find", async (req, res) => {
     });
 })
 
+router.get("/findbyId", async (req, res) => {
+    db = mongoUtil.get();
+    db.db("root").collection("uride").find({ _id: ObjectId(req.body["_id"]) }).toArray(function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+            throw err;
+        }
+        res.status(200).send(result);
+    });
+})
 // Update Carpool
 router.put("/update", async (req, res) => {
     db = mongoUtil.get();
 
-    db.db("root").collection("uride").updateOne(req.body["query"],req.body["update"], function (err) {
+    db.db("root").collection("uride").updateOne(req.body["query"], req.body["update"], function (err) {
         if (err) {
             res.status(400).send(err);
             throw err;
