@@ -82,6 +82,12 @@ router.post("/register", async (req, res) => {
 			throw err;
 		}
 
+		const userCredentials =
+		{
+			uid: result.localId,
+			name: req.body["name"],
+			email: req.body["email"],
+		}
 		db = mongoUtil.get();
 		db.db("root").collection("users").insertOne(userCredentials, function (err) {
 			if (err) {
@@ -119,7 +125,6 @@ router.post("/emailReset", async (req, res) => {
 		if (err) {
 			res.status(400).send(err);
 		}
-
 		res.status(200).send("Reset email Sent");
 	});
 
