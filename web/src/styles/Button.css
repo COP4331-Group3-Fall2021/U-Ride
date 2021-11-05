@@ -1,5 +1,5 @@
 button {
-    background-color: #F6E386;
+    background-color: #A1DBF2;
     color: #000000;
     border: none;
     border-radius: 6px;
@@ -7,6 +7,7 @@ button {
     font: 700 22px 'Nunito', sans-serif;
     color: #2B2B2B;
     margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 button:hover {

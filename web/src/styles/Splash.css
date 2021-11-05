@@ -1,5 +1,5 @@
 body {
-    background-color: #EDEBF6;
+    background-color: #FFFFFF;
 }
 
 .splash-container {
@@ -39,23 +39,31 @@ body {
 }
 
 .splash-page-img {
+    padding-top: 10%;
     transform: translate(0px, -40px);
 }
 
 .splash-row {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.column {
-
+.left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 60%;
+    margin-right: 2%;
 }
 
-#left {
-    flex: 2;
-}
-
-#right {
-    flex: 1;
+.right-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
 }
 
 .splash-page-paragraph {
@@ -72,12 +80,12 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    background-color: #ED7A7A;
-    border: 3px solid rgba(145, 8, 8, 0.4);
+    background-color: #007EA7;
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
+    width: 75%;
 }
 
 #register-box {
@@ -85,12 +93,12 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    background-color: #ED7A7A;
-    border: 3px solid rgba(145, 8, 8, 0.4);
+    background-color: #007EA7;
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
+    width: 75%;
 }
 
 #forgotpassword-box {
@@ -98,27 +106,29 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    background-color: #ED7A7A;
-    border: 3px solid rgba(145, 8, 8, 0.4);
+    background-color: #007EA7;
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
+    width: 80%;
+
 }
 
 .form-result {
-    color: #910808;
+    color: #FFFFFF;
     font-size: 1.1em;
     margin-bottom: 0em;
 }
 
 .input-headers {
+    color: #FFFFFF;
     text-align: left;
     margin: 0.5em 0 0 0;
 }
 
 .splash-window-title {
-    color: #461515;
+    color: #FFFFFF  ;
     font-family: 'Racing Sans One', cursive;
     font-size: 3em;
     margin-top: 0.3em;
@@ -126,7 +136,7 @@ body {
 }
 
 .hyperlink {
-    color: #FAF1C2;
+    color: #FFFFFF;
     margin: 0.2em 0;
     font-size: 1.1em;
     background: none;
@@ -144,4 +154,12 @@ body {
     color: #55FF70;
     font-size: 1.1em;
     margin-bottom: 0em;
+}
+
+form input {
+    width: 80%;
+}
+
+form label {
+    width: 80%;
 }

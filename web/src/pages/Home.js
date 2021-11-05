@@ -13,16 +13,16 @@ const HomePage = () => {
         <div className="container">
             <TitleLogo />
             <div className="row">
-                <div className="left-column">
+                <div className="left-column-home">
                     <div className="mapDiv"> 
                     {/* PUT MAP HERE */}
                     </div>
                     <div className="buttonsDiv">
-                        <Button text="Create Pool" />
-                        <Button text="Search Pool" />
+                        <Button text="Create Pool" bgcolor="#0466c8" color="#FFFFFF"/>
+                        <Button text="Search Pool" bgcolor="#0466c8" color="#FFFFFF"/>
                     </div>
                 </div>
-                <div className="right-column">
+                <div className="right-column-home">
                     <nav id="navBar">
                         {/* <button className="navButton"><Rider /></button>
                         <button className="navButton"><Driver /></button>
@@ -32,9 +32,9 @@ const HomePage = () => {
                         <button className="navButton"><FontAwesomeIcon icon={faBell}  /></button>
                     </nav>
                     <div className="poolsDiv">
-                        <p> PLACE HOLDER </p>
+                        
                     </div>
-                    <Button text="Sign Out" bgcolor="#ED7A7A" color="#FFFFFF" />
+                    <Button text="Sign Out" bgcolor="#0466c8" color="#FFFFFF" />
                 </div>
             </div>
         </div>

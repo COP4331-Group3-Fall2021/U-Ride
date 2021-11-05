@@ -36,11 +36,11 @@ export default function SplashPage() {
             <img className="star2" src={Star} />
             <TitleLogo />
             <div className="splash-row">
-                <div className="column" id="left">
+                <div className="left-column">
                     <p className="splash-page-paragraph">Start reducing emissions and making friends with a college&#8209;focused carpool app.</p>
                     <Car style={{width: 800}} className="splash-page-img"/>
                 </div>
-                <div className="column" id="right">
+                <div className="right-column">
                     {showLogin && <LoginWindow goToRegister={() => goToRegister()}
                                                goToForgotPassword={() => goToForgotPassword()}/>}
                     {showRegister && <RegisterWindow goToLogin={() => goToLogin()}
