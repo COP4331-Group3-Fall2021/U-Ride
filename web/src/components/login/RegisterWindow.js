@@ -7,6 +7,7 @@ function RegisterWindow ({goToLogin, goToForgotPassword}) {
     var lastName;
     var email;
     var password;
+    var confirmPassword;
     const [message, setMessage] = useState('');
     
 // Function that is called when register button is pressed
@@ -14,14 +15,26 @@ const register = async event => {
     event.preventDefault();
 
     // Validate input fields
-    if (!validateInput(email.value) || !validateInput(password.value)) {
+    if (!validateInput(firstName.value) ||!validateInput(lastName.value) ||!validateInput(email.value) || !validateInput(password.value) || !validateInput(confirmPassword.value)) {
         setMessage('Missing a field.');
 
+        if (!validateInput(firstName.value)) {
+            document.getElementById("registerFirstName").classList.add('error');
+        }
+        if (!validateInput(lastName.value)) {
+            document.getElementById("registerLastName").classList.add('error');
+        }
         if (!validateInput(email.value)) {
-            document.getElementById("loginEmail").classList.add('error');
+            document.getElementById("registerEmail").classList.add('error');
         }
         if (!validateInput(password.value)) {
-            document.getElementById("loginPassword").classList.add('error');
+            document.getElementById("registerPassword").classList.add('error');
+        }
+        if (!validateInput(confirmPassword.value)) {
+            document.getElementById("registerConfirmPassword").classList.add('error');
+        }
+        if (password.value !== confirmPassword.value) {
+            document.getElementById("registerConfirmPassword").classList.add('error');
         }
         return;
     } else {
@@ -30,7 +43,7 @@ const register = async event => {
     
     // Hash password, then construct request body
     var hash = sha256(password.value);
-    var obj = {email:email.value, password:hash};
+    var obj = {firstName:firstName.value, lastName:lastName.value, email:email.value, password:hash};
     var json = JSON.stringify(obj);
 
     // Send API request: Login
@@ -64,16 +77,16 @@ const register = async event => {
             <h2 className="splash-window-title">Register</h2>
             <form onSubmit={register}> 
                 <p id="form-result">{message}</p>
-                <p className="input-headers">First</p>
+                <p className="input-headers">First Name</p>
                 <input type="text" id="registerFirstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
-                <p className="input-headers">Last</p>
+                <p className="input-headers">Last Name</p>
                 <input type="text" id="registerLastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />
                 <p className="input-headers">Email</p>
                 <input type="text" id="registerEmail" placeholder="Email" ref={(c) => email = c} /><br />
                 <p className="input-headers">Password</p>
                 <input type="password" id="registerPassword" placeholder="Password" ref={(c) => password = c} /><br />
                 <p className="input-headers">Confirm Password</p>
-                <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" ref={(c) => password = c} /><br />
+                <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" ref={(c) => confirmPassword = c} /><br />
                 <Button text="Register" />
                 <br />
             </form>
@@ -86,11 +99,11 @@ const register = async event => {
 // Validates a string
 function validateInput (input) {
     if (input === undefined || input === "") {
-        return 0;
+        return false;
     }
     else {
         // Valid input
-        return 1;
+        return true;
     }
 }
 
