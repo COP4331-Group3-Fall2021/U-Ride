@@ -1,0 +1,72 @@
+.modal {
+    position: fixed;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0.5, 0.5, 0.5, 0.5);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #007EA7;
+    border-radius: 10px;
+    width: 30%;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 1% 0 1% 0;
+}
+
+.modal-header {
+    font-family: 'Racing Sans One', cursive;
+    font-size: 3em;
+    margin: 0;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-form input {
+    font-size: 1.2em;
+    border-radius: 0.25em;
+}
+
+.modal-form input[type="submit"] {
+    width: 5em;
+    height: 2em;
+    background-color: #A1DBF2;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font: 700 22px 'Nunito', sans-serif;
+    color: #2B2B2B;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+
+}
+
+.separator {
+    width: 55%;
+    color: #FFFFFF;
+    background-color: #FFFFFF;
+}
