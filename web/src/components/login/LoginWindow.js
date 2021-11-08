@@ -92,10 +92,10 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
 // Validates a string
 function validateInput (input) {
     if (input === undefined || input === "") {
-        return 0;
+        return false;
     }
     else {
         // Valid input
-        return 1;
+        return true;
     }
 }
