@@ -8,5 +8,9 @@
     "cacheDirectories": [
         "web/node_modules",
         "backend/node_modules"
-    ]
+    ],
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1"
+    }
 }
