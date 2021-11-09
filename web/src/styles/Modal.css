@@ -70,3 +70,26 @@
     color: #FFFFFF;
     background-color: #FFFFFF;
 }
+
+.checkboxes {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: center;
+}
+
+.check {
+    width: 1em;
+    margin-left: 3.5%;
+}
+
+#checkDiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: left;
+    justify-content: center;
+    margin-top: 2%; 
+    margin-bottom: 2%; 
+    padding: 0;
+}
