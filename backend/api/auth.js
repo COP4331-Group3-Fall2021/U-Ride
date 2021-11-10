@@ -10,6 +10,16 @@ const mongoUtil = require("../mongoUtil");
  * Allows a user to log into the application
  */
 router.post("/login", async (req, res) => {
+
+	if (req.body["email"] === null || req.body["email"] === undefined)
+	{
+		res.status(400).send("INVALID_EMAIL");
+	}
+
+	if (req.body["password"] === null || req.body["email"] === undefined)
+	{
+		res.status(400).send("INVALID_PASSWORD");
+	}
 	const credentials = {
 		email: req.body["email"],
 		password: req.body["password"],
@@ -65,6 +75,21 @@ router.post("/register", async (req, res) => {
 		returnSecureToken: true,
 	};
 
+	if (req.body["email"] === null || req.body["email"] === undefined)
+	{
+		res.status(400).send("INVALID_EMAIL");
+	}
+
+	if (req.body["password"] === null || req.body["email"] === undefined)
+	{
+		res.status(400).send("INVALID_PASSWORD");
+	}
+
+	if (req.body["name"] === null || req.body["name"] === undefined)
+	{
+		res.status(400).send("INVALID_PASSWORD");
+	}
+
 	const options = {
 		url:
 			"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
@@ -82,19 +107,27 @@ router.post("/register", async (req, res) => {
 			throw err;
 		}
 
+		results = JSON.parse(response.body);
+	
+		if (results.error !== null && results.error !== undefined)
+		{
+			res.status(results.error.code).send(results.error.message);
+			return;
+		}
 		const userCredentials =
 		{
-			uid: result.localId,
+			uid: results.localId,
 			name: req.body["name"],
 			email: req.body["email"],
 		}
+
 		db = mongoUtil.get();
-		db.db("root").collection("users").insertOne(userCredentials, function (err) {
+		db.db("root").collection("users").insertOne(userCredentials, function (err, response) {
 			if (err) {
 				res.status(400).send(err);
 			}
 			else {
-				res.status(200).send(userCredentials);
+				res.status(200).send(response.ops[0]);
 			}
 		});
 	});
@@ -103,12 +136,18 @@ router.post("/register", async (req, res) => {
 /**
  * Allows a user to reset their password
  */
-router.post("/emailReset", async (req, res) => {
+router.post("/emailReset/:email", async (req, res) => {
 
 	const credentials = {
 		requestType: "PASSWORD_RESET",
-		email: req.body["email"],
+		email: req.params.email,
 	};
+
+	if (req.body["email"] === null || req.body["email"] === undefined)
+	{
+		res.status(400).send("INVALID_EMAIL");
+	}
+
 
 	const options = {
 		url:
@@ -125,7 +164,7 @@ router.post("/emailReset", async (req, res) => {
 		if (err) {
 			res.status(400).send(err);
 		}
-		res.status(200).send("Reset email Sent");
+		res.status(200).send("Reset email sent");
 	});
 
 })
@@ -133,13 +172,17 @@ router.post("/emailReset", async (req, res) => {
 /**
  * Get User
  */
-router.get("/getUser", async (req, res) => {
+router.get("/getUser/:_id", async (req, res) => {
 
 	db = mongoUtil.get();
-	db.db("root").collection("users").find({ _id: ObjectId(req.body["_id"]) }).toArray(function (err, result) {
+	db.db("root").collection("users").find({ _id: ObjectId(req.params._id) }).toArray(function (err, result) {
 		if (err) {
 			res.status(400).send(err);
 			throw err;
+		}
+		if (result[0] === undefined || result[0] === null)
+		{
+			res.status(404).send("User not Found");
 		}
 		res.status(200).send(result[0]);
 	});
