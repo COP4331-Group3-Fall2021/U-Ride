@@ -1,0 +1,165 @@
+body {
+    background-color: #FFFFFF;
+}
+
+.splash-container {
+    margin: 3% 15%;
+}
+
+.splash-container h1 {
+    margin: 0 0 0 0;
+}
+
+.splash-container .action-button {
+    margin: 1.25em 0;
+    font-size: 1.2em;
+}
+
+.splash-container input {
+    font-size: 1.2em;
+    padding: 0.5em 1em;
+    margin: 0.3em 0;
+    border-radius: 0.25em;
+}
+
+.splash-container .star1 {
+    width: 508px;
+    position: absolute;
+    left: -11%;
+    top: 10%;
+    z-index: -1;
+}
+
+.splash-container .star2 {
+    width: 680px;
+    position: absolute;
+    right: -16%;
+    top: 20%;
+    z-index: -1;
+}
+
+.splash-page-img {
+    padding-top: 10%;
+    transform: translate(0px, -40px);
+}
+
+.splash-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 60%;
+    margin-right: 2%;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
+
+.splash-page-paragraph {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.5em;
+    text-align: left;
+    color: #2B2B2B;
+    margin-right: 23%;
+    margin-bottom: 0;
+}
+
+#login-box {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #007EA7;
+    border-radius: 17.3039px;
+    padding-bottom: 1em;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    width: 75%;
+}
+
+#register-box {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #007EA7;
+    border-radius: 17.3039px;
+    padding-bottom: 1em;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    width: 75%;
+}
+
+#forgotpassword-box {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #007EA7;
+    border-radius: 17.3039px;
+    padding-bottom: 1em;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    width: 80%;
+
+}
+
+.form-result {
+    color: #FFFFFF;
+    font-size: 1.1em;
+    margin-bottom: 0em;
+}
+
+.input-headers {
+    color: #FFFFFF;
+    text-align: left;
+    margin: 0.5em 0 0 0;
+}
+
+.splash-window-title {
+    color: #FFFFFF  ;
+    font-family: 'Racing Sans One', cursive;
+    font-size: 3em;
+    margin-top: 0.3em;
+    margin-bottom: 0;
+}
+
+.hyperlink {
+    color: #FFFFFF;
+    margin: 0.2em 0;
+    font-size: 1.1em;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.input-invalid {
+    border: 2px solid rgb(255, 30, 30);
+}
+
+#forgotpassword-box .fgtpwd-success {
+    color: #55FF70;
+    font-size: 1.1em;
+    margin-bottom: 0em;
+}
+
+form input {
+    width: 80%;
+}
+
+form label {
+    width: 80%;
+}
