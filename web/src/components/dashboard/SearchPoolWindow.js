@@ -3,17 +3,17 @@ import Button from '../Button';
 import '../../styles/Modal.css';
 
 
-export default function CreatePoolWindow({closeModal, showCreate}) {
+export default function SearchPoolWindow({closeModal, showSearch}) {
 
     // use UseState
     const [message, setMessage] = useState('');
 
-    let style = showCreate ? {display: 'flex'} : {display: 'none'}
+    let style = showSearch ? {display: 'flex'} : {display: 'none'}
 
     return (
-        <div id="create-pool-modal" className="modal" style={style}> 
+        <div id="search-pool-modal" className="modal" style={style}> 
             <div className="modal-content">
-                <h2 className="modal-header">Create Pool</h2>
+                <h2 className="modal-header">Search Pool</h2>
                 <hr className="separator" />
                 <form className="modal-form">
                     <span className="form-result">{message}</span>
@@ -21,8 +21,6 @@ export default function CreatePoolWindow({closeModal, showCreate}) {
                     <input type="text" id="createOrigin" placeholder="Origin" />
                     <label htmlFor="createDest" className="input-headers">Destination:</label>
                     <input type="text" id="createDest" placeholder="Destination" />
-                    <label htmlFor="maxPassengers" className="input-headers">Max Passengers:</label>
-                    <input type="number" id="maxPassengers" placeholder="Max Passengers" min="1" max="7" />
                     <label htmlFor="createStart" className="input-headers">Start Time:</label>
                     <input type="time" id="createStart" />
 
@@ -50,7 +48,7 @@ export default function CreatePoolWindow({closeModal, showCreate}) {
                         </div>
                     </div>
                     <div className="modal-buttons">
-                        <Button text="Create" bgcolor="" color="" />
+                        <Button text="Search" bgcolor="" color="" />
                         <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>
