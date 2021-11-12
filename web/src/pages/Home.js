@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TitleLogo from '../components/TitleLogo.js'
 import CreatePoolWindow from '../components/dashboard/CreatePoolWindow.js';
 import Button from '../components/Button'
+import Map from '../components/Map'
 import '../styles/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCar, faBell, faUsers } from '@fortawesome/free-solid-svg-icons'
