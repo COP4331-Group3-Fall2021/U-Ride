@@ -1,0 +1,54 @@
+body {
+    background-color: #FFFFFF;
+}
+
+.search-results-container {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.search-results-container .buttonsDiv {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.search-results-container .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-results-container .left-column {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 60%;
+}
+
+.search-results-container .right-column {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    border-left: 2px dotted black;
+    width: 30%;
+    margin-right: 4%;
+}
+
+.search-results-container .poolsDiv {
+    background-color: #007EA7;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 80%;
+    padding-top: 2%;
+}
+
+.results-header {
+    font: 700 1.7em 'Nunito', sans-serif;
+}
+
+.google-map {
+    background-color: lightgray;
+    margin: 3% 7% 4% 10%;
+    height: 100%;
+}

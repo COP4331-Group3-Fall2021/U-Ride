@@ -1,0 +1,13 @@
+.card {
+    background-color: white;
+    width: 93%;
+    border-radius: 16px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+}
+.card .column#left {
+    
+}
