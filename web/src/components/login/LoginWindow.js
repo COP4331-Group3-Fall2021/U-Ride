@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import Button from '../Button';
 const sha256 = require('js-sha256');
 
@@ -47,13 +48,13 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
 
         // Send API request: Login
         try {
-            const response = await fetch('https://u-ride-cop4331.herokuapp.com/api/login',
+            const response = await fetch('https://u-ride-cop4331.herokuapp.com/auth/login',
                 {method:'POST',body:json,headers:{'Content-Type': 'application/json'}});
 
             var res = JSON.parse(await response.text());
 
             // Check if valid login
-            if (res.id <= 0) {
+            if (response.status != 200) {
                 setMessage('Invalid login.');
             }
             else {
@@ -62,7 +63,7 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
 
                 // Clear error and input fields
                 setMessage('');
-                window.location.href = '/home'; // !!!!!!!!!!!!!!!! This is important to note
+                <Redirect to='/home' />
             }
         }
         catch(e) {
