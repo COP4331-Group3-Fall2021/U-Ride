@@ -23,32 +23,37 @@ export default function ForgotPasswordWindow ({goToLogin, goToRegister}) {
             setMessage('');
         }
         
-        // Construct request body
+        // Construct HTTP request
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        var requestBody = JSON.stringify({
+            email:forgotPasswordEmail.value,
+        });
+        var requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: requestBody,
+            redirect: 'follow'
+        };
         var obj = {email:forgotPasswordEmail.value};
         var json = JSON.stringify(obj);
 
-        // Send API request: Forgot Password
-        try {
-            const response = await fetch('https://u-ride-cop4331.herokuapp.com/api/forgotpassword',
-                {method:'POST',body:json,headers:{'Content-Type': 'application/json'}});
-
-            var res = JSON.parse(await response.text());
-
-            // Check if email is a valid account; syntax based on Firebase docs
-            if (res.error.message === 'EMAIL_NOT_FOUND') {
+        // Send Login API request and handle server response
+        fetch('https://u-ride-cop4331.herokuapp.com/auth/emailreset', requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            // Handle error messages
+            if (result === 'EMAIL_NOT_FOUND') {
                 setMessage('Account does not exist.');
             }
+            // Handle success
             else {
-                // Clear error and input fields
                 setMessage('Please check your email.');
                 document.getElementById("form-result").classList.remove('form-result');
                 document.getElementById("form-result").classList.add('fgtpwd-success');
             }
-        }
-        catch(e) {
-            alert(e.toString());
-            return;
-        }    
+        })
+        .catch(error => console.error('error', error));
     }
 
     return (
