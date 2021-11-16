@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
 import Button from '../Button';
+import { useHistory } from 'react-router-dom';
 const sha256 = require('js-sha256');
 
 export default function LoginWindow ({goToRegister, goToForgotPassword}) {
+    // Used to redirect to pages
+    const history = useHistory();
+
     var loginEmail;
     var loginPassword;
     const [message, setMessage] = useState('');
@@ -41,35 +44,47 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
             setMessage('');
         }
         
-        // Hash password, then construct request body
+        // Hash password, then construct HTTP request
         var hash = sha256(loginPassword.value);
-        var obj = {email:loginEmail.value, password:hash};
-        var json = JSON.stringify(obj);
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        var requestBody = JSON.stringify({
+            email:loginEmail.value,
+            password:hash
+        });
+        var requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: requestBody,
+            redirect: 'follow'
+        };
 
-        // Send API request: Login
-        try {
-            const response = await fetch('https://u-ride-cop4331.herokuapp.com/auth/login',
-                {method:'POST',body:json,headers:{'Content-Type': 'application/json'}});
+        // Send Login API request and handle server response
+        fetch('https://u-ride-cop4331.herokuapp.com/auth/login', requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                // Handle error messages
+                if (result === 'EMAIL_NOT_FOUND') {
+                    setMessage('Account does not exist.');
+                }
+                else if (result === 'INVALID_PASSWORD') {
+                    setMessage('Invalid login.');
+                }
+                // Handle success
+                else {
+                    // Needs the [0] because for some reason, the parsing produces an array
+                    let responseBody = JSON.parse(result)[0];
+                    let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
+                    setMessage('');
 
-            var res = JSON.parse(await response.text());
+                    // Set user info into local storage
+                    localStorage.setItem('user_data', JSON.stringify(userInfo));
 
-            // Check if valid login
-            if (response.status != 200) {
-                setMessage('Invalid login.');
-            }
-            else {
-                var user = {firstName:res.firstName, lastName:res.lastName, id:res.id}
-                localStorage.setItem('user_data', JSON.stringify(user));
-
-                // Clear error and input fields
-                setMessage('');
-                <Redirect to='/home' />
-            }
-        }
-        catch(e) {
-            alert(e.toString());
-            return;
-        }    
+                    // Redirect user to homepage
+                    history.push('/home');
+                }
+            })
+            .catch(error => console.error('error', error));
     }
 
     return (
