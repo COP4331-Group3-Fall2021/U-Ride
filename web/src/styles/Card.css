@@ -2,12 +2,58 @@
     background-color: white;
     width: 93%;
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1%;
 }
 
-.row {
-    display: flex;
-    justify-content: space-around;
+.card:hover {
+    box-shadow: 0 0 8px #000000;
 }
-.card .column#left {
-    
+
+.card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 17px;
+    padding-top: 1%;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    background-color: #EBEBEB;
+    font-weight: bold;
+    font-size: 19px;
+    padding-left: 4%;
+    padding-right: 4%;
+    height: 1.75em;
+    margin-bottom: 1%;
+}
+
+.left-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding-left: 4%;
+    width: 50%;
+}
+
+.left-text {
+    margin-bottom: 2%;
+}
+
+.right-col {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    width: 50%;
+    padding-right: 4%;
 }

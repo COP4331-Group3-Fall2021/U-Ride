@@ -3,6 +3,7 @@ import TitleLogo from '../components/TitleLogo.js'
 import CreatePoolWindow from '../components/dashboard/CreatePoolWindow.js';
 import SearchPoolWindow from '../components/dashboard/SearchPoolWindow.js';
 import Button from '../components/Button'
+import Card from '../components/Card'
 import Map from '../components/Map'
 import '../styles/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,7 +48,8 @@ const HomePage = () => {
                         <button className="navButton"><FontAwesomeIcon icon={faBell} /></button>
                     </nav>
                     <div className="poolsDiv">
-
+                        {/* DUMMY CARD == REMOVE */}
+                        <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" />
                     </div>
                     <Button text="Sign Out" bgcolor="#0466c8" color="#FFFFFF" />
                 </div>
