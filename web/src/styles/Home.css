@@ -73,6 +73,11 @@ body {
     padding: 0;
     padding-bottom: 5px;
     font-size: 30px;
+    color: #2B2B2B;
+}
+
+.navButton.selected {
+    color: #007EA7;
 }
 
 .mapDiv {
