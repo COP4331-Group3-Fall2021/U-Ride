@@ -1,19 +1,20 @@
-.card {
+
+.join-card {
     background-color: white;
     width: 93%;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
-    padding-bottom: 1%;
+    padding-bottom: 3%;
     margin-bottom: 2%;
 }
 
-.card:hover {
+.join-card:hover {
     box-shadow: 0 0 8px #000000;
     z-index: 10;
 }
 
-.card-content {
+.join-card-content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -23,7 +24,7 @@
     padding-top: 1%;
 }
 
-.card-header {
+.join-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,8 +35,17 @@
     font-size: 19px;
     padding-left: 4%;
     padding-right: 4%;
-    height: 1.75em;
+    height: 2.5em;
     margin-bottom: 1%;
+}
+
+.left-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding-left: 4%;
+    width: 50%;
 }
 
 .left-col {
@@ -53,9 +63,33 @@
 
 .right-col {
     display: flex; 
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: right;
+    justify-content: top;
     width: 50%;
     padding-right: 4%;
+    height: 100%;
+    margin-bottom: 2%;
+}
+
+.cardButton {
+    width: 6em;
+}
+
+.passenger-list {
+    margin-top: 2%;
+}
+
+.remove-rider-button {
+    opacity: 0;
+    border: none;
+    background-color: transparent;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.remove-rider-button:hover {
+    opacity: 1;
+    color: red;
 }

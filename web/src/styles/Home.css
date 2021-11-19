@@ -76,6 +76,10 @@ body {
     color: #2B2B2B;
 }
 
+.navButton:hover {
+    box-shadow: none;
+}
+
 .navButton.selected {
     color: #007EA7;
 }

@@ -27,7 +27,7 @@ export default function CreatePoolWindow({closeModal, showCreate}) {
                     <input type="time" id="createStart" />
 
                     {/* check boxes */}
-                    <div id="checkDiv">
+                    <div class="checkDiv">
                         <div className="checkboxes">
                             <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
                             <label htmlFor="mondayCheck">Monday</label>

@@ -3,12 +3,20 @@ import Button from '../Button';
 import '../../styles/Modal.css';
 
 
-export default function SearchPoolWindow({closeModal, showSearch}) {
+export default function SearchPoolWindow({closeModal, showSearch, setSearchData}) {
 
     // use UseState
     const [message, setMessage] = useState('');
 
-    let style = showSearch ? {display: 'flex'} : {display: 'none'}
+    let style = showSearch ? {display: 'flex'} : {display: 'none'};
+
+    function search(element) {
+        // dont submit the form
+        element.preventDefault();
+
+        // call api end point (using fetch)
+        // on success, generate the Cards for the resulting data, close this modal, then update the data with setSearchData
+    }
 
     return (
         <div id="search-pool-modal" className="modal" style={style}> 
@@ -25,7 +33,7 @@ export default function SearchPoolWindow({closeModal, showSearch}) {
                     <input type="time" id="createStart" />
 
                     {/* check boxes */}
-                    <div id="checkDiv">
+                    <div class="checkDiv">
                         <div className="checkboxes">
                             <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
                             <label htmlFor="mondayCheck">Monday</label>
@@ -48,7 +56,7 @@ export default function SearchPoolWindow({closeModal, showSearch}) {
                         </div>
                     </div>
                     <div className="modal-buttons">
-                        <Button text="Search" bgcolor="" color="" />
+                        <Button onClick={search} text="Search" bgcolor="" color="" />
                         <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>

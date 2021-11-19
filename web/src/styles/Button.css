@@ -13,4 +13,5 @@ button {
 button:hover {
     text-decoration: underline;
     cursor: pointer;
+    box-shadow: 0 0 4px #000000;
 }

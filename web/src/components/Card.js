@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/Card.css';
 import Button from './Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 /* Component properties:
  *                    name (required) - driver's name
@@ -10,23 +12,31 @@ import Button from './Button';
  *             destination (required) - the carpool's ending point; format????
  *   currentPassengerCount (required) - number of users currently in the carpool
  *            passengerCap (required) - total capacity of the carpool
+ *              passengers (required) - list of passengers
+ *              buttonName (required) - name for the button, leave/disband
  */
-export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, onClick = () => { }, }) {
+export default function JoinedCard({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = () => {}, buttonClick = () => {} }) {
+    const passengerLIs = passengers.map((passengerName) => {
+        return <li>{passengerName}</li>
+    });
 
     return (
-        <div class="card" onClick={onClick}>
-            <div class="card-header">
+        <div class="join-card" onClick={cardClick}>
+            <div class="join-card-header">
                 <span>🚘 {name}</span>
                 <span>{date} @ {time}</span>
             </div>
-            <div class="card-content">
+            <div class="join-card-content">
                 <div class="left-col">
                     <span class="left-text">📍 <b>To:</b> {origin}</span>
                     <span class="left-text">📍 <b>From: </b> {destination}</span>
-                    <span class="left-text">🚗 <b>{currentPassengerCount}/{passengerCap} passengers</b></span>
+                    <Button text={buttonName} bgcolor="#0466c8" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
                 </div>
                 <div class="right-col">
-                    <Button text="Join" bgcolor="#0466c8" color="#FFFFFF" />
+                    <span>🚗 <b>{currentPassengerCount}/{passengerCap} passengers</b></span>
+                    <ul class="passenger-list">
+                        {passengerLIs}
+                    </ul>
                 </div>
             </div>
         </div>
