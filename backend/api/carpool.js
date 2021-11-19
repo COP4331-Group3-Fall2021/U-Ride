@@ -45,7 +45,14 @@ router.get("/find", async (req, res) => {
 
 router.get("/findbyId:_id", async (req, res) => {
     db = mongoUtil.get();
-    db.db("root").collection("uride").find({ _id: ObjectId(req.body["_id"])}).toArray(function (err, result) {
+
+    if (req.params._id === null || req.params._id === undefined)
+    {
+        res.status(400).send("Missing user id");
+        return;
+    }
+
+    db.db("root").collection("uride").find({ _id: ObjectId(req.params._id)}).toArray(function (err, result) {
         if (err) {
             res.status(400).send(err);
             throw err;
