@@ -80,7 +80,7 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    background-color: #007EA7;
+    background-color: #003459;
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
@@ -93,7 +93,7 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    background-color: #007EA7;
+    background-color: #003459;
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
@@ -106,7 +106,7 @@ body {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    background-color: #007EA7;
+    background-color: #003459;
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
@@ -116,7 +116,7 @@ body {
 }
 
 .form-result {
-    color: #FFFFFF;
+    color: #FF7575 ;
     font-size: 1.1em;
     margin-bottom: 0em;
 }
@@ -147,7 +147,7 @@ body {
 }
 
 .input-invalid {
-    border: 2px solid rgb(255, 30, 30);
+    border: 2px solid #FF7575 ;
 }
 
 #forgotpassword-box .fgtpwd-success {

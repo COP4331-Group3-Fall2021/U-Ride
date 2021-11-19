@@ -10,7 +10,7 @@
 }
 
 .join-card:hover {
-    box-shadow: 0 0 8px #000000;
+    box-shadow: 0 0 20px #000000;
     z-index: 10;
 }
 

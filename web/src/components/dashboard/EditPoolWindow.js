@@ -65,7 +65,7 @@ export default function EditPoolWindow({ closeModal, showEdit, passengers = ["ca
                     <div className="modal-buttons">
                         <Button text="Save" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
-                        <Button text="Delete" bgcolor="red" color="white" />
+                        <Button text="Delete" bgcolor="#FF7575 " color="#000000" />
                     </div>
                 </form>
             </div>
