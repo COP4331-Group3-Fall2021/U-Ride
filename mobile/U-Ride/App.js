@@ -5,6 +5,7 @@ import { createAppContainer } from "react-navigation";
 import SplashScreen from './src/screens/SplashScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import MapScreen from './src/screens/MapScreen';
 import image from 'react-native'
 
 
@@ -28,6 +29,12 @@ const AppNavigator = createStackNavigator({
   },
   Register: {
     screen: RegisterScreen,
+    navigationOptions: {
+      header: null // Will hide header for HomePage
+    }
+  },
+  Map: {
+    screen: MapScreen,
     navigationOptions: {
       header: null // Will hide header for HomePage
     }

@@ -46,7 +46,7 @@ export default class LoginScreen extends Component {
           <Button 
             title="Log In"
             color = '#ed7a7a'
-            onPress={() => this.props.navigation.navigate('Login')}
+            onPress={() => this.props.navigation.navigate('Map')}
           />
         </View>
         <View style = {{width: 200, height: 40}}>
