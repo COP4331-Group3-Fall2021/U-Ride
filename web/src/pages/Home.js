@@ -52,7 +52,7 @@ const HomePage = () => {
                         {/* PUT MAP HERE */}
                     </div>
                     <div className="buttonsDiv">
-                        <Button onClick={() => setShowCreate(true)} text="Create Pool" bgcolor="#0466c8" color="#FFFFFF" />
+                        <Button onClick={() => setShowCreate(true)} text="Create Pool" bgcolor="#007EA7" color="#FFFFFF" />
                     </div>
                 </div>
                 <div className="right-column-home">
@@ -81,7 +81,7 @@ const HomePage = () => {
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Edit" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} buttonClick={() => setShowEdit(true)}/>
                         </>}
                     </div>
-                    <Button text="Sign Out" bgcolor="red" color="#FFFFFF" />
+                    <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" />
                 </div>
             </div>
         </div>

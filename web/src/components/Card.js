@@ -30,7 +30,7 @@ export default function JoinedCard({ name, date, time, origin, destination, curr
                 <div class="left-col">
                     <span class="left-text">📍 <b>To:</b> {origin}</span>
                     <span class="left-text">📍 <b>From: </b> {destination}</span>
-                    <Button text={buttonName} bgcolor="#0466c8" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
+                    <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
                 </div>
                 <div class="right-col">
                     <span>🚗 <b>{currentPassengerCount}/{passengerCap} passengers</b></span>
