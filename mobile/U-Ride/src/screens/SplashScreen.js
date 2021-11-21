@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, Button, View, Text, Image } from 'react-native';
+import { StyleSheet, Button, View, Text, Image, TextInput } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 const styles = StyleSheet.create({
@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class LoginScreen extends Component {
+<link rel = 'Button' href = 'Button.css'></link>
+export default class Homescreen extends Component {
   render() {
     return (
       <View style={{ backgroundColor:'#a89dd2', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -27,22 +28,9 @@ export default class LoginScreen extends Component {
           <Image style= {{width: 200, height:200}} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
         </View>
 
-        <View style = {{width: 200, height: 40}}>
-          <TextInput
-            style={{height: 30,fontSize:20, backgroundColor:'#ffffff'}}
-            placeholder="Username"
-          />     
-        </View>
 
-        <View style = {{width: 200, height: 40}}>
-          <TextInput
-            style={{height: 30,fontSize:20, backgroundColor:'#ffffff'}}
-            placeholder="Password"
-          />   
-        </View>
-        
 
-        <View style = {{width: 200, height: 40}}>
+        <View style = {{width: 200, height: 40, bottom: 10}}>
           <Button 
             title="Log In"
             color = '#ed7a7a'
@@ -51,9 +39,9 @@ export default class LoginScreen extends Component {
         </View>
         <View style = {{width: 200, height: 40}}>
           <Button 
-            title="Go back"
+            title="Register"
             color = '#ed7a7a'
-            onPress={() => this.props.navigation.navigate('Splash')}
+            onPress={() => this.props.navigation.navigate('Register')}
           />
         </View>
       </View>

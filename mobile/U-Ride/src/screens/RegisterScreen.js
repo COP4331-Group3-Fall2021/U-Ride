@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class LoginScreen extends Component {
+export default class RegisterScreen extends Component {
   render() {
     return (
       <View style={{ backgroundColor:'#a89dd2', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -40,13 +40,20 @@ export default class LoginScreen extends Component {
             placeholder="Password"
           />   
         </View>
+
+        <View style = {{width: 200, height: 40}}>
+          <TextInput
+            style={{height: 30,fontSize:20, backgroundColor:'#ffffff'}}
+            placeholder="Confirm Password"
+          />   
+        </View>
         
 
         <View style = {{width: 200, height: 40}}>
           <Button 
-            title="Log In"
+            title="Register"
             color = '#ed7a7a'
-            onPress={() => this.props.navigation.navigate('Login')}
+            onPress={() => this.props.navigation.navigate('Register')}
           />
         </View>
         <View style = {{width: 200, height: 40}}>

@@ -2,8 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
+import SplashScreen from './src/screens/SplashScreen';
 import LoginScreen from './src/screens/LoginScreen';
-import CardScreen from './src/screens/CardScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 import image from 'react-native'
 
 
@@ -13,20 +14,26 @@ export default class App extends React.Component {
   }
 }
 const AppNavigator = createStackNavigator({
+  Splash: {
+    screen: SplashScreen,
+    navigationOptions: {
+      header: null // Will hide header for HomePage
+    }
+  },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
       header: null // Will hide header for HomePage
     }
   },
-  Card: {
-    screen: CardScreen,
+  Register: {
+    screen: RegisterScreen,
     navigationOptions: {
       header: null // Will hide header for HomePage
     }
   }
 },{
-  initialRouteName: "Login"
+  initialRouteName: "Splash"
 });
 const AppContainer = createAppContainer(AppNavigator);
 const styles = StyleSheet.create({
