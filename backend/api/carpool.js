@@ -61,23 +61,6 @@ router.get("/find/:_id", async (req, res) => {
     });
 })
 
-// // Update Carpool
-// router.put("/update", async (req, res) => {
-//     db = mongoUtil.get();
-
-//     db.db("root").collection("uride").find({ _id: ObjectId(req.params._id) }).toArray(function (err, result) {
-//         if (err) {
-//             res.status(5)
-//         }
-//     db.db("root").collection("uride").updateOne(req.body["query"], req.body["update"], function (err) {
-//         if (err) {
-//             res.status(400).send(err);
-//             throw err;
-//         }
-//         res.status(200).send("Carpool updated!");
-//     });
-// })
-
 
 // Allows a user to join a carpool
 router.put("/join/:carpool/:user", async (req, res) => {
