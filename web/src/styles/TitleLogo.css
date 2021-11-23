@@ -1,13 +1,12 @@
 @media only screen and (max-width: 800px) {
-    h1 {
-        font-family: 'Racing Sans One', cursive;
-        font-size: 4em;
-        text-align: left;
-        color: #003459;
-        margin: 0 0 0 3%;
-    }
+h1 {
+    font-family: 'Racing Sans One', cursive;
+    font-size: 4em;
+    text-align: left;
+    color: #003459;
+    margin: 0 0 0 3%;
 }
-
+}
 @media only screen and (min-width: 800px) {
     h1 {
         font-family: 'Racing Sans One', cursive;
@@ -16,4 +15,4 @@
         color: #003459;
         margin: 0 0 0 3%;
     }
-}
+    }
