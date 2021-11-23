@@ -183,7 +183,8 @@ input{
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 400px;
+    width: 90vw;
+    max-width: 400px;
 }
 
 #register-box {
@@ -196,7 +197,8 @@ input{
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 400px;
+    width: 90vw;
+    max-width: 400px;
 }
 
 #forgotpassword-box {
@@ -256,7 +258,8 @@ input{
 }
 
 form input {
-    width: 250px;
+    width: 90%;
+    max-width: 250px;
 }
 
 form label {
