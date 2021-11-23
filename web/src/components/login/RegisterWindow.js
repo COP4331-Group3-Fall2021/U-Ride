@@ -90,7 +90,7 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
                     setMessage('Account already exists.');
                 }
                 else if (result === 'TOO_MANY_ATTEMPTS_TRY_LATER') {
-                    setMessage('Google says: f*** you.');
+                    setMessage("You're being rate limited.");
                 }
                 // Handle success
                 else {
@@ -106,30 +106,6 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
                 }
             })
             .catch(error => console.error('error', error));
-
-        // Send API request: Login
-        // try {
-        //     const response = await fetch('https://u-ride-cop4331.herokuapp.com/auth/register', requestOptions);
-
-        //     var res = JSON.parse(await response.text());
-
-        //     // Check if valid login
-        //     if (res.id <= 0) {
-        //         setMessage('Invalid login.');
-        //     }
-        //     else {
-        //         var user = {firstName:res.firstName, lastName:res.lastName, id:res.id}
-        //         localStorage.setItem('user_data', JSON.stringify(user));
-
-        //         // Clear error and input fields
-        //         setMessage('');
-        //         window.location.href = '/home'; // !!!!!!!!!!!!!!!! This is important to note
-        //     }
-        // }
-        // catch(e) {
-        //     alert(e.toString());
-        //     return;
-        // }    
     }
 
     return (
