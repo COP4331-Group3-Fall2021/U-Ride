@@ -2,6 +2,93 @@ body {
     background-color: #FFFFFF;
 }
 
+#splash-format
+{
+    display: grid;
+    grid-template-rows: auto;
+}
+@media only screen and (max-width: 800px) {
+.content-wrapper
+{
+    display: grid;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: center;
+    width: 100vw;
+    height: 100%;
+    width: full;
+    margin-top: 10px;
+  }
+  .splash-page-paragraph {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.5em;
+    text-align: center;
+    color: #2B2B2B;
+    margin-bottom: 0;
+    padding-left: 40px;
+    padding-right: 40px;
+    overflow: hidden;
+}
+}
+@media only screen and (min-width: 800px) {
+    .splash-page-paragraph {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.7em;
+        text-align: center;
+        color: #2B2B2B;
+        margin-bottom: 0;
+        padding-left: 30px;
+        padding-right: 30px;
+        overflow: hidden;
+    }
+    .content-wrapper
+    {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+        justify-items: center;
+        width: 100vw;
+        height: 100%;
+        width: full;
+        margin-top: 20px;
+    }
+    
+}
+  @media only screen and (min-width: 1000px) {
+    .content-wrapper
+    {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+        justify-items: center;
+        width: 100vw;
+        height: 100%;
+        width: full;
+        margin-top: 20px;
+    }
+    .splash-page-paragraph {
+        font-family: 'Nunito', sans-serif;
+        font-size: 2em;
+        text-align: center;
+        color: #2B2B2B;
+        margin-bottom: 0;
+        padding-left: 30px;
+        padding-right: 30px;
+        overflow: hidden;
+    }
+}
+
+
+.login 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    height: auto;
+    width: 100%;
+}
+
 .splash-container {
     margin: 3% 15%;
 }
@@ -66,14 +153,6 @@ body {
     height: 100%;
 }
 
-.splash-page-paragraph {
-    font-family: 'Nunito', sans-serif;
-    font-size: 2.5em;
-    text-align: left;
-    color: #2B2B2B;
-    margin-right: 23%;
-    margin-bottom: 0;
-}
 
 #login-box {
     display: flex;
@@ -85,7 +164,7 @@ body {
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 75%;
+    width: 400px;
 }
 
 #register-box {

@@ -31,16 +31,17 @@ export default function SplashPage() {
 
     // The "&#8209;" character is necessary to prevent word wrap
     return (
-        <div className="splash-container">
-            <img className="star1" src={Star} />
-            <img className="star2" src={Star} />
-            <TitleLogo />
-            <div className="splash-row">
-                <div className="left-column">
-                    <p className="splash-page-paragraph">Start reducing emissions and making friends with a college&#8209;focused carpool app.</p>
-                    <Car style={{width: 800}} className="splash-page-img"/>
+        <div className="splash-format">
+           <TitleLogo />
+            <div className="content-wrapper">
+                {/*Informational Text and Image*/}
+                <div className="column-wrap">
+                    <p className="splash-page-paragraph ">Start reducing emissions and making friends with a college&#8209;focused carpool app.</p>
+                    <Car style={{width: "100%"}} className=""/>
                 </div>
-                <div className="right-column">
+                {/* Log in Div */}
+                <div className="column-wrap">
+                <div className="login">
                     {showLogin && <LoginWindow goToRegister={() => goToRegister()}
                                                goToForgotPassword={() => goToForgotPassword()}/>}
                     {showRegister && <RegisterWindow goToLogin={() => goToLogin()}
@@ -48,6 +49,7 @@ export default function SplashPage() {
                     {showForgotPassword && <ForgotPasswordWindow goToLogin={() => goToLogin()}
                                                                  goToRegister={() => goToRegister()}/>}
                 </div>
+            </div>
             </div>
         </div>
     );
