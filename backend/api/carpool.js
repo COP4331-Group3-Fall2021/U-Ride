@@ -6,6 +6,7 @@ const mongoUtil = require("../mongoUtil");
 // Create Carpool 
 router.post("/create", async (req, res) => {
     db = mongoUtil.get();
+
     db.db("root").collection("uride").insertOne(req.body, function (err) {
 
         if (err) {
@@ -105,26 +106,24 @@ router.get("/findDrives/:_id", async (req, res) => {
     });
 })
 
-// Ignore this 
-router.get("/closest?", async (req, res) => {
+// Determines carpools within ~ 5-6 miles from distance
+// longitude
+// latitude
+// isStart
+    // isStart = False origin
+router.get("/nearby", async (req, res) => {
     db = mongoUtil.get();
 
-    // console.log(db.db("root").collection("uride"));
-    // console.log(req.query);
-    db.db("root").collection("uride").createIndex(
-        { origin: "2dsphere" },
-        { origin: "2d" },
-        { destination: "2dsphere" })
+    db.db("root").collection("uride").createIndex({ "origin": "2dsphere" });
 
-    db.db("root").collection("uride").createIndex({ "geometry.coordinates": "2dsphere" });
-
-    if (req.query.isStart === "true") {
+    if (req.body.isStart === true) {
         db.db("root").collection("uride").findMany({
+            isFull: false,
             origin: {
                 $near: {
                     $geometry: {
-                        type: "Point",
-                        coordinates: [-81.2000599, 28.6024274]
+                        index : "Point" ,
+                        coordinates : [req.body.longitude, req.body.latitude]
                     },
                 }
             }
@@ -140,11 +139,11 @@ router.get("/closest?", async (req, res) => {
     else {
         db.db("root").collection("uride").find({
             isFull: false,
-            "detination.coordinates": {
+            destination: {
                 $near: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [parseFloat(req.query.longitude), parseFloat(req.query.latitude)]
+                        coordinates : [req.body.longitude, req.body.latitude]
                     },
                     $minDistance: 0,
                     $maxDistance: 1000,
@@ -247,10 +246,10 @@ router.put("/leave/:carpool/:user", async (req, res) => {
 
                 // ModifiedCount === 0, if the carpool cannot be found or carpool is already full
                 if (result.modifiedCount === 0) {
-                    res.status(400).send("Cannot join carpool at this time.");
+                    res.status(400).send("Cannot leave carpool at this time.");
                     return;
                 }
-                res.status(200).send("Carpool Joined!");
+                res.status(200).send("Carpool left!");
             })
     })
 })
