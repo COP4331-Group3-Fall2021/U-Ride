@@ -143,7 +143,7 @@ router.post("/emailReset/:email", async (req, res) => {
 		email: req.params.email,
 	};
 
-	if (req.body["email"] === null || req.body["email"] === undefined)
+	if (req.params.email === null || req.params.email === undefined)
 	{
 		res.status(400).send("INVALID_EMAIL");
 	}
