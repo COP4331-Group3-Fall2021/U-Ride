@@ -42,6 +42,7 @@ export default function SplashPage() {
                 </div>
                 {/* Log in Div */}
                 <div className="column-wrap">
+                   
                 <div className="login">
                     {showLogin && <LoginWindow goToRegister={() => goToRegister()}
                                                goToForgotPassword={() => goToForgotPassword()}/>}

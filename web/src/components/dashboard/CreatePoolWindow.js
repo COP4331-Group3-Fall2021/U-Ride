@@ -17,7 +17,7 @@ export default function CreatePoolWindow({closeModal, showCreate}) {
                 <hr className="separator" />
                 <form className="modal-form">
                     <span className="form-result">{message}</span>
-                    <label htmlFor="createOrigin" className="input-headers">Origin:</label>
+                    <p htmlFor="createOrigin" className="input-headers">Origin:</p>
                     <input type="text" id="createOrigin" placeholder="Origin" />
                     <label htmlFor="createDest" className="input-headers">Destination:</label>
                     <input type="text" id="createDest" placeholder="Destination" />
