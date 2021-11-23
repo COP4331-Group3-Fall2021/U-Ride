@@ -32,6 +32,7 @@ export default function SplashPage() {
     // The "&#8209;" character is necessary to prevent word wrap
     return (
         <div className="splash-format">
+            <div className="background"/>
            <TitleLogo />
             <div className="content-wrapper">
                 {/*Informational Text and Image*/}

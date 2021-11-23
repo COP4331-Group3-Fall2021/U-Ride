@@ -2,6 +2,17 @@ body {
     background-color: #FFFFFF;
 }
 
+.background
+{
+    position: absolute;
+    height: 100vh;
+    z-index: -1;
+    width: 100vw;
+  background-size: auto;
+    background-image: url("../images/background_graphics.svg");
+    opacity: .2;
+}
+
 #splash-format
 {
     display: grid;
@@ -28,6 +39,7 @@ body {
     padding-left: 40px;
     padding-right: 40px;
     overflow: hidden;
+    font-weight: bold;
 }
 }
 @media only screen and (min-width: 800px) {
@@ -40,6 +52,7 @@ body {
         padding-left: 30px;
         padding-right: 30px;
         overflow: hidden;
+        font-weight: bold;
     }
     .content-wrapper
     {
@@ -72,8 +85,8 @@ body {
         text-align: center;
         color: #2B2B2B;
         margin-bottom: 0;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 70px;
+        padding-right: 70px;
         overflow: hidden;
     }
 }
@@ -153,7 +166,13 @@ body {
     height: 100%;
 }
 
-
+input{
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 5px;
+    height: 20px;
+    width: 100px;
+}
 #login-box {
     display: flex;
     flex-flow: column wrap;
@@ -177,7 +196,7 @@ body {
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 75%;
+    width: 400px;
 }
 
 #forgotpassword-box {
@@ -204,6 +223,7 @@ body {
     color: #FFFFFF;
     text-align: left;
     margin: 0.5em 0 0 0;
+    margin-bottom: 5px;
 }
 
 .splash-window-title {
@@ -236,7 +256,7 @@ body {
 }
 
 form input {
-    width: 80%;
+    width: 250px;
 }
 
 form label {
