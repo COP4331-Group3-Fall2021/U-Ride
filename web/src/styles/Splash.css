@@ -110,9 +110,13 @@ body {
     margin: 0 0 0 0;
 }
 
+.action-button 
+{
+    width: 80%;
+}
 .splash-container .action-button {
-    margin: 1.25em 0;
-    font-size: 1.2em;
+    margin:1.2em 0;
+    width: 80%;
 }
 
 .splash-container input {
