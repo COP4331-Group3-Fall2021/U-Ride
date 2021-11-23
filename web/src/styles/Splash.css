@@ -112,9 +112,11 @@ body {
 
 .action-button 
 {
+    margin-top: 20px;
     width: 80%;
 }
 .splash-container .action-button {
+    margin-top: 5px;
     margin:1.2em 0;
     width: 80%;
 }
