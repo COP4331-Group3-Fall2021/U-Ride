@@ -29,7 +29,7 @@ const HomePage = () => {
 
     function getClassFor(idx) {
         let cls = 'navButton';
-        if (tabIdx == idx) {
+        if (tabIdx === idx) {
             cls += ' selected';
         }
         return cls;
@@ -62,19 +62,19 @@ const HomePage = () => {
                         <button className={getClassFor(2)} onClick={() => setTabIdx(2)}><FontAwesomeIcon icon={faCar} /></button>
                     </nav>
                     <div className="poolsDiv">
-                        {tabIdx == 0 && <>
+                        {tabIdx === 0 && <>
                         {/* DUMMY CARDS == REMOVE */}
                             {searchData}
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
                         </>}
-                        {tabIdx == 1 && <>
+                        {tabIdx === 1 && <>
                         {/* DUMMY CARDS == REMOVE */}
                             {riderData}
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Leave" passengers={[]} />
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Leave" passengers={[]}/>
                         </>}
-                        {tabIdx == 2 && <>
+                        {tabIdx === 2 && <>
                         {/* DUMMY CARDS == REMOVE */}
                             {driverData}
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Edit" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} buttonClick={() => setShowEdit(true)}/>
