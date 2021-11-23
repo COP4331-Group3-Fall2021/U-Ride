@@ -1,6 +1,7 @@
 import * as React from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Button, Dimensions } from 'react-native';
+import { ScrollView } from 'react-navigation';
 
 export default function App() {
   return (
@@ -12,6 +13,9 @@ export default function App() {
                   longitudeDelta: 0.05,
               }}/>
       
+      <ScrollView style={styles.scrollView}>
+        <Text style = {{fontSize:40}}>HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO HELLOHELLO HELLO</Text>
+      </ScrollView>
     </View>
     
   );
@@ -20,12 +24,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#a89dd2'
+    
   },
   map: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('window').height / 2
   },
 });

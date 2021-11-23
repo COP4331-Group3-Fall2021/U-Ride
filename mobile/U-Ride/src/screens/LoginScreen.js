@@ -49,13 +49,6 @@ export default class LoginScreen extends Component {
             onPress={() => this.props.navigation.navigate('Map')}
           />
         </View>
-        <View style = {{width: 200, height: 40}}>
-          <Button 
-            title="Go back"
-            color = '#ed7a7a'
-            onPress={() => this.props.navigation.navigate('Splash')}
-          />
-        </View>
       </View>
     )
   }

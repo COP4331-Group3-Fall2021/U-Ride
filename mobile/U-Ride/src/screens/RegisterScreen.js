@@ -53,14 +53,7 @@ export default class RegisterScreen extends Component {
           <Button 
             title="Register"
             color = '#ed7a7a'
-            onPress={() => this.props.navigation.navigate('Register')}
-          />
-        </View>
-        <View style = {{width: 200, height: 40}}>
-          <Button 
-            title="Go back"
-            color = '#ed7a7a'
-            onPress={() => this.props.navigation.navigate('Splash')}
+            onPress={() => this.props.navigation.navigate('PostRegister')}
           />
         </View>
       </View>
