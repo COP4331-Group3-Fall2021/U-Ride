@@ -136,9 +136,9 @@ const HomePage = () => {
                 </div>
                 <div className="right-column-home">
                     <nav id="navBar">
-                        <button className={getClassFor(0)} onClick={() => { setTabIdx(0); setSearchData(<></>); setShowSearch(true) }}><FontAwesomeIcon icon={faSearch} /></button>
-                        <button className={getClassFor(1)} onClick={() => setTabIdx(1)}><FontAwesomeIcon icon={faUsers} /></button>
-                        <button className={getClassFor(2)} onClick={() => setTabIdx(2)}><FontAwesomeIcon icon={faCar} /></button>
+                        <button title="Search Pools" className={getClassFor(0)} onClick={() => { setTabIdx(0); setSearchData(<></>); setShowSearch(true) }}><FontAwesomeIcon icon={faSearch} /></button>
+                        <button title="Riding Pools" className={getClassFor(1)} onClick={() => setTabIdx(1)}><FontAwesomeIcon icon={faUsers} /></button>
+                        <button title="Driving Pools" className={getClassFor(2)} onClick={() => setTabIdx(2)}><FontAwesomeIcon icon={faCar} /></button>
                     </nav>
                     <div className="poolsDiv">
                         {tabIdx == 0 && <>
