@@ -203,6 +203,40 @@ router.put("/join/:carpool/:user", async (req, res) => {
     })
 })
 
+// Updates a carpool
+router.put("/update", async (req, res) => 
+{
+    db = mongoUtil.get();
+    if (req.body.numParticipants > req.body.maxParticipants)
+    {
+        res.status(400).send("Carpool cannot fit all participants");
+        return;
+    }
+    
+    var updated =
+    {
+        numPartcipants: req.body.numPartcipants,
+        maxParticipants: req.body.maxParticipants,
+        poolDate: req.body.poolDate,
+        origin: req.body.origin,
+        destination: req.body.destination,
+        riders: req.body.driver,
+        isFull: req.body.numParticipants === req.body.maxParticipants
+    }
+    
+    db.db("root").collection("uride").updateOne({_id: ObjectId(req.body._id)}, {
+        $set: updated
+    }, function(err,result)
+    {
+        if (err)
+        {
+            res.status(400).send(err);
+            throw err; 
+        }
+
+        res.status(200).send("Carpool Updated");
+    })
+})
 // Allows a user to join a carpool
 router.put("/leave/:carpool/:user", async (req, res) => {
     db = mongoUtil.get();
