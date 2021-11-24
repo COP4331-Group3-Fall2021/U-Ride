@@ -4,6 +4,33 @@ const router = express.Router ();
 const request = require ('request');
 const mongoUtil = require ('../mongoUtil');
 
+function sendEmailVerification(token, res, successResults)
+{
+	const emailVerify = {
+		requestType: "VERIFY_EMAIL",
+		idToken: token
+	  };
+	
+	  const options = {
+		url: 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=' +
+		  process.env.FIREBASEKEY,
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json',
+		},
+		body: JSON.stringify (emailVerify),
+	  };
+	
+	  request.post (options, function (err, response) {
+		if (err) {
+		  res.status (400).send (err);
+		  throw err;
+		}
+
+		console.log(response.body);
+		res.status(200).send(successResults);
+	});
+}
 /**
  * Allows a user to log into the application
  */
@@ -109,6 +136,9 @@ router.post ('/register', async (req, res) => {
       res.status (results.error.code).send (results.error.message);
       return;
     }
+
+	
+	
     const userCredentials = {
       uid: results.localId,
       name: req.body['name'],
@@ -126,7 +156,7 @@ router.post ('/register', async (req, res) => {
 		
 		  response.ops[0].refreshToken = results.refreshToken;
 		  response.ops[0].idToken = results.idToken;
-          res.status (200).send (response.ops[0]);
+          sendEmailVerification(results.idToken,res,response.ops[0]);
         }
       });
   });
