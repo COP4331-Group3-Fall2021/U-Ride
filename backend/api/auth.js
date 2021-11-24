@@ -4,8 +4,38 @@ const router = express.Router ();
 const request = require ('request');
 const mongoUtil = require ('../mongoUtil');
 
-function sendEmailVerification(token, res, successResults)
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./poosd-610ed-firebase-adminsdk-qltca-47a7eb34ec.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
+async function checkEmailVerification(token, res, successResults)
 {
+	try
+	{
+		const user = await admin.auth().getUser(successResults.uid)
+		if(!user.emailVerified)
+		{
+			sendEmailVerification(token,res,null,false);
+		}
+		else
+		{
+			res.status(200).send(successResults);
+		}
+	}
+	catch(e)
+	{
+		res.status(400).send(e);
+	}
+}
+function sendEmailVerification(token, res, successResults, isLogin)
+{
+	
 	const emailVerify = {
 		requestType: "VERIFY_EMAIL",
 		idToken: token
@@ -26,9 +56,21 @@ function sendEmailVerification(token, res, successResults)
 		  res.status (400).send (err);
 		  throw err;
 		}
+			const result = JSON.parse (response.body);
 
-		console.log(response.body);
-		res.status(200).send(successResults);
+		if (result.error !== null && result.error !== undefined) {
+		res.status (result.error.code).send (result.error.message);
+		return;
+		}
+		if(isLogin)
+		{
+			res.status(200).send(successResults);
+		}
+		else
+		{
+			res.status(200).send("Verification Email Resent");
+		}
+		
 	});
 }
 /**
@@ -87,7 +129,7 @@ router.post ('/login', async (req, res) => {
         }
 		result.refreshToken = token;
 		result.idToken = id_token;
-        res.status (200).send (result);
+        checkEmailVerification(result.idToken,res,result);
       });
   });
 });
@@ -156,7 +198,7 @@ router.post ('/register', async (req, res) => {
 		
 		  response.ops[0].refreshToken = results.refreshToken;
 		  response.ops[0].idToken = results.idToken;
-          sendEmailVerification(results.idToken,res,response.ops[0]);
+          sendEmailVerification(results.idToken,res,response.ops[0],true);
         }
       });
   });
