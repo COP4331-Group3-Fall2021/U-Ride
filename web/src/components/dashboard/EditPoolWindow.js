@@ -13,7 +13,7 @@ export default function EditPoolWindow({ closeModal, showEdit, passengers = ["ca
     const passengerChkBx = passengers.map((passengerName, idx) => {
         return <div className="checkboxes">
             <input type="checkbox"  value={passengerName} id={'passenger' + idx} className="check" />
-            <label for={'passenger' + idx}>{passengerName}</label>
+            <label htmlFor={'passenger' + idx}>{passengerName}</label>
         </div>
     });
 
