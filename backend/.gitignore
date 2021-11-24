@@ -18,7 +18,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
-poosd-610ed-firebase-adminsdk-qltca-47a7eb34ec.json
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
