@@ -2,6 +2,107 @@ body {
     background-color: #FFFFFF;
 }
 
+.background
+{
+    position: absolute;
+    height: 100vh;
+    z-index: -1;
+    width: 100vw;
+  background-size: auto;
+    background-image: url("../images/background_graphics.svg");
+    opacity: .2;
+}
+
+#splash-format
+{
+    display: grid;
+    grid-template-rows: auto;
+}
+@media only screen and (max-width: 800px) {
+.content-wrapper
+{
+    display: grid;
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: center;
+    width: 100vw;
+    height: 100vh;
+    gap:10px;
+    width: full;
+    margin-top: 10px;
+  }
+  .splash-page-paragraph {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.0em;
+    text-align: center;
+    color: #2B2B2B;
+    margin-bottom: 0;
+    padding-left: 80px;
+    padding-right: 80px;
+    overflow: hidden;
+    font-weight: bold;
+}
+}
+@media only screen and (min-width: 800px) {
+    .splash-page-paragraph {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.7em;
+        text-align: center;
+        color: #2B2B2B;
+        margin-bottom: 0;
+        padding-left: 30px;
+        padding-right: 30px;
+        overflow: hidden;
+        font-weight: bold;
+    }
+    .content-wrapper
+    {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+        justify-items: center;
+        width: 100vw;
+        height: 100%;
+        width: full;
+        margin-top: 20px;
+    }
+    
+}
+  @media only screen and (min-width: 1000px) {
+    .content-wrapper
+    {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+        justify-items: center;
+        width: 100vw;
+        height: 100%;
+        width: full;
+        margin-top: 20px;
+    }
+    .splash-page-paragraph {
+        font-family: 'Nunito', sans-serif;
+        font-size: 2em;
+        text-align: center;
+        color: #2B2B2B;
+        margin-bottom: 0;
+        padding-left: 70px;
+        padding-right: 70px;
+        overflow: hidden;
+    }
+}
+
+
+.login 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    height: auto;
+    width: 100%;
+}
+
 .splash-container {
     margin: 3% 15%;
 }
@@ -10,9 +111,15 @@ body {
     margin: 0 0 0 0;
 }
 
+.action-button 
+{
+    margin-top: 20px;
+    width: 80%;
+}
 .splash-container .action-button {
-    margin: 1.25em 0;
-    font-size: 1.2em;
+    margin-top: 5px;
+    margin:1.2em 0;
+    width: 80%;
 }
 
 .splash-container input {
@@ -66,15 +173,13 @@ body {
     height: 100%;
 }
 
-.splash-page-paragraph {
-    font-family: 'Nunito', sans-serif;
-    font-size: 2.5em;
-    text-align: left;
-    color: #2B2B2B;
-    margin-right: 23%;
-    margin-bottom: 0;
+input{
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 5px;
+    height: 20px;
+    width: 100px;
 }
-
 #login-box {
     display: flex;
     flex-flow: column wrap;
@@ -85,7 +190,8 @@ body {
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 75%;
+    width: 90vw;
+    max-width: 400px;
 }
 
 #register-box {
@@ -98,7 +204,8 @@ body {
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 75%;
+    width: 90vw;
+    max-width: 400px;
 }
 
 #forgotpassword-box {
@@ -121,10 +228,16 @@ body {
     margin-bottom: 0em;
 }
 
+
 .input-headers {
     color: #FFFFFF;
+    ;
+    font-size: 20px;
+    width: 80%;
+  
     text-align: left;
-    margin: 0.5em 0 0 0;
+    padding: 0px;
+    margin-bottom: 5px;
 }
 
 .splash-window-title {
@@ -157,7 +270,7 @@ body {
 }
 
 form input {
-    width: 80%;
+    width: 250px;
 }
 
 form label {
