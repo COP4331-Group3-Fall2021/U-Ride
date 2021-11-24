@@ -6,9 +6,7 @@ const mongoUtil = require("../mongoUtil");
 // Create Carpool 
 router.post("/create", async (req, res) => {
     db = mongoUtil.get();
-
     db.db("root").collection("uride").insertOne(req.body, function (err) {
-
         if (err) {
             res.status(400).send(err);
         }
@@ -17,8 +15,6 @@ router.post("/create", async (req, res) => {
             res.status(200).send("New carpool created!");
         }
     });
-
-
 })
 
 // Delete Carpool 
