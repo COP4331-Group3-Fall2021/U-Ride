@@ -10,6 +10,72 @@ import '../styles/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCar, faSearch, faUsers } from '@fortawesome/free-solid-svg-icons'
 
+function riderDataToReact(dataArray) {
+    console.log(dataArray);
+    let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
+        let isoDate = new Date(data.poolDate);
+        
+        let name = data.driver; // TODO
+        let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
+        let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+        let origin = data.origin.coordinates; // TODO
+        let destination = data.detination.coordinates; // TODO
+        let currPassCount = data.numParticipants;
+        let passCap = data.maxParticipants;
+        let buttonName = "Join";
+        let passengers = data.riders; // TODO
+        return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} />
+    });
+
+    // if no cards, show no results
+    if (!cards) {
+        return (
+            <>
+                <h3 className="no-results">You are not riding in any carpools.</h3>
+            </>
+        )
+    }
+
+    return (
+        <>
+            {cards}
+        </>
+    )
+}
+
+function driverDataToReact(dataArray) {
+    console.log(dataArray);
+    let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
+        let isoDate = new Date(data.poolDate);
+        
+        let name = `${data.driver.name.first} ${data.driver.name.last}`;
+        let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
+        let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+        let origin = data.origin.coordinates; // TODO
+        let destination = data.detination.coordinates; // TODO
+        let currPassCount = data.numParticipants;
+        let passCap = data.maxParticipants;
+        let buttonName = "Edit";
+        let passengers = data.riders; // TODO
+        return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} />
+    });
+
+    // if no cards, show no results
+    if (!cards) {
+        return (
+            <>
+                <h3 className="no-results">You are not driving any carpools.</h3>
+            </>
+        )
+    }
+
+    return (
+        <>
+            {cards}
+        </>
+    )
+}
+
 const HomePage = () => {
 
     // Use usestate to show modals
@@ -17,9 +83,9 @@ const HomePage = () => {
     const [showSearch, setShowSearch] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [tabIdx, setTabIdx] = useState(1);
-    const [riderData, setRiderData] = useState();
-    const [driverData, setDriverData] = useState();
-    const [searchData, setSearchData] = useState();
+    const [riderData, setRiderData] = useState(<></>);
+    const [driverData, setDriverData] = useState(<></>);
+    const [searchData, setSearchData] = useState(<></>);
 
     function closeModal() {
         setShowCreate(false);
@@ -35,9 +101,40 @@ const HomePage = () => {
         return cls;
     }
 
+    function loadRiderData() {
+        let user = JSON.parse(localStorage.getItem('user_data'));
+        fetch(`https://u-ride-cop4331.herokuapp.com/carpool/findRides/${user.userID}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(j => riderDataToReact(j))
+        .then(data => setRiderData(data))
+        .catch(error => console.error(error))
+    }
+
+    function loadDriverData() {
+        let user = JSON.parse(localStorage.getItem('user_data'));
+        fetch(`https://u-ride-cop4331.herokuapp.com/carpool/findDrives/${user.userID}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(j => driverDataToReact(j))
+        .then(data => setDriverData(data))
+        .catch(error => console.error(error))
+    }
+
+    // initialize rider & driver pool data on component load
     useEffect(() => {
-        // call api end point to get all data
-        // set rider and driver and notif data as a result of converting that data to cards
+        loadRiderData();
+        loadDriverData();
     }, []);
     
     return (
@@ -57,9 +154,9 @@ const HomePage = () => {
                 </div>
                 <div className="right-column-home">
                     <nav id="navBar">
-                        <button className={getClassFor(0)} onClick={() => { setTabIdx(0); setShowSearch(true) }}><FontAwesomeIcon icon={faSearch} /></button>
-                        <button className={getClassFor(1)} onClick={() => setTabIdx(1)}><FontAwesomeIcon icon={faUsers} /></button>
-                        <button className={getClassFor(2)} onClick={() => setTabIdx(2)}><FontAwesomeIcon icon={faCar} /></button>
+                        <button title="Search Pools" className={getClassFor(0)} onClick={() => { setTabIdx(0); setSearchData(<></>); setShowSearch(true) }}><FontAwesomeIcon icon={faSearch} /></button>
+                        <button title="Riding Pools" className={getClassFor(1)} onClick={() => setTabIdx(1)}><FontAwesomeIcon icon={faUsers} /></button>
+                        <button title="Driving Pools" className={getClassFor(2)} onClick={() => setTabIdx(2)}><FontAwesomeIcon icon={faCar} /></button>
                     </nav>
                     <div className="poolsDiv">
                         {tabIdx === 0 && <>
@@ -71,14 +168,10 @@ const HomePage = () => {
                         {tabIdx === 1 && <>
                         {/* DUMMY CARDS == REMOVE */}
                             {riderData}
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Leave" passengers={[]} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Leave" passengers={[]}/>
                         </>}
                         {tabIdx === 2 && <>
                         {/* DUMMY CARDS == REMOVE */}
                             {driverData}
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Edit" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} buttonClick={() => setShowEdit(true)}/>
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Edit" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} buttonClick={() => setShowEdit(true)}/>
                         </>}
                     </div>
                     <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" />
