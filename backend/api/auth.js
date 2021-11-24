@@ -29,10 +29,10 @@ async function checkEmailVerification (token, res, successResults) {
     if (!user.emailVerified) {
       sendEmailVerification (token, res, null, false);
     } else {
-      res.status (200).send (successResults);
+      res.status(200).send (successResults);
     }
   } catch (e) {
-    res.status (400).send (e);
+    res.status (400).send(e);
   }
 }
 function sendEmailVerification (token, res, successResults, isLogin) {
@@ -65,7 +65,7 @@ function sendEmailVerification (token, res, successResults, isLogin) {
     if (isLogin) {
       res.status (200).send (successResults);
     } else {
-      res.status (200).send ('Verification Email Resent');
+      res.status (400).send ('Verification Email Resent');
     }
   });
 }
@@ -197,10 +197,10 @@ router.post ('/register', async (req, res) => {
 /**
  * Allows a user to reset their password
  */
-router.post ('/emailReset/:email', async (req, res) => {
+router.post ('/emailReset', async (req, res) => {
   const credentials = {
     requestType: 'PASSWORD_RESET',
-    email: req.params.email,
+    email: req.body.email,
   };
 
   if (req.params.email === null || req.params.email === undefined) {
