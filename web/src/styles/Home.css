@@ -90,3 +90,9 @@ body {
     margin-right: 7%;
     margin-top: 3%;
 }
+
+.no-results {
+    color: #A1DBF2;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+}

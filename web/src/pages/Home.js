@@ -27,6 +27,15 @@ function riderDataToReact(dataArray) {
         return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} />
     });
 
+    // if no cards, show no results
+    if (!cards) {
+        return (
+            <>
+                <h3 className="no-results">You are not riding in any carpools.</h3>
+            </>
+        )
+    }
+
     return (
         <>
             {cards}
@@ -50,6 +59,15 @@ function driverDataToReact(dataArray) {
         let passengers = data.riders; // TODO
         return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} />
     });
+
+    // if no cards, show no results
+    if (!cards) {
+        return (
+            <>
+                <h3 className="no-results">You are not driving any carpools.</h3>
+            </>
+        )
+    }
 
     return (
         <>

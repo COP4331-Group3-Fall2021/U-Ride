@@ -15,26 +15,26 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
  *              passengers (required) - list of passengers
  *              buttonName (required) - name for the button, leave/disband
  */
-export default function JoinedCard({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = () => {}, buttonClick = () => {} }) {
+export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = () => {}, buttonClick = () => {} }) {
     const passengerLIs = passengers.map((passengerName) => {
         return <li>{passengerName}</li>
     });
 
     return (
-        <div class="join-card" onClick={cardClick}>
-            <div class="join-card-header">
+        <div className="join-card" onClick={cardClick}>
+            <div className="join-card-header">
                 <span>🚘 {name}</span>
                 <span>{date} @ {time}</span>
             </div>
-            <div class="join-card-content">
-                <div class="left-col">
-                    <span class="left-text">📍 <b>To:</b> {origin}</span>
-                    <span class="left-text">📍 <b>From: </b> {destination}</span>
+            <div className="join-card-content">
+                <div className="left-col">
+                    <span className="left-text">📍 <b>To:</b> {origin}</span>
+                    <span className="left-text">📍 <b>From: </b> {destination}</span>
                     <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
                 </div>
-                <div class="right-col">
+                <div className="right-col">
                     <span>🚗 <b>{currentPassengerCount}/{passengerCap} passengers</b></span>
-                    <ul class="passenger-list">
+                    <ul className="passenger-list">
                         {passengerLIs}
                     </ul>
                 </div>
