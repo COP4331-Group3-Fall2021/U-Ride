@@ -70,9 +70,20 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
                 else if (result === 'INVALID_PASSWORD') {
                     setMessage('Invalid login.');
                 }
+                else if(result === 'Verification Email Resent')
+                {
+                    setMessage("Verify your email.");
+                }
+                else if(result === "TOO_MANY_ATTEMPTS_TRY_LATER")
+                {
+                    setMessage("Try again later.");
+                }
                 // Handle success
                 else {
+                    
                     let responseBody = JSON.parse(result);
+
+                    
                     let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
                     setMessage('');
 
