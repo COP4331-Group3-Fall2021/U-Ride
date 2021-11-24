@@ -72,8 +72,7 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
                 }
                 // Handle success
                 else {
-                    // Needs the [0] because for some reason, the parsing produces an array
-                    let responseBody = JSON.parse(result)[0];
+                    let responseBody = JSON.parse(result);
                     let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
                     setMessage('');
 
