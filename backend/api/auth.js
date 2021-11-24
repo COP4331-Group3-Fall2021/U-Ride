@@ -4,86 +4,70 @@ const router = express.Router ();
 const request = require ('request');
 const mongoUtil = require ('../mongoUtil');
 
+var admin = require ('firebase-admin');
 
-var admin = require("firebase-admin");
+var serviceAccount = {
+  type: 'service_account',
+  project_id: process.env.PROJECT_ID,
+  private_key_id: process.env.PRIVATE_KEY_ID,
+  private_key: process.env.PRIVATE_KEY,
+  client_email: process.env.CLIENT_EMAIL,
+  client_id: process.env.CLIENT_ID,
+  auth_uri: process.env.AUTH_URI,
+  token_uri: process.env.TOKEN_URI,
+  auth_provider_x509_cert_url: process.env.AUTH_URL,
+  client_x509_cert_url: process.env.CERT_URL,
+};
 
-
-var serviceAccount = 
-{
-	"type": "service_account",
-	"project_id": process.env.PROJECT_ID,
-	"private_key_id":process.env.PRIVATE_KEY_ID,
-	"private_key": process.env.PRIVATE_KEY,
-	"client_email": process.env.CLIENT_EMAIL,
-	"client_id": process.env.CLIENT_ID,
-	"auth_uri": process.env.AUTH_URI,
-	"token_uri": process.env.TOKEN_URI,
-	"auth_provider_x509_cert_url": process.env.AUTH_URL,
-	"client_x509_cert_url": process.env.CERT_URL
-}
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+admin.initializeApp ({
+  credential: admin.credential.cert (serviceAccount),
 });
 
-async function checkEmailVerification(token, res, successResults)
-{
-	try
-	{
-		const user = await admin.auth().getUser(successResults.uid)
-		if(!user.emailVerified)
-		{
-			sendEmailVerification(token,res,null,false);
-		}
-		else
-		{
-			res.status(200).send(successResults);
-		}
-	}
-	catch(e)
-	{
-		res.status(400).send(e);
-	}
+async function checkEmailVerification (token, res, successResults) {
+  try {
+    const user = await admin.auth ().getUser (successResults.uid);
+    if (!user.emailVerified) {
+      sendEmailVerification (token, res, null, false);
+    } else {
+      res.status (200).send (successResults);
+    }
+  } catch (e) {
+    res.status (400).send (e);
+  }
 }
-function sendEmailVerification(token, res, successResults, isLogin)
-{
-	
-	const emailVerify = {
-		requestType: "VERIFY_EMAIL",
-		idToken: token
-	  };
-	
-	  const options = {
-		url: 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=' +
-		  process.env.FIREBASEKEY,
-		method: 'POST',
-		headers: {
-		  'Content-Type': 'application/json',
-		},
-		body: JSON.stringify (emailVerify),
-	  };
-	
-	  request.post (options, function (err, response) {
-		if (err) {
-		  res.status (400).send (err);
-		  throw err;
-		}
-			const result = JSON.parse (response.body);
+function sendEmailVerification (token, res, successResults, isLogin) {
+  const emailVerify = {
+    requestType: 'VERIFY_EMAIL',
+    idToken: token,
+  };
 
-		if (result.error !== null && result.error !== undefined) {
-		res.status (result.error.code).send (result.error.message);
-		return;
-		}
-		if(isLogin)
-		{
-			res.status(200).send(successResults);
-		}
-		else
-		{
-			res.status(200).send("Verification Email Resent");
-		}
-		
-	});
+  const options = {
+    url: 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=' +
+      process.env.FIREBASEKEY,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify (emailVerify),
+  };
+
+  request.post (options, function (err, response) {
+    if (err) {
+      res.status (400).send (err);
+      throw err;
+    }
+    const result = JSON.parse (response.body);
+
+    if (result.error !== null && result.error !== undefined) {
+      res.status (result.error.code).send (result.error.message);
+      return;
+    }
+    if (isLogin) {
+      res.status (200).send (successResults);
+    } else {
+      res.status (200).send ('Verification Email Resent');
+    }
+  });
 }
 /**
  * Allows a user to log into the application
@@ -124,25 +108,22 @@ router.post ('/login', async (req, res) => {
       return;
     }
 
-	var token = result.refreshToken;
-	var id_token = result.idToken;
+    var token = result.refreshToken;
+    var id_token = result.idToken;
     const query = {
       uid: result.localId,
     };
 
     db = mongoUtil.get ();
-    db
-      .db ('root')
-      .collection ('users')
-      .findOne(query, function (err, result) {
-        if (err) {
-          res.status (400).send (err);
-          throw err;
-        }
-		result.refreshToken = token;
-		result.idToken = id_token;
-        checkEmailVerification(result.idToken,res,result);
-      });
+    db.db ('root').collection ('users').findOne (query, function (err, result) {
+      if (err) {
+        res.status (400).send (err);
+        throw err;
+      }
+      result.refreshToken = token;
+      result.idToken = id_token;
+      checkEmailVerification (result.idToken, res, result);
+    });
   });
 });
 
@@ -191,8 +172,6 @@ router.post ('/register', async (req, res) => {
       return;
     }
 
-	
-	
     const userCredentials = {
       uid: results.localId,
       name: req.body['name'],
@@ -207,10 +186,9 @@ router.post ('/register', async (req, res) => {
         if (err) {
           res.status (400).send (err);
         } else {
-		
-		  response.ops[0].refreshToken = results.refreshToken;
-		  response.ops[0].idToken = results.idToken;
-          sendEmailVerification(results.idToken,res,response.ops[0],true);
+          response.ops[0].refreshToken = results.refreshToken;
+          response.ops[0].idToken = results.idToken;
+          sendEmailVerification (results.idToken, res, response.ops[0], true);
         }
       });
   });
@@ -269,7 +247,7 @@ router.get ('/getUser', async (req, res) => {
 });
 
 // Allows a token to be refreshed
-router.post('/refresh/:oldToken', async (req, res) => {
+router.post ('/refresh/:oldToken', async (req, res) => {
   if (req.params.oldToken === null || req.params.oldToken === undefined) {
     res.status (400).send ('invalid token');
   }
