@@ -71,8 +71,8 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
                 "destination": [0, 0], // TODO, convert to latitude and longitude
                 "riders": [],
                 "driver": {
-                    "_id": user._id,
-                    "name": { "first": user.first, "last": user.last }
+                    "_id": user.userID,
+                    "name": { "first": user.firstName, "last": user.lastName }
                 },
                 "isFull": false
             })
