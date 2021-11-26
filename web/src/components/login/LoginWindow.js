@@ -44,13 +44,12 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
             setMessage('');
         }
         
-        // Hash password, then construct HTTP request
-        var hash = sha256(loginPassword.value);
+        // Construct HTTP request
         var headers = new Headers();
         headers.append("Content-Type", "application/json");
         var requestBody = JSON.stringify({
             email:loginEmail.value,
-            password:hash
+            password:loginPassword.value
         });
         var requestOptions = {
             method: 'POST',

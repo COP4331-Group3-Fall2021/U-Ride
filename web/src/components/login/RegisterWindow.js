@@ -62,8 +62,7 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
             document.getElementById("registerConfirmPassword").classList.remove('input-invalid');
         }
         
-        // Hash password, then construct HTTP request
-        var hash = sha256(password.value);
+        // Construct HTTP request
         var headers = new Headers();
         headers.append("Content-Type", "application/json");
         var requestBody = JSON.stringify({
@@ -72,7 +71,7 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
                 lastName:lastName.value
             },
             email:email.value,
-            password:hash
+            password:password.value
         });
         var requestOptions = {
             method: 'POST',
