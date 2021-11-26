@@ -44,7 +44,12 @@ body {
     border-left: 2px dotted black;
 
 }
-
+@media only screen and (max-width: 800px) {
+    .poolsDiv
+    {
+        display: none;
+    }
+}
 .poolsDiv {
     background-color: #003459;
     border-radius: 10px;
@@ -53,7 +58,6 @@ body {
     justify-content: top;
     align-items: center;
     height: 800px;
-    width: 80%;
     padding-top: 2%;
     padding-bottom: 2%;
 }
@@ -89,4 +93,10 @@ body {
     margin-left: 10%;
     margin-right: 7%;
     margin-top: 3%;
+}
+
+.no-results {
+    color: #A1DBF2;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
 }

@@ -8,5 +8,8 @@
     "cacheDirectories": [
         "web/node_modules",
         "backend/node_modules"
-    ]
+    ],
+    "dependencies": {
+        "firebase-admin": "^10.0.0"
+    }
 }

@@ -17,38 +17,38 @@ export default function CreatePoolWindow({closeModal, showCreate}) {
                 <hr className="separator" />
                 <form className="modal-form">
                     <span className="form-result">{message}</span>
-                    <label htmlFor="createOrigin" className="input-headers">Origin:</label>
+                    <p htmlFor="createOrigin" className="input-headers">Origin:</p>
                     <input type="text" id="createOrigin" placeholder="Origin" />
                     <label htmlFor="createDest" className="input-headers">Destination:</label>
                     <input type="text" id="createDest" placeholder="Destination" />
                     <label htmlFor="maxPassengers" className="input-headers">Max Passengers:</label>
                     <input type="number" id="maxPassengers" placeholder="Max Passengers" min="1" max="7" />
                     <label htmlFor="createStart" className="input-headers">Start Time:</label>
-                    <input type="time" id="createStart" />
+                    <input type="datetime-local" id="createStart" />
 
                     {/* check boxes */}
-                    <div class="checkDiv">
+                    {/* <div class="checkDiv">
                         <div className="checkboxes">
                             <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
-                            <label htmlFor="mondayCheck">Monday</label>
+                            <label htmlFor="mondayCheck">M</label>
                         </div>
                         <div className="checkboxes">
                             <input type="checkbox" value="Tuesday" id="tuesdayCheck" className="check" />
-                            <label htmlFor="tuesdayCheck">Tuesday</label>
+                            <label htmlFor="tuesdayCheck">T</label>
                         </div>
                         <div className="checkboxes">
                             <input type="checkbox" value="Wednesday" id="wednesdayCheck" className="check" />
-                            <label htmlFor="wednesdayCheck">Wednesday</label>
+                            <label htmlFor="wednesdayCheck">W</label>
                         </div>
                         <div className="checkboxes">
                             <input type="checkbox" value="Thursday" id="thursdayCheck" className="check" />
-                            <label htmlFor="thursdayCheck">Thursday</label>
+                            <label htmlFor="thursdayCheck">Th</label>
                         </div>
                         <div className="checkboxes">
                             <input type="checkbox" value="Friday" id="fridayCheck" className="check" />
-                            <label htmlFor="fridayCheck">Friday</label>
+                            <label htmlFor="fridayCheck">F</label>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="modal-buttons">
                         <Button text="Create" bgcolor="" color="" />
                         <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
