@@ -10,7 +10,7 @@ var serviceAccount = {
   type: 'service_account',
   project_id: process.env.PROJECT_ID,
   private_key_id: process.env.PRIVATE_KEY_ID,
-  private_key: process.env.PRIVATE_KEY,
+  private_key: process.env.PRIVATE_KEY.replace(/\\n/g,'\n'),
   client_email: process.env.CLIENT_EMAIL,
   client_id: process.env.CLIENT_ID,
   auth_uri: process.env.AUTH_URI,
@@ -77,7 +77,7 @@ router.post ('/login', async (req, res) => {
     res.status (400).send ('INVALID_EMAIL');
   }
 
-  if (req.body['password'] === null || req.body['email'] === undefined) {
+  if (req.body['password'] === null || req.body['password'] === undefined) {
     res.status (400).send ('INVALID_PASSWORD');
   }
   const credentials = {
@@ -141,13 +141,10 @@ router.post ('/register', async (req, res) => {
     res.status (400).send ('INVALID_EMAIL');
   }
 
-  if (req.body['password'] === null || req.body['email'] === undefined) {
+  if (req.body['password'] === null || req.body['password'] === undefined) {
     res.status (400).send ('INVALID_PASSWORD');
   }
 
-  if (req.body['name'] === null || req.body['name'] === undefined) {
-    res.status (400).send ('INVALID_PASSWORD');
-  }
 
   const options = {
     url: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
