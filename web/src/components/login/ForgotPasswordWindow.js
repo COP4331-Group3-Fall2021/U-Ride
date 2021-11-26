@@ -26,25 +26,23 @@ export default function ForgotPasswordWindow ({goToLogin, goToRegister}) {
         // Construct HTTP request
         var headers = new Headers();
         headers.append("Content-Type", "application/json");
-        var requestBody = JSON.stringify({
-            email:forgotPasswordEmail.value,
-        });
         var requestOptions = {
             method: 'POST',
             headers: headers,
-            body: requestBody,
             redirect: 'follow'
         };
-        var obj = {email:forgotPasswordEmail.value};
-        var json = JSON.stringify(obj);
+        var emailEncoded = encodeURIComponent(forgotPasswordEmail.value);
 
         // Send Login API request and handle server response
-        fetch('https://u-ride-cop4331.herokuapp.com/auth/emailreset', requestOptions)
+        fetch('https://u-ride-cop4331.herokuapp.com/auth/emailReset/' + emailEncoded, requestOptions)
         .then(response => response.text())
         .then(result => {
             // Handle error messages
             if (result === 'EMAIL_NOT_FOUND') {
                 setMessage('Account does not exist.');
+            }
+            else if (result === 'INVALID_EMAIL') {
+                setMessage('Some unknown error occurred!');
             }
             // Handle success
             else {
@@ -60,7 +58,7 @@ export default function ForgotPasswordWindow ({goToLogin, goToRegister}) {
         <div id="forgotpassword-box">
             <h2 className="splash-window-title">Recover Account</h2>
             <form onSubmit={recover}> 
-                <p id="form-result" class="form-result">{message}</p>
+                <p id="form-result" className="form-result">{message}</p>
                 <p className="input-headers">Email</p>
                 <input type="email" id="forgotpasswordEmail" placeholder="Email" ref={(c) => forgotPasswordEmail = c} /><br />
                 <Button text="Reset Password" className="action-button"/>
