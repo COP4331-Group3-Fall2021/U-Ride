@@ -70,10 +70,20 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
                 else if (result === 'INVALID_PASSWORD') {
                     setMessage('Invalid login.');
                 }
+                else if(result === 'Verification Email Resent')
+                {
+                    setMessage("Verify your email.");
+                }
+                else if(result === "TOO_MANY_ATTEMPTS_TRY_LATER")
+                {
+                    setMessage("Google says: f*** you.");
+                }
                 // Handle success
                 else {
-                    // Needs the [0] because for some reason, the parsing produces an array
-                    let responseBody = JSON.parse(result)[0];
+                    
+                    let responseBody = JSON.parse(result);
+
+                    
                     let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
                     setMessage('');
 
