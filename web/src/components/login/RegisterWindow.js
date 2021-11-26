@@ -95,14 +95,9 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
                 // Handle success
                 else {
                     let responseBody = JSON.parse(result);
-                    let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
                     setMessage('');
-
-                    // Set user info into local storage
-                    localStorage.setItem('user_data', JSON.stringify(userInfo));
-
-                    // Redirect user to homepage
-                    history.push('/home');
+                    // Return user to login window
+                    goToLogin();
                 }
             })
             .catch(error => console.error('error', error));
