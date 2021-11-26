@@ -118,11 +118,7 @@ router.get ('/findDrives/:_id', async (req, res) => {
     });
 });
 
-// Determines carpools within ~ 5-6 miles from distance
-// longitude
-// latitude
-// isStart
-// isStart = False origin
+
 router.get ('/nearby', async (req, res) => {
   db = mongoUtil.get ();
 

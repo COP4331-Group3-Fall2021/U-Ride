@@ -65,7 +65,7 @@ function sendEmailVerification (token, res, successResults, isLogin) {
     if (isLogin) {
       res.status (200).send (successResults);
     } else {
-      res.status (400).send ('Verification Email Resent');
+      res.status (200).send ('Verification Email Resent');
     }
   });
 }
@@ -101,17 +101,17 @@ router.post ('/login', async (req, res) => {
       res.status (400).send (err);
     }
 
-    const result = JSON.parse (response.body);
+    const results = JSON.parse (response.body);
 
-    if (result.error !== null && result.error !== undefined) {
-      res.status (result.error.code).send (result.error.message);
+    if (results.error !== null && results.error !== undefined) {
+      res.status (results.error.code).send (results.error.message);
       return;
     }
 
-    var token = result.refreshToken;
-    var id_token = result.idToken;
+    var token = results.refreshToken;
+    var id_token = results.idToken;
     const query = {
-      uid: result.localId,
+      uid: results.localId,
     };
 
     db = mongoUtil.get ();
