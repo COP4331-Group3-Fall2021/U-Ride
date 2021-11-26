@@ -49,25 +49,25 @@ const HomePage = () => {
     }
 
     function riderDataToReact(dataArray) {
-        console.log(dataArray);
+        console.log("rider: ", dataArray);
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
 
-            let name = data.driver; // TODO
+            let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
             let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = data.origin.coordinates; // TODO
-            let destination = data.detination.coordinates; // TODO
+            let destination = data.destination.coordinates; // TODO
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
-            let buttonName = "Join";
+            let buttonName = "Leave";
             let passengers = data.riders; // TODO
 
             let leave = () => {
                 leavePool(data._id); // TODO
             }
 
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} onClick={leave} />
+            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} />
         });
 
         // if no cards, show no results
@@ -87,7 +87,7 @@ const HomePage = () => {
     }
 
     function driverDataToReact(dataArray) {
-        console.log(dataArray);
+        console.log("driver: ", dataArray);
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
 
@@ -95,7 +95,7 @@ const HomePage = () => {
             let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = data.origin.coordinates; // TODO
-            let destination = data.detination.coordinates; // TODO
+            let destination = data.destination.coordinates; // TODO
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Edit";
@@ -173,7 +173,7 @@ const HomePage = () => {
     return (
         <div className="container">
             <TitleLogo />
-            <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} />
+            <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData}/>
             <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={setSearchData} />
             <EditPoolWindow closeModal={closeModal} showEdit={showEdit} />
             <div className="row">
