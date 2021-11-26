@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, TextInput, Button, View, Text, Image } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-const sha256 = require('js-sha256');
+
 
 
 
@@ -72,13 +72,12 @@ function validateInput (input) {
       
       // Hash password, then construct HTTP request
       console.log(hash,"password",loginCreds.password);
-      var hash = sha256(loginCreds.password);
+      
       
       var headers = new Headers();
       headers.append("Content-Type", "application/json");
       var requestBody = JSON.stringify({
-          email:loginCreds.email,
-          password:hash
+          loginCreds
       });
       var requestOptions = {
           method: 'POST',
@@ -88,8 +87,8 @@ function validateInput (input) {
       };
 
       // Send Login API request and handle server response
-      // Change back to : http://u-ride-cop4331.herokuapp.com/auth/login after fix
-      fetch('http://localhost:5000/auth/login', requestOptions)
+     
+      fetch('https://u-ride-cop4331.herokuapp.com/auth/login', requestOptions)
           .then(response => response.text())
           .then(result => {
               // Handle error messages
