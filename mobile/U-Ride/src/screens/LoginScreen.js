@@ -122,7 +122,7 @@ function validateInput (input) {
 
                   
                   // Set user info into local storage
-                  localStorage.setItem('user_data', JSON.stringify(userInfo));
+                  // localStorage.setItem('user_data', JSON.stringify(userInfo));
 
                   console.log("Login Sucessful");
                   
