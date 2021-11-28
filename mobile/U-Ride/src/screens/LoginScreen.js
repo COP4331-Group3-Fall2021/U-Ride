@@ -70,14 +70,15 @@ function validateInput (input) {
       //     setMessage('');
       // }
       
-      // Hash password, then construct HTTP request
-      console.log(hash,"password",loginCreds.password);
       
+      // TODO: Remove when Frontend removes the hashed login / Register
+      // var hash = sha256(loginCreds.password);
       
       var headers = new Headers();
       headers.append("Content-Type", "application/json");
       var requestBody = JSON.stringify({
-          loginCreds
+         email: loginCreds.email,
+         password: loginCreds.password
       });
       var requestOptions = {
           method: 'POST',
@@ -91,6 +92,7 @@ function validateInput (input) {
       fetch('https://u-ride-cop4331.herokuapp.com/auth/login', requestOptions)
           .then(response => response.text())
           .then(result => {
+            
               // Handle error messages
               if (result === 'EMAIL_NOT_FOUND') {
                   setMessage('Account does not exist.');
@@ -98,6 +100,9 @@ function validateInput (input) {
               else if (result === 'INVALID_PASSWORD') {
                   setMessage('Invalid login.');
               }
+              else if (result === 'INVALID_EMAIL') {
+                setMessage('Invalid login.');
+            }
               else if(result === 'Verification Email Resent')
               {
                   setMessage("Verify your email.");
@@ -118,6 +123,10 @@ function validateInput (input) {
                   
                   // Set user info into local storage
                   localStorage.setItem('user_data', JSON.stringify(userInfo));
+
+                  console.log("Login Sucessful");
+                  
+                  // Navigate to map
               }
           })
           .catch(error => console.error('error', error)); 
