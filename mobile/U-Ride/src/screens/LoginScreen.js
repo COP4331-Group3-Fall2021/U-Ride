@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
   // Stores the inputs
   const [loginCreds, setLoginCreds] = new useState({
     email:"",
@@ -125,6 +125,8 @@ function validateInput (input) {
                   // localStorage.setItem('user_data', JSON.stringify(userInfo));
 
                   console.log("Login Sucessful");
+
+                  navigation.navigate('Map');
                   
                   // Navigate to map
               }
