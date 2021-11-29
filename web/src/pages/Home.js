@@ -143,7 +143,7 @@ const HomePage = () => {
     function signout() {
         localStorage.setItem('user_data', "");
         // Redirect user to homepage
-         history.push('/');
+        history.push('/');
     }
 
     return (
