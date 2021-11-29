@@ -9,25 +9,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#FFFFFF'
   },
-  input: {
-    height: 40,
-    width: 300,
-    paddingHorizontal: 5,
-    backgroundColor: 'white',
-    marginBottom: 5,
-  },
-  inputContainer: {
-    marginBottom: 20,
-    borderRadius: 5,
-    borderWidth: 3,
-    elevation: 4,
-  },
- textWindow:
- {
-  alignItems:'center',
-  width: 500, 
-  height: 80
- }
 });
 
 export default function LoginScreen({navigation}) {
@@ -36,6 +17,8 @@ export default function LoginScreen({navigation}) {
     email:"",
     password:""
   });
+
+  const [error, setError] = new useState("");
  
 // Validates a string
 function validateInput (input) {
@@ -50,7 +33,7 @@ function validateInput (input) {
   // TODO: Add Error Messages to Login Modal
   function setMessage(message)
   {
-    // Do something with the message here
+   setError(message);
   }
     
     // Allows Login to Occur
@@ -63,7 +46,18 @@ function validateInput (input) {
         */
         // Validate input fields
         // if (!validateInput(loginCreds.email) || !validateInput(loginCreds.password)) {
+        if (loginCreds.email === null || loginCreds.email === undefined)
+        {
           setMessage('Missing a field.');
+          return;
+        } 
+        if (loginCreds.password === null || loginCreds.password === undefined)
+        {
+          setMessage('Missing a field.');
+          return;
+        } 
+        
+       
 
       // TODO
       // In Front End this code helped with validation. There is no document in mobile,
@@ -137,7 +131,7 @@ function validateInput (input) {
 
                   
                   let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
-                  setMessage('');
+                  setError("");
 
                   
                   // Set user info into local storage
@@ -163,7 +157,7 @@ function validateInput (input) {
           <Image style= {{width: 200, height: 200, marginBottom: 25}} source = {{uri:  'https://cdn.discordapp.com/attachments/900191961200349214/914677832725168178/logo3.png'}} />  
         </View>
 
-        <Text style={{color: 'red', fontSize:20, fontWeight:'bold', marginBottom:10 }}> Error Message Here :) </Text>
+        <Text style={{color: 'red', fontSize:20, fontWeight:'bold', marginBottom:10 }}> {error} </Text>
 
     
           <Input
@@ -178,6 +172,7 @@ function validateInput (input) {
           <Input
             containerStyle={{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Password"
+            secureTextEntry={true}
             onChange={(e) => setLoginCreds({...loginCreds, password:e.nativeEvent.text})}
           />   
    
@@ -196,7 +191,7 @@ function validateInput (input) {
             buttonStyle={{color:'#003459'}}
             title="Create An Account"
             type = 'clear'
-            onPress={() => doLogin()}
+            onPress={() => navigation.navigate('Login')}
           />
         </View>
 

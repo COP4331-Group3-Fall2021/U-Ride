@@ -1,23 +1,12 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, TextInput, Button, View, Text, Image, Alert } from 'react-native';
+import { StyleSheet, TextInput, View, Text, Image, Alert } from 'react-native';
+import { Input, Button } from 'react-native-elements';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
-  input: {
-    margin: 15,
-    height: 50,
-    borderColor: '#7a42f4',
-    borderWidth: 1,
-    paddingRight:5,
- },
- textWindow:
- {
-  width: 200, 
-  height: 60
- }
 });
 
 export default function RegisterScreen({navigation}) {
