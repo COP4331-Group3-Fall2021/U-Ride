@@ -154,7 +154,7 @@ function validateInput (input) {
         </View>
 
         <View style = {styles.container}>
-          <Image style= {{width: 200, height: 200, marginBottom: 25}} source = {{uri:  'https://cdn.discordapp.com/attachments/900191961200349214/914677832725168178/logo3.png'}} />  
+          <Image style= {{width: 125, height: 125, marginBottom: 25}} source = {{uri:  'https://cdn.discordapp.com/attachments/900191961200349214/914677832725168178/logo3.png'}} />  
         </View>
 
         <Text style={{color: 'red', fontSize:20, fontWeight:'bold', marginBottom:10 }}> {error} </Text>
