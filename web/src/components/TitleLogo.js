@@ -3,7 +3,7 @@ import '../styles/TitleLogo.css';
 
 function TitleLogo () {
     return (
-        <h1 className="title-logo">URide</h1>
+        <h1 className="title-logo">U-Ride</h1>
     );
 }
 
