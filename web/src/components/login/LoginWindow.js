@@ -100,7 +100,7 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
         <div id="login-box">
             <h2 className="splash-window-title">Log In</h2>
             <form onSubmit={login}> 
-                <p className="form-result">{message}</p>
+                <p id="form-result">{message}</p>
                 <p className="input-headers">Email</p>
                 <input type="email" id="loginEmail" placeholder="Email" ref={(c) => loginEmail = c} /><br />
                 <p className="input-headers">Password</p>
