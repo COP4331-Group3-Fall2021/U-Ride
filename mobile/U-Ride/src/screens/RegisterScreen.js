@@ -19,9 +19,10 @@ export default function RegisterScreen({navigation}) {
     confirmPassword: "",
   });
 
+  const [error, setError] = new useState("");
   function setMessage(message)
   {
-    console.log(message);
+    setError(message);
   }
 
 // Validates a string
@@ -37,6 +38,32 @@ function validateInput (input) {
 
 function doRegister()
 {
+
+  if (userCreds.email === null || userCreds.email === undefined)
+  {
+    setMessage('Missing a field.');
+    return;
+  } 
+  if (userCreds.password === null || userCreds.password === undefined)
+  {
+    setMessage('Missing a field.');
+    return;
+  } 
+  if (userCreds.firstName === null || userCreds.firstName === undefined)
+  {
+    setMessage('Missing a field.');
+    return;
+  } 
+  if (userCreds.lastName === null || userCreds.lastName === undefined)
+  {
+    setMessage('Missing a field.');
+    return;
+  } 
+  if (userCreds.confirmPassword === null || userCreds.confirmPassword === undefined)
+  {
+    setMessage('Missing a field.');
+    return;
+  } 
   // Any verfication needs to be done here 
   // Validates a string
 function validateInput (input) {
@@ -64,7 +91,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
   } else {
       // document.getElementById("registerFirstName").classList.remove('input-invalid');
   }
-  if (!validateInput(lastName.value)) {
+  if (!validateInput(userCreds.lastName)) {
       // document.getElementById("registerLastName").classList.add('input-invalid');
   } else {
       // document.getElementById("registerLastName").classList.remove('input-invalid');
@@ -143,64 +170,68 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
           {userCreds.firstName}
           </Text>
         <View style={{alignItems: 'flex-end', }}>
-        <View style={{ flexDirection:'column' }}>
-          <Text style={{fontSize:40}}>     U-ride </Text>
-          <Text style={{fontSize:20}}>Eco and wallet friendly </Text>    
-        </View>
+        
 
      
         
         </View>
 
         <View style = {styles.container}>
-          <Image style= {{width: 200, height:200}} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
+          <Image style= {{width: 200, height: 200, marginBottom: 25}} source = {{uri:  'https://cdn.discordapp.com/attachments/900191961200349214/914677832725168178/logo3.png'}} />  
         </View>
-        <View style = {styles.textWindow}>
-          <TextInput
-            style={styles.input}
+  
+        <Text style={{color: 'red', fontSize:20, fontWeight:'bold', marginBottom:10 }}> {error} </Text>
+          <Input
+           containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="First Name"
             onChange={(e) => setUserCreds({...userCreds, firstName:e.nativeEvent.text})}
           />     
-        </View>
 
-        <View style = {styles.textWindow}>
-          <TextInput
-            style={styles.input}
+
+       
+          <Input
+            containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Last Name"
             onChange={(e) => setUserCreds({...userCreds, lastName:e.nativeEvent.text})}
           />   
-        </View>
+ 
 
-        <View style = {styles.textWindow}>
-          <TextInput
-            style={styles.input}
+       
+          <Input
+            containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Email"
             onChange={(e) => setUserCreds({...userCreds, email:e.nativeEvent.text})}
           />     
-        </View>
+     
 
-        <View style = {styles.textWindow}>
-          <TextInput
-            style={styles.input}
+       
+          <Input
+            containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Password"
             onChange={(e) => setUserCreds({...userCreds, password:e.nativeEvent.text})}
           />   
-        </View>
 
-        <View style = {styles.textWindow}>
-          <TextInput
-            style={styles.input}
+
+       
+          <Input
+           containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Confirm Password"
             onChange={(e) => setUserCreds({...userCreds, confirmPassword:e.nativeEvent.text})}
           />   
-        </View>
-        
-
-        <View style = {styles.textWindow}>
+        <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
-            title="Register"
-            color = '#ed7a7a'
+            title="Create Account"
+            buttonStyle={{backgroundColor: '#003459'}}
             onPress={() => doRegister()}
+          />
+        </View>
+
+        <View style = {{width:'75%', maxWidth:500, marginBottom:10, borderRadius: 20}}>
+          <Button 
+            buttonStyle={{color:'#003459'}}
+            title="Log In"
+            type = 'clear'
+            onPress={() => navigation.navigate('Login')}
           />
         </View>
       </View>

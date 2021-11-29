@@ -191,7 +191,7 @@ function validateInput (input) {
             buttonStyle={{color:'#003459'}}
             title="Create An Account"
             type = 'clear'
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('Register')}
           />
         </View>
 
