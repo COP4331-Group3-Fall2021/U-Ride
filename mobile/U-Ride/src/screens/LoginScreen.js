@@ -1,14 +1,33 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, TextInput, Button, View, Text, Image } from 'react-native';
+import { StyleSheet, TextInput, View, Text, Image } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-
-
+import { Input, Button } from 'react-native-elements';
 
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    color: '#FFFFFF'
   },
+  input: {
+    height: 40,
+    width: 300,
+    paddingHorizontal: 5,
+    backgroundColor: 'white',
+    marginBottom: 5,
+  },
+  inputContainer: {
+    marginBottom: 20,
+    borderRadius: 5,
+    borderWidth: 3,
+    elevation: 4,
+  },
+ textWindow:
+ {
+  alignItems:'center',
+  width: 500, 
+  height: 80
+ }
 });
 
 export default function LoginScreen({navigation}) {
@@ -134,47 +153,53 @@ function validateInput (input) {
           .catch(error => console.error('error', error)); 
   }
     return (
-      <View style={{ backgroundColor:'#a89dd2', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ backgroundColor:'#FFFFFF', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         
         <View style={{alignItems: 'flex-end'}}>
-        <View style={{ flexDirection:'column' }}>
-          <Text style={{fontSize:40}}>     U-ride </Text>
-          <Text style={{fontSize:20}}>Eco and wallet friendly </Text>    
-        </View>
 
-     
-        
         </View>
 
         <View style = {styles.container}>
-          <Image style= {styles.textWindow} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
+          <Image style= {{width: 200, height: 200, marginBottom: 25}} source = {{uri:  'https://cdn.discordapp.com/attachments/900191961200349214/914677832725168178/logo3.png'}} />  
         </View>
 
-        <View style = {{width: 200, height: 40}}>
-          <TextInput
-            style={{height: 30,fontSize:20, backgroundColor:'#ffffff'}}
+        <Text style={{color: 'red', fontSize:20, fontWeight:'bold', marginBottom:10 }}> Error Message Here :) </Text>
+
+    
+          <Input
+          containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Email"
             onChange={(e) => 
                 setLoginCreds({...loginCreds, email:e.nativeEvent.text})}
           />     
-        </View>
+  
 
-        <View style = {{width: 200, height: 40}}>
-          <TextInput
-            style={{height: 30,fontSize:20, backgroundColor:'#ffffff'}}
+      
+          <Input
+            containerStyle={{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Password"
             onChange={(e) => setLoginCreds({...loginCreds, password:e.nativeEvent.text})}
           />   
-        </View>
+   
         
 
-        <View style = {{width: 200, height: 40}}>
+        <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
             title="Log In"
-            color = '#ed7a7a'
+            buttonStyle={{backgroundColor: '#003459'}}
             onPress={() => doLogin()}
           />
         </View>
+
+        <View style = {{width:'75%', maxWidth:500, marginBottom:10, borderRadius: 20}}>
+          <Button 
+            buttonStyle={{color:'#003459'}}
+            title="Create An Account"
+            type = 'clear'
+            onPress={() => doLogin()}
+          />
+        </View>
+
       </View>
     )
   }
