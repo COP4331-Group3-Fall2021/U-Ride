@@ -10,6 +10,7 @@
         "backend/node_modules"
     ],
     "dependencies": {
+        "@react-google-maps/api": "^2.7.0",
         "firebase-admin": "^10.0.0"
     }
 }

@@ -15,13 +15,13 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
  *              passengers (required) - list of passengers
  *              buttonName (required) - name for the button, leave/disband
  */
-export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = () => {}, buttonClick = () => {} }) {
+export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = (origin, destination) => {}, buttonClick = () => {} }) {
     const passengerLIs = passengers.map((passengerName) => {
         return <li>{passengerName}</li>
     });
 
     return (
-        <div className="join-card" onClick={cardClick}>
+        <div className="join-card" onClick={() => cardClick(origin, destination)}>
             <div className="join-card-header">
                 <span>🚘 {name}</span>
                 <span>{date} @ {time}</span>

@@ -79,6 +79,14 @@ function driverDataToReact(dataArray) {
 
 const HomePage = () => {
 
+    // States for Card->Map interactions
+    const [origin, setOrigin] = useState({lat: null, lng: null});
+    const [destination, setDestination] = useState({lat: null, lng: null});
+    function updateMap(origin, destination) {
+        setOrigin(origin);
+        setDestination(destination);
+    }
+
     // Use usestate to show modals
     const [showCreate, setShowCreate] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
@@ -155,7 +163,7 @@ const HomePage = () => {
             <div className="row">
                 <div className="left-column-home">
                     <div className="mapDiv">
-                        {/* PUT MAP HERE */}
+                        <Map origin={origin} destination={destination}/>
                     </div>
                     <div className="buttonsDiv">
                         <Button onClick={() => setShowCreate(true)} text="Create Pool" bgcolor="#007EA7" color="#FFFFFF" />
@@ -183,6 +191,7 @@ const HomePage = () => {
                         {tabIdx === 2 && <>
                         {/* DUMMY CARDS == REMOVE */}
                             {driverData}
+                            <Card name="TEST CARD" date="11/2/21" time="8:00pm" origin={{lat: 28.601027, lng: -81.205060}} destination={{lat: 28.61060555577089, lng: -81.21444511353575}} cardClick={(origin, destination) => updateMap(origin, destination)} currentPassengerCount="0" passengerCap="4" buttonName="Leave" passengers={[]} />
                         </>}
                     </div>
                     <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" onClick={signout}/>
