@@ -200,6 +200,7 @@ input{
     justify-content: center;
     align-items: center;
     background-color: #003459;
+    
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
@@ -222,7 +223,7 @@ input{
 
 }
 
-.form-result {
+#form-result {
     color: #FF7575 ;
     font-size: 1.1em;
     margin-bottom: 0em;

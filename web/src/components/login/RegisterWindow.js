@@ -61,6 +61,13 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
             document.getElementById("registerPassword").classList.remove('input-invalid');
             document.getElementById("registerConfirmPassword").classList.remove('input-invalid');
         }
+        if (password.value.length < 6) {
+            setMessage('Password should be at least 6 characters.');
+            document.getElementById("registerPassword").classList.add('input-invalid');
+        } else {
+            setMessage('');
+            document.getElementById("registerPassword").classList.remove('input-invalid');
+        }
         
         // Construct HTTP request
         var headers = new Headers();
