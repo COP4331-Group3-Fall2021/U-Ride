@@ -147,7 +147,7 @@ function validateInput (input) {
         </View>
 
         <View style = {styles.container}>
-          <Image style= {{width: 200, height:200}} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
+          <Image style= {styles.textWindow} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
         </View>
 
         <View style = {{width: 200, height: 40}}>
