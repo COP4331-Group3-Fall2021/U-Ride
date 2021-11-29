@@ -208,6 +208,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
           <Input
             containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Password"
+            secureTextEntry={true}
             onChange={(e) => setUserCreds({...userCreds, password:e.nativeEvent.text})}
           />   
 
@@ -216,6 +217,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
           <Input
            containerStyle = {{width:'75%', maxWidth:500, marginBottom: 10}}
             placeholder="Confirm Password"
+            secureTextEntry={true}
             onChange={(e) => setUserCreds({...userCreds, confirmPassword:e.nativeEvent.text})}
           />   
         <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
