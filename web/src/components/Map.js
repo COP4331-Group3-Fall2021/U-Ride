@@ -6,7 +6,7 @@ import { Marker, GoogleMap, DirectionsService, DirectionsRenderer, LoadScript } 
  */
 export default function Map({origin, destination}) {
     const [directionsServiceState, setDirectionsServiceState] = useState(null);
-    const googleAPIKey = process.env.REACT_GOOGLEMAPS_KEY;
+    const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
     /* From the Google Maps API:
      * "Accessing the Directions service is asynchronous, since the Google Maps API needs to make a call to an external server.
