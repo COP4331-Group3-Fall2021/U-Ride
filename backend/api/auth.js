@@ -194,10 +194,10 @@ router.post ('/register', async (req, res) => {
 /**
  * Allows a user to reset their password
  */
-router.post ('/emailReset', async (req, res) => {
+router.post ('/emailReset/:email', async (req, res) => {
   const credentials = {
     requestType: 'PASSWORD_RESET',
-    email: req.body.email,
+    email: req.params.email,
   };
 
   if (req.params.email === null || req.params.email === undefined) {
