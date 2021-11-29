@@ -43,12 +43,14 @@ body {
     border-left: 2px dotted black;
 
 }
+
 @media only screen and (max-width: 800px) {
     .poolsDiv
     {
         display: none;
     }
 }
+
 .poolsDiv {
     background-color: #003459;
     border-radius: 10px;
