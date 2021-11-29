@@ -57,7 +57,9 @@ body {
     flex-direction: column;
     justify-content: top;
     align-items: center;
-    height: 800px;
+    overflow-y: scroll;
+    max-height: 800px;
+    width: 100%;
     padding-top: 2%;
     padding-bottom: 2%;
 }
