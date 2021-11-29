@@ -23,7 +23,7 @@ export default function EditPoolWindow({ closeModal, showEdit, passengers = ["ca
                 <h2 className="modal-header">Edit Pool</h2>
                 <hr className="separator" />
                 <form className="modal-form">
-                    <span className="form-result">{message}</span>
+                    <span id="form-result">{message}</span>
                     <label htmlFor="createOrigin" className="input-headers">Origin:</label>
                     <input type="text" id="createOrigin" placeholder="Origin" />
                     <label htmlFor="createDest" className="input-headers">Destination:</label>
