@@ -5,6 +5,7 @@ import SearchPoolWindow from '../components/dashboard/SearchPoolWindow'
 import EditPoolWindow from '../components/dashboard/EditPoolWindow'
 import Button from '../components/Button'
 import Card from '../components/Card'
+import { useHistory } from 'react-router-dom';
 import Map from '../components/Map'
 import '../styles/Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -87,6 +88,8 @@ const HomePage = () => {
     const [driverData, setDriverData] = useState(<></>);
     const [searchData, setSearchData] = useState(<></>);
 
+    const history = useHistory();
+
     function closeModal() {
         setShowCreate(false);
         setShowSearch(false);
@@ -136,7 +139,13 @@ const HomePage = () => {
         loadRiderData();
         loadDriverData();
     }, []);
-    
+
+    function signout() {
+        localStorage.setItem('user_data', "");
+        // Redirect user to homepage
+         history.push('/');
+    }
+
     return (
         <div className="container">
             <TitleLogo />
@@ -176,7 +185,7 @@ const HomePage = () => {
                             {driverData}
                         </>}
                     </div>
-                    <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" />
+                    <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" onClick={signout}/>
                 </div>
             </div>
         </div>
