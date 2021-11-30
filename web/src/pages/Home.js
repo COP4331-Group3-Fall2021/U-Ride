@@ -215,7 +215,7 @@ const HomePage = () => {
             <TitleLogo />
             <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData} />
             <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={setSearchData} />
-            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit}/>
+            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit} refreshDriverData={loadDriverData}/>
             <div className="row">
                 <div className="left-column-home">
                     <div className="mapDiv">

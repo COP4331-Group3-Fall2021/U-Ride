@@ -65,7 +65,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             },
             body: JSON.stringify({
                 "numParticipants": 0,
-                "maxParticipants": maxPass.value,
+                "maxParticipants": parseInt(maxPass.value),
                 "poolDate": dateTime.value,
                 "origin": [0, 0], // TODO, convert to latitude and longitude
                 "destination": [0, 0], // TODO, convert to latitude and longitude
