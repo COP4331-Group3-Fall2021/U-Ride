@@ -23,20 +23,20 @@ export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
     }
 
     return (
-        <div id="create-pool-modal" className="modal" style={style}>
+        <div id="edit-pool-modal" className="modal" style={style}>
             <div className="modal-content">
                 <h2 className="modal-header">Edit Pool</h2>
                 <hr className="separator" />
                 <form className="modal-form">
                     <span id="form-result">{message}</span>
-                    <label htmlFor="createOrigin" className="input-headers">Origin:</label>
-                    <input type="text" id="createOrigin" placeholder="Origin" value={latLongToStr(originalInfo.origin)}/>
-                    <label htmlFor="createDest" className="input-headers">Destination:</label>
-                    <input type="text" id="createDest" placeholder="Destination" value={latLongToStr(originalInfo.destination)}/>
+                    <label htmlFor="editOrigin" className="input-headers">Origin:</label>
+                    <input type="text" id="editOrigin" placeholder="Origin" value={latLongToStr(originalInfo.origin)}/>
+                    <label htmlFor="editDest" className="input-headers">Destination:</label>
+                    <input type="text" id="editDest" placeholder="Destination" value={latLongToStr(originalInfo.destination)}/>
                     <label htmlFor="maxPassengers" className="input-headers">Max Passengers:</label>
                     <input type="number" id="maxPassengers" placeholder="Max Passengers" min="1" max="7" value={originalInfo.maxParticipants} />
-                    <label htmlFor="createStart" className="input-headers">Start Time:</label>
-                    <input type="datetime-local" id="createStart" value={originalInfo.poolDate}/> 
+                    <label htmlFor="editStart" className="input-headers">Start Time:</label>
+                    <input type="datetime-local" id="editStart" value={originalInfo.poolDate}/> 
 
                     {/* check boxes */}
                     <div id="checkContainer">
