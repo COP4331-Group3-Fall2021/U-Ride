@@ -18,7 +18,7 @@ export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
     });
 
     function latLongToStr(latLongObj) {
-        let present = latLongObj && latLongObj.lat && latLongObj.lng;
+        let present = latLongObj && latLongObj.lat !== undefined && latLongObj.lng !== undefined;
         return present ? `${latLongObj.lat} x ${latLongObj.lng}` : JSON.stringify(latLongObj);
     }
 
