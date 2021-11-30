@@ -20,6 +20,12 @@ export default function Card({ name, date, time, origin, destination, currentPas
         return <li>{passengerName}</li>
     });
 
+    // this is a temporary solution to make the application not break
+    function latLongToStr(latLongObj) {
+        let present = latLongObj && latLongObj.lat && latLongObj.lng;
+        return present ? `${latLongObj.lat} x ${latLongObj.lng}` : JSON.stringify(latLongObj);
+    }
+
     return (
         <div className="join-card" onClick={() => cardClick(origin, destination)}>
             <div className="join-card-header">
@@ -28,8 +34,8 @@ export default function Card({ name, date, time, origin, destination, currentPas
             </div>
             <div className="join-card-content">
                 <div className="left-col">
-                    <span className="left-text">📍 <b>To:</b> {origin}</span>
-                    <span className="left-text">📍 <b>From: </b> {destination}</span>
+                    <span className="left-text">📍 <b>To:</b> {latLongToStr(origin)}</span>
+                    <span className="left-text">📍 <b>From: </b> {latLongToStr(destination)}</span>
                     <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
                 </div>
                 <div className="right-col">
