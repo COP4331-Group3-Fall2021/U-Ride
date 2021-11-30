@@ -16,6 +16,18 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
     let maxPass;
     let dateTime;
 
+    // delete the pool
+    function deletePool() {
+        fetch(`https://u-ride-cop4331.herokuapp.com/carpool/delete/${originalInfo._id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.ok && (closeModal() || refreshDriverData()))
+            .catch(error => { console.error(error); setMessage('A network error occurred.') })
+    }
+
     // validate the fields
     function validateForm() {
 
@@ -122,7 +134,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
                     <div className="modal-buttons">
                         <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Save" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
-                        <Button text="Delete" bgcolor="#FF7575 " color="#000000" />
+                        <Button onClick={(e) => { e.preventDefault(); deletePool() }} text="Delete" bgcolor="#FF7575 " color="#000000" />
                     </div>
                 </form>
             </div>
