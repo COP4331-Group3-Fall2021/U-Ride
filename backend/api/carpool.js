@@ -236,7 +236,8 @@ router.put ('/update', async (req, res) => {
     poolDate: req.body.poolDate,
     origin: req.body.origin,
     destination: req.body.destination,
-    riders: req.body.driver,
+    driver: req.body.driver,
+    riders: req.body.riders,
     isFull: req.body.numParticipants === req.body.maxParticipants,
   };
 
