@@ -177,7 +177,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
         </View>
 
         <View style = {styles.container}>
-          <Image style= {{width: 125, height: 125, marginBottom: 25}} source = {{uri:  'https://cdn.discordapp.com/attachments/900191961200349214/914677832725168178/logo3.png'}} />  
+          <Image style= {{width: 150, height: 125, marginBottom: 25}} source = {{uri:  'https://lh3.googleusercontent.com/pw/AM-JKLUo4dsqU5BE9qNwz9GgidrqNVzaVluKFgl0mU0eTib2NFPa7q6lAclY0piw1dnyMEXppcFc_TpCvnTpRIQqar0oFUEQT_gRCOuTU0qwRQIkkTuQnhd7CcVKVY3lsVr4obAdS2jevMLdS3g0-fN2m5ju=w680-h439-no?authuser=0'}} />  
         </View>
   
         <Text style={{color: 'red', fontSize:20, fontWeight:'bold', marginBottom:10 }}> {error} </Text>
@@ -220,6 +220,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
             secureTextEntry={true}
             onChange={(e) => setUserCreds({...userCreds, confirmPassword:e.nativeEvent.text})}
           />   
+          
         <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
             title="Create Account"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, View, Text, Image, TextInput } from 'react-native';
+import { StyleSheet, View, Text, Image, TextInput } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { Button } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,35 +13,31 @@ const styles = StyleSheet.create({
 export default class Homescreen extends Component {
   render() {
     return (
-      <View style={{ backgroundColor:'#a89dd2', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ backgroundColor:'#FFFFFF', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         
         <View style={{alignItems: 'flex-end'}}>
-        <View style={{ flexDirection:'column' }}>
-          <Text style={{fontSize:40}}>     U-ride </Text>
-          <Text style={{fontSize:20}}>Eco and wallet friendly </Text>    
-        </View>
-
+        <Image style= {{width: 300, height: 125, marginBottom: 5}} source = {{uri:  'https://lh3.googleusercontent.com/pw/AM-JKLUyTf3H8lbgugZbwJWx-qsuQdRz_wwh51omCd0joM-LF_WmmXWotnRmM3lQCmJ5_mLS6nhJDRklOoxXH77uXwpQKvLzizxDstwWhTB3gsTbFrROFSJCJlVAytu58ahbcun091XLUjXwxpln-T-x8mum=w343-h162-no?authuser=0'}} />  
      
         
         </View>
 
         <View style = {styles.container}>
-          <Image style= {{width: 200, height:200}} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
+          <Image style= {{width: 300, height:300}} source = {{uri:  'https://i.imgur.com/QLSNjfH.png'}} />  
         </View>
 
 
-
-        <View style = {{width: 200, height: 40, bottom: 10}}>
+        <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
             title="Log In"
-            color = '#ed7a7a'
+            buttonStyle={{backgroundColor: '#003459'}}
             onPress={() => this.props.navigation.navigate('Login')}
           />
         </View>
-        <View style = {{width: 200, height: 40}}>
+        <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
-            title="Register"
-            color = '#ed7a7a'
+          
+            title="Sign Up"
+            buttonStyle={{backgroundColor: '#2E5C94'}}
             onPress={() => this.props.navigation.navigate('Register')}
           />
         </View>
