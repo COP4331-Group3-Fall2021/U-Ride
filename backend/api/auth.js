@@ -237,7 +237,7 @@ router.get ('/getUser/:_id', async (req, res) => {
         throw err;
       }
       if (result[0] === undefined || result[0] === null) {
-        res.status (404).send ('User not Found');
+        res.status (400).send ('User not Found');
       }
       res.status (200).send (result[0]);
     });
