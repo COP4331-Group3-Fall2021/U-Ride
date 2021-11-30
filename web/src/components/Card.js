@@ -17,7 +17,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
  */
 export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = (origin, destination) => {}, buttonClick = () => {} }) {
     const passengerLIs = passengers.map((passengerName) => {
-        return <li>{passengerName}</li>
+        return <li key={passengerName}>{passengerName}</li>
     });
 
     // this is a temporary solution to make the application not break

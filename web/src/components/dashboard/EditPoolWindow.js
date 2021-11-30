@@ -85,7 +85,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
     }, [originalInfo]);
 
     const passengerChkBx = originalInfo.riders.map((passenderID, idx) => {
-        return <div className="checkboxes">
+        return <div className="checkboxes" key={passenderID}>
             <input type="checkbox" value={passenderID} id={'passenger' + idx} checked={true} className="check" />
             <label htmlFor={'passenger' + idx}>{passenderID}</label>
         </div>
