@@ -41,28 +41,6 @@ export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
                     {/* check boxes */}
                     <div id="checkContainer">
                         <div className="checkDiv-edit">
-                            <div className="checkboxes">
-                                <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
-                                <label htmlFor="mondayCheck">Monday</label>
-                            </div>
-                            <div className="checkboxes">
-                                <input type="checkbox" value="Tuesday" id="tuesdayCheck" className="check" />
-                                <label htmlFor="tuesdayCheck">Tuesday</label>
-                            </div>
-                            <div className="checkboxes">
-                                <input type="checkbox" value="Wednesday" id="wednesdayCheck" className="check" />
-                                <label htmlFor="wednesdayCheck">Wednesday</label>
-                            </div>
-                            <div className="checkboxes">
-                                <input type="checkbox" value="Thursday" id="thursdayCheck" className="check" />
-                                <label htmlFor="thursdayCheck">Thursday</label>
-                            </div>
-                            <div className="checkboxes">
-                                <input type="checkbox" value="Friday" id="fridayCheck" className="check" />
-                                <label htmlFor="fridayCheck">Friday</label>
-                            </div>
-                        </div>
-                        <div className="checkDiv-edit">
                             <span><u>Passengers:</u></span>
                             { passengerChkBx }
                         </div>
