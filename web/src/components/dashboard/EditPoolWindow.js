@@ -96,13 +96,6 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         document.getElementById("editStart").value = originalInfo.poolDate;
     }, [originalInfo]);
 
-    const passengerChkBx = originalInfo.riders.map((passenderID, idx) => {
-        return <div className="checkboxes" key={passenderID}>
-            <input type="checkbox" value={passenderID} id={'passenger' + idx} checked={true} className="check" />
-            <label htmlFor={'passenger' + idx}>{passenderID}</label>
-        </div>
-    });
-
     function latLongToStr(latLongObj) {
         let present = latLongObj && latLongObj.lat !== undefined && latLongObj.lng !== undefined;
         return present ? `${latLongObj.lat} x ${latLongObj.lng}` : JSON.stringify(latLongObj);
@@ -124,13 +117,6 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
                     <label htmlFor="editStart" className="input-headers">Start Time:</label>
                     <input type="datetime-local" id="editStart"  ref={(c) => dateTime = c} /> 
 
-                    {/* check boxes */}
-                    <div id="checkContainer">
-                        <div className="checkDiv-edit">
-                            <span><u>Passengers:</u></span>
-                            { passengerChkBx }
-                        </div>
-                    </div>
                     <div className="modal-buttons">
                         <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Save" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
