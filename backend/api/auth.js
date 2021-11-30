@@ -225,7 +225,7 @@ router.post ('/emailReset/:email', async (req, res) => {
 /**
  * Get User
  */
-router.get ('/getUser/_id', async (req, res) => {
+router.get ('/getUser/:_id', async (req, res) => {
   db = mongoUtil.get ();
   db
     .db ('root')
