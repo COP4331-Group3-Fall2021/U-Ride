@@ -181,14 +181,14 @@ function validateInput (input) {
         <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
             title="Log In"
-            buttonStyle={{backgroundColor: '#003459', borderRadius: 15}}
+            buttonStyle={{backgroundColor: '#003459', borderRadius: 15, height: 45}}
             onPress={() => doLogin()}
           />
         </View>
 
         <View style = {{width:'75%', maxWidth:500, marginBottom:10, borderRadius: 20}}>
           <Button 
-            buttonStyle={{color:'#003459', borderRadius: 15}}
+            buttonStyle={{color:'#003459', borderRadius: 15, height: 45}}
             title="Create An Account"
             type = 'clear'
             onPress={() => navigation.navigate('Register')}
