@@ -1,14 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import Button from '../Button';
 import '../../styles/Modal.css';
 
 
-export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
+export default function EditPoolWindow({closeModal, showEdit, originalInfo}) {
 
     // use UseState
     const [message, setMessage] = useState('');
 
     let style = showEdit ? { display: 'flex' } : { display: 'none' }
+
+    // variable references for each input
+    let origin;
+    let dest;
+    let maxPass;
+    let dateTime;
+
+    // validate the fields
+    function validateForm() {
+
+        // reset errors
+        document.getElementById("editOrigin").classList.remove('input-invalid');
+        document.getElementById("editDest").classList.remove('input-invalid');
+        document.getElementById("maxPassengers").classList.remove('input-invalid');
+        document.getElementById("editStart").classList.remove('input-invalid');
+        setMessage('');
+
+        // if any fields invalid, set message
+        if (!validInput(origin.value) || !validInput(dest.value) || !validInput(maxPass.value) || !validInput(dateTime.value)) {
+            setMessage('Missing a field.');
+
+            // draw red border on missing fields
+            if (!validInput(origin.value)) {
+                document.getElementById("editOrigin").classList.add('input-invalid');
+            }
+
+            if (!validInput(dest.value)) {
+                document.getElementById("editDest").classList.add('input-invalid');
+            }
+
+            if (!validInput(maxPass.value)) {
+                document.getElementById("maxPassengers").classList.add('input-invalid');
+            }
+
+            if (!validInput(dateTime.value)) {
+                document.getElementById("editStart").classList.add('input-invalid');
+            }
+
+            return;
+        } else {
+            // Passed validation, get rid of errors
+            document.getElementById("editOrigin").classList.remove('input-invalid');
+            document.getElementById("editDest").classList.remove('input-invalid');
+            document.getElementById("maxPassengers").classList.remove('input-invalid');
+            document.getElementById("editStart").classList.remove('input-invalid');
+            setMessage('');
+        }
+    }
+
+    // initialize pool data on component load
+    useEffect(() => {
+        origin.value = latLongToStr(originalInfo.origin);
+        dest.value = latLongToStr(originalInfo.destination);
+        maxPass.value = originalInfo.maxParticipants;
+        dateTime = originalInfo.poolDate;
+    }, []);
 
     const passengerChkBx = originalInfo.riders.map((passenderID, idx) => {
         return <div className="checkboxes">
@@ -30,13 +86,13 @@ export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
                 <form className="modal-form">
                     <span id="form-result">{message}</span>
                     <label htmlFor="editOrigin" className="input-headers">Origin:</label>
-                    <input type="text" id="editOrigin" placeholder="Origin" value={latLongToStr(originalInfo.origin)}/>
+                    <input type="text" id="editOrigin" placeholder="Origin" ref={(c) => origin = c}/>
                     <label htmlFor="editDest" className="input-headers">Destination:</label>
-                    <input type="text" id="editDest" placeholder="Destination" value={latLongToStr(originalInfo.destination)}/>
+                    <input type="text" id="editDest" placeholder="Destination" ref={(c) => dest = c}/>
                     <label htmlFor="maxPassengers" className="input-headers">Max Passengers:</label>
-                    <input type="number" id="maxPassengers" placeholder="Max Passengers" min="1" max="7" value={originalInfo.maxParticipants} />
+                    <input type="number" id="maxPassengers" placeholder="Max Passengers" min="1" max="7" ref={(c) => maxPass = c}/>
                     <label htmlFor="editStart" className="input-headers">Start Time:</label>
-                    <input type="datetime-local" id="editStart" value={originalInfo.poolDate}/> 
+                    <input type="datetime-local" id="editStart"  ref={(c) => dateTime = c} /> 
 
                     {/* check boxes */}
                     <div id="checkContainer">
@@ -46,7 +102,7 @@ export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
                         </div>
                     </div>
                     <div className="modal-buttons">
-                        <Button text="Save" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Save" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
                         <Button text="Delete" bgcolor="#FF7575 " color="#000000" />
                     </div>
@@ -54,4 +110,15 @@ export default function EditPoolWindow({ closeModal, showEdit, originalInfo}) {
             </div>
         </div>
     );
+}
+
+// Validates a string
+function validInput(input) {
+    if (input === undefined || input === "") {
+        return false;
+    }
+    else {
+        // Valid input
+        return true;
+    }
 }
