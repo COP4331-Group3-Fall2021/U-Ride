@@ -224,14 +224,14 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
         <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
             title="Create Account"
-            buttonStyle={{backgroundColor: '#003459'}}
+            buttonStyle={{backgroundColor: '#003459',borderRadius: 15}}
             onPress={() => doRegister()}
           />
         </View>
 
         <View style = {{width:'75%', maxWidth:500, marginBottom:10, borderRadius: 20}}>
           <Button 
-            buttonStyle={{color:'#003459'}}
+            buttonStyle={{color:'#003459', }}
             title="Log In"
             type = 'clear'
             onPress={() => navigation.navigate('Login')}

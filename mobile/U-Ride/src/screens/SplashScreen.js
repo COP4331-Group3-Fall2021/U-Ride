@@ -29,7 +29,7 @@ export default class Homescreen extends Component {
         <View style = {{width:'75%', maxWidth:500, borderRadius: 20, marginBottom: 20}}>
           <Button 
             title="Log In"
-            buttonStyle={{backgroundColor: '#003459'}}
+            buttonStyle={{backgroundColor: '#003459', borderRadius: 15}}
             onPress={() => this.props.navigation.navigate('Login')}
           />
         </View>
@@ -37,7 +37,7 @@ export default class Homescreen extends Component {
           <Button 
           
             title="Sign Up"
-            buttonStyle={{backgroundColor: '#2E5C94'}}
+            buttonStyle={{backgroundColor: '#2E5C94', borderRadius: 15}}
             onPress={() => this.props.navigation.navigate('Register')}
           />
         </View>
