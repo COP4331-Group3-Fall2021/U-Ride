@@ -215,8 +215,8 @@ input{
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 80%;
-
+    width: 90vw;
+    max-width: 400px;
 }
 
 #form-result {
