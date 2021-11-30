@@ -22,7 +22,7 @@ export default function Card({ name, date, time, origin, destination, currentPas
 
     // this is a temporary solution to make the application not break
     function latLongToStr(latLongObj) {
-        let present = latLongObj && latLongObj.lat && latLongObj.lng;
+        let present = latLongObj && latLongObj.lat !== undefined && latLongObj.lng !== undefined;
         return present ? `${latLongObj.lat} x ${latLongObj.lng}` : JSON.stringify(latLongObj);
     }
 
