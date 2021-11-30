@@ -93,7 +93,7 @@ const HomePage = () => {
                 leavePool(data._id); // TODO
             }
 
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} cardClick={(origin, destination) => updateMap(origin, destination)} />
+            return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} cardClick={(origin, destination) => updateMap(origin, destination)} />
         });
 
         // if no cards, show no results
@@ -132,7 +132,7 @@ const HomePage = () => {
                 setShowEdit(true);
             }
 
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={edit} cardClick={(origin, destination) => updateMap(origin, destination)} />
+            return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={edit} cardClick={(origin, destination) => updateMap(origin, destination)} />
         });
 
         // if no cards, show no results
