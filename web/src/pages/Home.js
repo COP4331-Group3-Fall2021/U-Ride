@@ -82,8 +82,8 @@ const HomePage = () => {
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
             let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = data.origin.coordinates; // TODO
-            let destination = data.destination.coordinates; // TODO
+            let origin = {lat: data.origin[0], lng: data.origin[1]};
+            let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Leave";
@@ -93,7 +93,7 @@ const HomePage = () => {
                 leavePool(data._id); // TODO
             }
 
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} />
+            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} cardClick={(origin, destination) => updateMap(origin, destination)} />
         });
 
         // if no cards, show no results
@@ -120,8 +120,8 @@ const HomePage = () => {
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
             let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = data.origin.coordinates; // TODO
-            let destination = data.destination.coordinates; // TODO
+            let origin = {lat: data.origin[0], lng: data.origin[1]};
+            let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Edit";
@@ -132,7 +132,7 @@ const HomePage = () => {
                 setShowEdit(true);
             }
 
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={edit} />
+            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={edit} cardClick={(origin, destination) => updateMap(origin, destination)} />
         });
 
         // if no cards, show no results
@@ -247,7 +247,7 @@ const HomePage = () => {
                         {tabIdx === 2 && <>
                             {/* DUMMY CARDS == REMOVE */}
                             {driverData}
-                            <Card name="TEST CARD" date="11/2/21" time="8:00pm" origin={{ lat: 28.601027, lng: -81.205060 }} destination={{ lat: 28.61060555577089, lng: -81.21444511353575 }} cardClick={(origin, destination) => updateMap(origin, destination)} currentPassengerCount="0" passengerCap="4" buttonName="Leave" passengers={[]} />
+                            <Card name="TEST CARD" date="11/2/21" time="8:00pm" origin={{ lat: 28.601027, lng: -81.205060 }} destination={{ lat: 28.61060555577089, lng: -81.21444511353575 }} cardClick={(origin, destination) => updateMap(origin, destination)} currentPassengerCount="0" passengerCap="4" buttonName="edit" passengers={[]} />
                         </>}
                     </div>
                     <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" onClick={signout} />
