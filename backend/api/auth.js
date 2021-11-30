@@ -228,12 +228,12 @@ router.post ('/emailReset', async (req, res) => {
 /**
  * Get User
  */
-router.get ('/getUser', async (req, res) => {
+router.get ('/getUser/_id', async (req, res) => {
   db = mongoUtil.get ();
   db
     .db ('root')
     .collection ('users')
-    .find ({_id: ObjectId (req.body._id)})
+    .find ({_id: ObjectId (req.params._id)})
     .toArray (function (err, result) {
       if (err) {
         res.status (400).send (err);
