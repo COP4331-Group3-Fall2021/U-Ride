@@ -197,7 +197,7 @@ router.put ('/join/:carpool/:user', async (req, res) => {
           numParticipants: 1,
         },
 
-        // if numPartcipants == maxParticipants sets isFull to true, otherwise isFull is false
+        // if numParticipants == maxParticipants sets isFull to true, otherwise isFull is false
         $set: {
           isFull: result.numParticipants + 1 === result.maxParticipants,
         },
@@ -231,7 +231,7 @@ router.put ('/update', async (req, res) => {
   }
 
   var updated = {
-    numPartcipants: req.body.numPartcipants,
+    numParticipants: req.body.numParticipants,
     maxParticipants: req.body.maxParticipants,
     poolDate: req.body.poolDate,
     origin: req.body.origin,
@@ -277,7 +277,7 @@ router.put ('/leave/:carpool/:user', async (req, res) => {
           numParticipants: -1,
         },
 
-        // if numPartcipants == maxParticipants sets isFull to true, otherwise isFull is false
+        // if numParticipants == maxParticipants sets isFull to true, otherwise isFull is false
         $set: {
           isFull: result.numParticipants - 1 === result.maxParticipants,
         },
