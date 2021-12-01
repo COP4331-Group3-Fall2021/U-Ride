@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../Button';
 import '../../styles/Modal.css';
-
+import Autocomplete from "react-google-autocomplete";
 
 export default function EditPoolWindow({closeModal, showEdit, originalInfo, refreshDriverData}) {
 
+    const googleAPIKey = "AIzaSyB-1ftwBLZ1yoznFm4_pB-i3wqCnecSirY";
+
     // use UseState
     const [message, setMessage] = useState('');
+    const [origin, setOrigin] = useState({});
+    const [destination, setDestination] = useState({});
 
     let style = showEdit ? { display: 'flex' } : { display: 'none' }
 
     // variable references for each input
-    let origin;
-    let dest;
     let maxPass;
     let dateTime;
 
@@ -39,15 +41,15 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         setMessage('');
 
         // if any fields invalid, set message
-        if (!validInput(origin.value) || !validInput(dest.value) || !validInput(maxPass.value) || !validInput(dateTime.value)) {
+        if (isObjectEmpty(origin) || isObjectEmpty(destination) || !validInput(maxPass.value) || !validInput(dateTime.value)) {
             setMessage('Missing a field.');
 
             // draw red border on missing fields
-            if (!validInput(origin.value)) {
+            if (isObjectEmpty(origin)) {
                 document.getElementById("editOrigin").classList.add('input-invalid');
             }
 
-            if (!validInput(dest.value)) {
+            if (isObjectEmpty(destination)) {
                 document.getElementById("editDest").classList.add('input-invalid');
             }
 
@@ -73,8 +75,8 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         let body = {};
         Object.assign(body, originalInfo);
         
-        body.origin = JSON.parse(document.getElementById("editOrigin").value);
-        body.destination = JSON.parse(document.getElementById("editDest").value);
+        body.origin = [origin.lat, origin.lng];
+        body.destination = [destination.lat, destination.lng];
         body.maxParticipants = parseInt(document.getElementById("editMaxPassengers").value);
         body.poolDate = document.getElementById("editStart").value;
 
@@ -111,9 +113,17 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
                 <form className="modal-form">
                     <span id="form-result">{message}</span>
                     <label htmlFor="editOrigin" className="input-headers">Origin:</label>
-                    <input type="text" id="editOrigin" placeholder="Origin" ref={(c) => origin = c}/>
+                    <Autocomplete
+                        apiKey={googleAPIKey}
+                        onPlaceSelected={(place) => setOrigin({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()})}
+                        options={{types: ['address'], componentRestrictions: {country: 'us'}, fields: ['geometry.location']}}
+                        id="editOrigin" />
                     <label htmlFor="editDest" className="input-headers">Destination:</label>
-                    <input type="text" id="editDest" placeholder="Destination" ref={(c) => dest = c}/>
+                    <Autocomplete
+                        apiKey={googleAPIKey}
+                        onPlaceSelected={(place) => setDestination({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()})}
+                        options={{types: ['address'], componentRestrictions: {country: 'us'}, fields: ['geometry.location']}}
+                        id="editDest" />
                     <label htmlFor="editMaxPassengers" className="input-headers">Max Passengers:</label>
                     <input type="number" id="editMaxPassengers" placeholder="Max Passengers" min="1" max="7" ref={(c) => maxPass = c}/>
                     <label htmlFor="editStart" className="input-headers">Start Time:</label>
@@ -139,4 +149,9 @@ function validInput(input) {
         // Valid input
         return true;
     }
+}
+
+// Check if an object is empty
+function isObjectEmpty(input) {
+    return input && Object.keys(input).length === 0 && Object.getPrototypeOf(input) === Object.prototype;
 }
