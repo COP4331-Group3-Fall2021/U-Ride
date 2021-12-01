@@ -5,7 +5,7 @@ import Autocomplete from "react-google-autocomplete";
 
 export default function EditPoolWindow({closeModal, showEdit, originalInfo, refreshDriverData}) {
 
-    const googleAPIKey = "AIzaSyB-1ftwBLZ1yoznFm4_pB-i3wqCnecSirY";
+    const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
     // use UseState
     const [message, setMessage] = useState('');
