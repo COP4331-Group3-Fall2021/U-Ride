@@ -16,7 +16,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
     let maxPass;
     let dateTime;
 
-    // delete the pool
+    // api call, delete the pool
     function deletePool() {
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/delete/${originalInfo._id}`, {
             method: 'DELETE',
@@ -69,6 +69,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
             setMessage('');
         }
 
+        // prepare api call
         let body = {};
         Object.assign(body, originalInfo);
         
@@ -77,6 +78,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         body.maxParticipants = parseInt(document.getElementById("editMaxPassengers").value);
         body.poolDate = document.getElementById("editStart").value;
 
+        // api call, update the pool
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/update`, {
             method: 'PUT',
             headers: {
