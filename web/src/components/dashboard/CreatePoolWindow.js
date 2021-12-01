@@ -65,7 +65,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             },
             body: JSON.stringify({
                 "numParticipants": 0,
-                "maxParticipants": maxPass.value,
+                "maxParticipants": parseInt(maxPass.value),
                 "poolDate": dateTime.value,
                 "origin": [0, 0], // TODO, convert to latitude and longitude
                 "destination": [0, 0], // TODO, convert to latitude and longitude
@@ -97,29 +97,6 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
                     <label htmlFor="createStart" className="input-headers">Day &amp; Time:</label>
                     <input type="datetime-local" id="createStart" ref={(c) => dateTime = c} />
 
-                    {/* check boxes */}
-                    {/* <div class="checkDiv">
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
-                            <label htmlFor="mondayCheck">M</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Tuesday" id="tuesdayCheck" className="check" />
-                            <label htmlFor="tuesdayCheck">T</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Wednesday" id="wednesdayCheck" className="check" />
-                            <label htmlFor="wednesdayCheck">W</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Thursday" id="thursdayCheck" className="check" />
-                            <label htmlFor="thursdayCheck">Th</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Friday" id="fridayCheck" className="check" />
-                            <label htmlFor="fridayCheck">F</label>
-                        </div>
-                    </div> */}
                     <div className="modal-buttons">
                         <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Create" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
