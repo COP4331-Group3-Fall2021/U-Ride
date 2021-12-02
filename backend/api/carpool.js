@@ -6,6 +6,7 @@ const mongoUtil = require ('../mongoUtil');
 // Create Carpool
 router.post ('/create', async (req, res) => {
   db = mongoUtil.get ();
+  req.body.poolDate = new Date(req.body.poolDate).toISOString();
   db.db ('root').collection ('uride').insertOne (req.body, function (err) {
     if (err) {
       res.status (400).send (err);
@@ -119,59 +120,80 @@ router.get ('/findDrives/:_id', async (req, res) => {
 });
 
 
-router.get ('/nearby', async (req, res) => {
+router.get ('/search', async (req, res) => {
   db = mongoUtil.get ();
 
-  db.db ('root').collection ('uride').createIndex ({origin: '2dsphere'});
+  var date = new Date(req.body.poolDate);
 
-  if (req.body.isStart === true) {
+  higherDate = new Date(date.setHours( date.getHours() + 2 )).toISOString();
+  lowerDate = new Date(date.setHours( date.getHours() - 4 )).toISOString();
+  
+  db.db ('root').collection ('uride').createIndex ({origin: '2dsphere'});
     db
       .db ('root')
       .collection ('uride')
-      .findMany ({
+      .find({
+        // Finds only OPEN carpools
         isFull: false,
+
+        // Finds only pools within a 1 mile radius
         origin: {
           $near: {
             $geometry: {
               index: 'Point',
-              coordinates: [req.body.longitude, req.body.latitude],
+              coordinates: req.body.origin,
             },
+          $maxDistance: 1610 // ~ 1 mile in meters
           },
         },
+
+        // Finds pools within 1 hour of requested time
       })
       .toArray (function (err, result) {
         if (err) {
           res.status (400).send (err);
           throw err;
         }
-        console.log (result);
-        res.status (200).send (result);
-      });
-  } else {
-    db
-      .db ('root')
-      .collection ('uride')
-      .find ({
-        isFull: false,
-        destination: {
-          $near: {
-            $geometry: {
-              type: 'Point',
-              coordinates: [req.body.longitude, req.body.latitude],
+      
+        var obj_ids = result.map(function(obj) {  console.log(obj)
+        return ObjectId(obj._id); });
+       
+        db
+          .db ('root')
+          .collection ('uride')
+          .find({
+            _id: {$in: obj_ids},
+            // Finds only pools within a 1 mile radius
+            destination: {
+              $near: {
+                $geometry: {
+                  index: 'Point',
+                  coordinates: req.body.destination,
+                },
+                
+               
+                $maxDistance: 1610 // ~ 1 mile in meters
+              },
+           
             },
-            $minDistance: 0,
-            $maxDistance: 1000,
-          },
-        },
+            poolDate:{$gte: lowerDate,
+                      $lte: higherDate}
+        }).toArray(function(err, result)
+        {
+          if (err)
+          {
+            res.status(400).send(err);
+            throw err;
+          }
+
+          console.log(result);
+          res.status(200).send(result);
       })
-      .toArray (function (err, result) {
-        if (err) {
-          res.status (400).send (err);
-          throw err;
-        }
-        res.status (200).send (result);
-      });
-  }
+          
+     
+});
+
+
 });
 // Allows a user to join a carpool
 router.put ('/join/:carpool/:user', async (req, res) => {
@@ -224,6 +246,8 @@ router.put ('/join/:carpool/:user', async (req, res) => {
 
 // Updates a carpool
 router.put ('/update', async (req, res) => {
+
+  
   db = mongoUtil.get ();
   if (req.body.numParticipants > req.body.maxParticipants) {
     res.status (400).send ('Carpool cannot fit all participants');
@@ -245,7 +269,7 @@ router.put ('/update', async (req, res) => {
     _id: ObjectId (req.body._id),
   }, {
     $set: updated,
-  }, function (err, result) {
+  }, function (err, result) { 
     if (err) {
       res.status (400).send (err);
       throw err;
