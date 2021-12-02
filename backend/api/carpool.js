@@ -155,7 +155,7 @@ router.get ('/search', async (req, res) => {
           throw err;
         }
       
-        var obj_ids = result.map(function(obj) {  console.log(obj)
+        var obj_ids = result.map(function(obj) { 
         return ObjectId(obj._id); });
        
         db
@@ -186,7 +186,7 @@ router.get ('/search', async (req, res) => {
             throw err;
           }
 
-          console.log(result);
+       
           res.status(200).send(result);
       })
           
