@@ -78,9 +78,9 @@ const HomePage = () => {
         console.log("rider: ", dataArray);
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
-
+            
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
-            let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
@@ -116,9 +116,9 @@ const HomePage = () => {
         console.log("driver: ", dataArray);
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
-
+         
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
-            let date = `${isoDate.getMonth()}/${isoDate.getDay()}/${isoDate.getYear()}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
