@@ -69,7 +69,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             body: JSON.stringify({
                 "numParticipants": 0,
                 "maxParticipants": parseInt(maxPass.value),
-                "poolDate": dateTime.value,
+                "poolDate": new Date(dateTime.value).toUTCString(),
                 "origin": [origin.lat, origin.lng],
                 "destination": [destination.lat, destination.lng],
                 "riders": [],

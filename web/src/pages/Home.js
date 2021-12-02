@@ -80,8 +80,8 @@ const HomePage = () => {
             let isoDate = new Date(data.poolDate);
             
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
-            let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
@@ -118,8 +118,8 @@ const HomePage = () => {
             let isoDate = new Date(data.poolDate);
          
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
-            let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
@@ -140,6 +140,45 @@ const HomePage = () => {
             return (
                 <>
                     <h3 className="no-results">You are not driving any carpools.</h3>
+                </>
+            )
+        }
+
+        return (
+            <>
+                {cards}
+            </>
+        )
+    }
+
+    function searchDataToReact(dataArray) {
+        console.log("search results: ", dataArray);
+
+        let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
+            let isoDate = new Date(data.poolDate);
+         
+            let name = `${data.driver.name.first} ${data.driver.name.last}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let origin = {lat: data.origin[0], lng: data.origin[1]};
+            let destination = {lat: data.destination[0], lng: data.destination[1]};
+            let currPassCount = data.numParticipants;
+            let passCap = data.maxParticipants;
+            let buttonName = "Join";
+            let passengers = data.riders; // TODO
+
+            let join = () => {
+                joinPool(data._id);
+            }
+
+            return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={join} cardClick={(origin, destination) => updateMap(origin, destination)} />
+        });
+
+        // if no cards, show no results
+        if (!cards) {
+            return (
+                <>
+                    <h3 className="no-results">No Search Results.</h3>
                 </>
             )
         }
@@ -214,7 +253,7 @@ const HomePage = () => {
         <div className="container">
             <TitleLogo />
             <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData} />
-            <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={setSearchData} />
+            <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={(data) => setSearchData(searchDataToReact(data))} />
             <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit} refreshDriverData={loadDriverData}/>
             <div className="row">
                 <div className="left-column-home">
@@ -233,12 +272,7 @@ const HomePage = () => {
                     </nav>
                     <div className="poolsDiv">
                         {tabIdx === 0 && <>
-                            {/* DUMMY CARDS == REMOVE */}
                             {searchData}
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
                         </>}
                         {tabIdx === 1 && <>
                             {riderData}

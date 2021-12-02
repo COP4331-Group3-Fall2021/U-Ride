@@ -78,7 +78,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         body.origin = [origin.lat, origin.lng];
         body.destination = [destination.lat, destination.lng];
         body.maxParticipants = parseInt(document.getElementById("editMaxPassengers").value);
-        body.poolDate = document.getElementById("editStart").value;
+        body.poolDate = new Date(document.getElementById("editStart").value).toUTCString();
 
         // api call, update the pool
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/update`, {
