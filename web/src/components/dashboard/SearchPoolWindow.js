@@ -22,16 +22,21 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
         document.getElementById("searchDest").classList.remove('input-invalid');
         setMessage('');
 
-        if (isObjectEmpty(origin) || isObjectEmpty(destination)) {
+        if (isObjectEmpty(origin) || isObjectEmpty(destination) || !validInput(document.getElementById("searchStart").value)) {
             setMessage('Missing a required field.');
 
             if (isObjectEmpty(origin)) {
-                document.getElementById("createOrigin").classList.add('input-invalid');
+                document.getElementById("searchOrigin").classList.add('input-invalid');
             }
 
             if (isObjectEmpty(destination)) {
+                document.getElementById("searchDest").classList.add('input-invalid');
+            }
+
+            if (validInput(document.getElementById("searchStart").value)) {
                 document.getElementById("createDest").classList.add('input-invalid');
             }
+
             return;
         } else {
             // Passed validation, reset any errors
@@ -46,13 +51,13 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
          */
     }
 
-    function search(element) {
-        // dont submit the form
-        element.preventDefault();
+    // function search(element) {
+    //     // dont submit the form
+    //     element.preventDefault();
 
-        // call api end point (using fetch)
-        // on success, generate the Cards for the resulting data, close this modal, then update the data with setSearchData
-    }
+    //     // call api end point (using fetch)
+    //     // on success, generate the Cards for the resulting data, close this modal, then update the data with setSearchData
+    // }
 
     return (
         <div id="search-pool-modal" className="modal" style={style}> 
@@ -76,13 +81,24 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
                     <label htmlFor="searchStart" className="input-headers">Start Time:</label>
                     <input type="time" id="searchStart" />
                     <div className="modal-buttons">
-                        <Button onClick={search} text="Search" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); validateForm()}} text="Search" bgcolor="" color="" />
                         <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>
             </div>
         </div>
     );
+}
+
+// Validates a string
+function validInput(input) {
+    if (input === undefined || input === "") {
+        return false;
+    }
+    else {
+        // Valid input
+        return true;
+    }
 }
 
 // Check if an object is empty
