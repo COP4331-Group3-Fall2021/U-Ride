@@ -80,7 +80,7 @@ const HomePage = () => {
             let isoDate = new Date(data.poolDate);
             
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
@@ -118,7 +118,7 @@ const HomePage = () => {
             let isoDate = new Date(data.poolDate);
          
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
+            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
@@ -235,10 +235,10 @@ const HomePage = () => {
                         {tabIdx === 0 && <>
                             {/* DUMMY CARDS == REMOVE */}
                             {searchData}
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
-                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
+                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={[]} />
+                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={[]} />
+                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={[]} />
+                            <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={[]} />
                         </>}
                         {tabIdx === 1 && <>
                             {riderData}
