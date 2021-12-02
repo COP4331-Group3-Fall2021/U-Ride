@@ -75,30 +75,6 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
                         id="searchDest" />
                     <label htmlFor="searchStart" className="input-headers">Start Time:</label>
                     <input type="time" id="searchStart" />
-
-                    {/* check boxes */}
-                    <div className="checkDiv">
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
-                            <label htmlFor="mondayCheck">Monday</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Tuesday" id="tuesdayCheck" className="check" />
-                            <label htmlFor="tuesdayCheck">Tuesday</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Wednesday" id="wednesdayCheck" className="check" />
-                            <label htmlFor="wednesdayCheck">Wednesday</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Thursday" id="thursdayCheck" className="check" />
-                            <label htmlFor="thursdayCheck">Thursday</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Friday" id="fridayCheck" className="check" />
-                            <label htmlFor="fridayCheck">Friday</label>
-                        </div>
-                    </div>
                     <div className="modal-buttons">
                         <Button onClick={search} text="Search" bgcolor="" color="" />
                         <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
