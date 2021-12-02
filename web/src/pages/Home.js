@@ -241,13 +241,10 @@ const HomePage = () => {
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
                         </>}
                         {tabIdx === 1 && <>
-                            {/* DUMMY CARDS == REMOVE */}
                             {riderData}
                         </>}
                         {tabIdx === 2 && <>
-                            {/* DUMMY CARDS == REMOVE */}
                             {driverData}
-                            <Card name="TEST CARD" date="11/2/21" time="8:00pm" origin={{ lat: 28.601027, lng: -81.205060 }} destination={{ lat: 28.61060555577089, lng: -81.21444511353575 }} cardClick={(origin, destination) => updateMap(origin, destination)} currentPassengerCount="0" passengerCap="4" buttonName="edit" passengers={[]} />
                         </>}
                     </div>
                     <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" onClick={signout} />
