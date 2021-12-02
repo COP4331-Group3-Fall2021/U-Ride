@@ -50,19 +50,26 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
             setMessage('');
         }
 
-        // Perform search after validation
-        /* 
-         * search()
-         */
+        // prepare api call
+        let body = {};
+        
+        body.origin = [origin.lat, origin.lng];
+        body.destination = [destination.lat, destination.lng];
+        body.poolDate = new Date(document.getElementById("searchStart").value).toUTCString();
+
+        // api call, update the pool
+        fetch(`https://u-ride-cop4331.herokuapp.com/carpool/search`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(res => res.json())
+            .then(json => setSearchData(json))
+            .then(() => closeModal())
+            .catch(error => { console.error(error); setMessage('A network error occurred.') })
     }
-
-    // function search(element) {
-    //     // dont submit the form
-    //     element.preventDefault();
-
-    //     // call api end point (using fetch)
-    //     // on success, generate the Cards for the resulting data, close this modal, then update the data with setSearchData
-    // }
 
     return (
         <div id="search-pool-modal" className="modal" style={style}> 
@@ -84,7 +91,7 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
                         options={{types: ['address'], componentRestrictions: {country: 'us'}, fields: ['geometry.location']}}
                         id="searchDest" />
                     <label htmlFor="searchStart" className="input-headers">Start Time:</label>
-                    <input type="time" id="searchStart" />
+                    <input type="datetime-local" id="searchStart" />
                     <div className="modal-buttons">
                         <Button onClick={(e) => { e.preventDefault(); validateForm()}} text="Search" bgcolor="" color="" />
                         <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
