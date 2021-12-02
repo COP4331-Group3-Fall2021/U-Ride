@@ -120,7 +120,7 @@ router.get ('/findDrives/:_id', async (req, res) => {
 });
 
 
-router.get ('/search', async (req, res) => {
+router.post ('/search', async (req, res) => {
   db = mongoUtil.get ();
 
   var date = new Date(req.body.poolDate);
