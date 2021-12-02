@@ -14,6 +14,11 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
 
     let style = showSearch ? {display: 'flex'} : {display: 'none'};
 
+    // Clear all form inputs
+    function clearForm() {
+        document.getElementById("searchForm").reset();
+    }
+
     // Validate form fields
     function validateForm() {
         
@@ -67,7 +72,7 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
         })
             .then(res => res.json())
             .then(json => setSearchData(json))
-            .then(() => closeModal())
+            .then(() => { clearForm(); closeModal() })
             .catch(error => { console.error(error); setMessage('A network error occurred.') })
     }
 
@@ -76,7 +81,7 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
             <div className="modal-content">
                 <h2 className="modal-header">Search Pool</h2>
                 <hr className="separator" />
-                <form className="modal-form">
+                <form className="modal-form" id="searchForm">
                     <span id="form-result">{message}</span>
                     <label htmlFor="searchOrigin" className="input-headers">Origin:</label>
                     <Autocomplete
@@ -93,8 +98,8 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
                     <label htmlFor="searchStart" className="input-headers">Start Time:</label>
                     <input type="datetime-local" id="searchStart" />
                     <div className="modal-buttons">
-                        <Button onClick={(e) => { e.preventDefault(); validateForm()}} text="Search" bgcolor="" color="" />
-                        <Button onClick={(e) => {e.preventDefault(); closeModal()}} text="Cancel" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Search" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); clearForm(); closeModal() }} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>
             </div>
