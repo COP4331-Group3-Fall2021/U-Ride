@@ -1,8 +1,6 @@
 import React from 'react';
 import '../styles/Card.css';
 import Button from './Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 /* Component properties:
  *                    name (required) - driver's name
@@ -16,15 +14,40 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
  *              buttonName (required) - name for the button, leave/disband
  */
 export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = (origin, destination) => {}, buttonClick = () => {} }) {
-    const passengerLIs = passengers.map((passengerName) => {
-        return <li>{passengerName}</li>
-    });
+    const [passengerLIs, setPassengerLIs] = React.useState(<></>);
 
     // this is a temporary solution to make the application not break
     function latLongToStr(latLongObj) {
-        let present = latLongObj && latLongObj.lat && latLongObj.lng;
+        let present = latLongObj && latLongObj.lat !== undefined && latLongObj.lng !== undefined;
         return present ? `${latLongObj.lat} x ${latLongObj.lng}` : JSON.stringify(latLongObj);
     }
+
+    // resolve rider names in card (from their hashed ID)
+    React.useEffect(() => {
+        async function run() {
+            const lis = [];
+            for (const passengerName of passengers) {
+                const res = await fetch(`https://u-ride-cop4331.herokuapp.com/auth/getUser/${passengerName}`, {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                });
+                
+                if (!res.ok) {
+                    console.error(`Failed to get name for ${passengerName}`);
+                    lis.push(<li key={passengerName}>{passengerName}</li>);
+                }
+                
+                const json = await res.json();
+                lis.push(<li key={passengerName}>{`${json.name?.firstName} ${json.name?.lastName}`}</li>);
+            };
+
+            setPassengerLIs(lis);
+        }
+        run();
+    }, []);
 
     return (
         <div className="join-card" onClick={() => cardClick(origin, destination)}>

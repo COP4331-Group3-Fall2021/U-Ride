@@ -15,8 +15,8 @@ import { faCar, faSearch, faUsers } from '@fortawesome/free-solid-svg-icons'
 const HomePage = () => {
 
     // States for Card->Map interactions
-    const [origin, setOrigin] = useState({lat: null, lng: null});
-    const [destination, setDestination] = useState({lat: null, lng: null});
+    const [origin, setOrigin] = useState({ lat: null, lng: null });
+    const [destination, setDestination] = useState({ lat: null, lng: null });
     function updateMap(origin, destination) {
         setOrigin(origin);
         setDestination(destination);
@@ -26,6 +26,23 @@ const HomePage = () => {
     const [showCreate, setShowCreate] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [currEdit, setCurrEdit] = useState({
+        _id: "0",
+        numParticipants: 0,
+        maxParticipants: 0,
+        poolDate: "2021-11-18T21:27:12+0000",
+        origin: [0, 0],
+        destination: [0, 0],
+        riders: [],
+        driver: {
+            _id: "",
+            name: {
+                first: "",
+                last: ""
+            }
+        },
+        isFull: false
+    });
     const [tabIdx, setTabIdx] = useState(1);
     const [riderData, setRiderData] = useState(<></>);
     const [driverData, setDriverData] = useState(<></>);
@@ -40,8 +57,8 @@ const HomePage = () => {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.ok && loadRiderData())
-        .catch(error => console.error(error))
+            .then(res => res.ok && loadRiderData())
+            .catch(error => console.error(error))
     }
 
     // PUT for leaving pool
@@ -53,8 +70,8 @@ const HomePage = () => {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.ok && loadRiderData())
-        .catch(error => console.error(error))
+            .then(res => res.ok && loadRiderData())
+            .catch(error => console.error(error))
     }
 
     function riderDataToReact(dataArray) {
@@ -65,8 +82,8 @@ const HomePage = () => {
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = data.origin.coordinates; // TODO
-            let destination = data.destination.coordinates; // TODO
+            let origin = {lat: data.origin[0], lng: data.origin[1]};
+            let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Leave";
@@ -76,7 +93,7 @@ const HomePage = () => {
                 leavePool(data._id); // TODO
             }
 
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} />
+            return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} cardClick={(origin, destination) => updateMap(origin, destination)} />
         });
 
         // if no cards, show no results
@@ -103,13 +120,19 @@ const HomePage = () => {
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDay()}/${isoDate.getYear()}`;
             let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = data.origin.coordinates; // TODO
-            let destination = data.destination.coordinates; // TODO
+            let origin = {lat: data.origin[0], lng: data.origin[1]};
+            let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Edit";
             let passengers = data.riders; // TODO
-            return <Card name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} />
+
+            let edit = () => {
+                setCurrEdit(data);
+                setShowEdit(true);
+            }
+
+            return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={edit} cardClick={(origin, destination) => updateMap(origin, destination)} />
         });
 
         // if no cards, show no results
@@ -190,13 +213,13 @@ const HomePage = () => {
     return (
         <div className="container">
             <TitleLogo />
-            <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData}/>
+            <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData} />
             <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={setSearchData} />
-            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} />
+            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit} refreshDriverData={loadDriverData}/>
             <div className="row">
                 <div className="left-column-home">
                     <div className="mapDiv">
-                        <Map origin={origin} destination={destination}/>
+                        <Map origin={origin} destination={destination} />
                     </div>
                     <div className="buttonsDiv">
                         <Button onClick={() => setShowCreate(true)} text="Create Pool" bgcolor="#007EA7" color="#FFFFFF" />
@@ -210,7 +233,7 @@ const HomePage = () => {
                     </nav>
                     <div className="poolsDiv">
                         {tabIdx === 0 && <>
-                        {/* DUMMY CARDS == REMOVE */}
+                            {/* DUMMY CARDS == REMOVE */}
                             {searchData}
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
@@ -218,16 +241,13 @@ const HomePage = () => {
                             <Card name="John Doe" date="11/2/21" time="8:00pm" origin="123 Main St." destination="123 Main St." currentPassengerCount="2" passengerCap="4" buttonName="Join" passengers={['Hannah Montana', 'Lizzy McGuire', 'Raven Simone']} />
                         </>}
                         {tabIdx === 1 && <>
-                        {/* DUMMY CARDS == REMOVE */}
                             {riderData}
                         </>}
                         {tabIdx === 2 && <>
-                        {/* DUMMY CARDS == REMOVE */}
                             {driverData}
-                            <Card name="TEST CARD" date="11/2/21" time="8:00pm" origin={{lat: 28.601027, lng: -81.205060}} destination={{lat: 28.61060555577089, lng: -81.21444511353575}} cardClick={(origin, destination) => updateMap(origin, destination)} currentPassengerCount="0" passengerCap="4" buttonName="Leave" passengers={[]} />
                         </>}
                     </div>
-                    <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" onClick={signout}/>
+                    <Button text="Sign Out" bgcolor="#003459" color="#FFFFFF" onClick={signout} />
                 </div>
             </div>
         </div>

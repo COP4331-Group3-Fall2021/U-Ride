@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Marker, GoogleMap, DirectionsService, DirectionsRenderer, LoadScript } from '@react-google-maps/api'
 
+
+// Prevents a Google Map API warning
+const mapLibrariesToUse = ["places"];
+
 /* 'origin' and 'destination' need to be an object with this schema:
  * {lat: float, lng: float}
  */
@@ -28,7 +32,7 @@ export default function Map({origin, destination}) {
 
     // By default, center the map on UCF
     let center = {lat: 28.602336, lng: -81.200225};
-
+    
     // Prevents the map from infinitely calculating directions
     useEffect(() => {
         setDirectionsServiceState(null);
@@ -36,7 +40,8 @@ export default function Map({origin, destination}) {
 
     return (
         <LoadScript
-            googleMapsApiKey={googleAPIKey}>
+            googleMapsApiKey={googleAPIKey}
+            libraries={mapLibrariesToUse}>
             <GoogleMap
                 mapContainerStyle={{height: "100%", width: "100%", minHeight: "40em"}}
                 center={center}
