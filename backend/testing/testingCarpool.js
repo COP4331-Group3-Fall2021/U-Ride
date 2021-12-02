@@ -35,4 +35,43 @@ describe("Carpool ", function(){
         done();
     });
 });
+
+// Ellie
+it('find carpool', function(done) {
+
+});
+
+// Vic
+it('find rides', function(done){
+
+})
+
+// Ellie
+it('find drives', function(done)
+{
+
+})
+
+// Vic
+it('join carpool', function(done)
+{
+
+})
+
+// Ellie
+it('update carpool', function(done)
+{
+
+})
+
+// Vic
+it('leave carpool', function(done)
+{
+
+})
+
+// Ellie
+it('delete carpool', function(done) {
+});
+
 })
