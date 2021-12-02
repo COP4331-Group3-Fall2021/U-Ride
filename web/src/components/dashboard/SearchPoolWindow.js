@@ -20,6 +20,8 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
         // Reset any errors
         document.getElementById("searchOrigin").classList.remove('input-invalid');
         document.getElementById("searchDest").classList.remove('input-invalid');
+        document.getElementById("searchStart").classList.remove('input-invalid');
+
         setMessage('');
 
         if (isObjectEmpty(origin) || isObjectEmpty(destination) || !validInput(document.getElementById("searchStart").value)) {
@@ -33,8 +35,8 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
                 document.getElementById("searchDest").classList.add('input-invalid');
             }
 
-            if (validInput(document.getElementById("searchStart").value)) {
-                document.getElementById("createDest").classList.add('input-invalid');
+            if (!validInput(document.getElementById("searchStart").value)) {
+                document.getElementById("searchStart").classList.add('input-invalid');
             }
 
             return;
@@ -42,6 +44,9 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
             // Passed validation, reset any errors
             document.getElementById("searchOrigin").classList.remove('input-invalid');
             document.getElementById("searchDest").classList.remove('input-invalid');
+            document.getElementById("searchStart").classList.remove('input-invalid');
+
+            
             setMessage('');
         }
 
