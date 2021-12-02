@@ -60,7 +60,6 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             setMessage('');
         }
 
-        console.log(dateTime.value);
         let user = JSON.parse(localStorage.getItem('user_data'));
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/create`, {
             method: 'POST',
