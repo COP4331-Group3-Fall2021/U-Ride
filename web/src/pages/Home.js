@@ -81,7 +81,7 @@ const HomePage = () => {
             
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
@@ -119,7 +119,7 @@ const HomePage = () => {
          
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 + 1}:${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
             let origin = {lat: data.origin[0], lng: data.origin[1]};
             let destination = {lat: data.destination[0], lng: data.destination[1]};
             let currPassCount = data.numParticipants;
