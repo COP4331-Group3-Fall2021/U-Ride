@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import { useHistory } from 'react-router-dom';
-const sha256 = require('js-sha256');
 
 export default function LoginWindow ({goToRegister, goToForgotPassword}) {
     // Used to redirect to pages
