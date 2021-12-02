@@ -85,7 +85,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
                 "isFull": false
             })
         })
-            .then(res => res.ok && (closeModal() || refreshDriverData()))
+            .then(res => res.ok && (clearForm() || closeModal() || refreshDriverData()))
             .catch(error => { console.error(error); setMessage('A network error occurred.') })
     }
 
@@ -115,7 +115,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
                     <input type="datetime-local" id="createStart" ref={(c) => dateTime = c} />
 
                     <div className="modal-buttons">
-                        <Button onClick={(e) => { e.preventDefault(); validateForm(); clearForm(); }} text="Create" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Create" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); clearForm(); closeModal() }} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>
