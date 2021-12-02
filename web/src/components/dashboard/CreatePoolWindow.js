@@ -19,6 +19,11 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
     let maxPass;
     let dateTime;
 
+    // Clear all form inputs
+    function clearForm() {
+        document.getElementById("createForm").reset();
+    }
+
     // validate the fields
     function validateForm() {
 
@@ -89,7 +94,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             <div className="modal-content">
                 <h2 className="modal-header">Create Pool</h2>
                 <hr className="separator" />
-                <form className="modal-form">
+                <form className="modal-form" id="createForm">
                     <span id="form-result">{message}</span>
                     <label htmlFor="createOrigin" className="input-headers">Origin:</label>
                     {/* Reference for place obj: https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult.geometry */}
@@ -110,8 +115,8 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
                     <input type="datetime-local" id="createStart" ref={(c) => dateTime = c} />
 
                     <div className="modal-buttons">
-                        <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Create" bgcolor="" color="" />
-                        <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); validateForm(); clearForm(); }} text="Create" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); clearForm(); closeModal() }} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>
             </div>
