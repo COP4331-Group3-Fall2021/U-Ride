@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Card.css';
 import Button from './Button';
 
@@ -16,9 +16,9 @@ const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
  *              buttonName (required) - name for the button, leave/disband
  */
 export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = (origin, destination) => {}, buttonClick = () => {} }) {
-    const [passengerLIs, setPassengerLIs] = React.useState(<></>);
-    const [originAddr, setOriginAddr] = React.useState(latLongToStr(origin));
-    const [destinAddr, setDestinAddr] = React.useState(latLongToStr(destination));
+    const [passengerLIs, setPassengerLIs] = useState(<></>);
+    const [originAddr, setOriginAddr] = useState(latLongToStr(origin));
+    const [destinAddr, setDestinAddr] = useState(latLongToStr(destination));
 
     // this is a temporary solution to make the application not break
     function latLongToStr(latLongObj) {
@@ -27,7 +27,7 @@ export default function Card({ name, date, time, origin, destination, currentPas
     }
 
     // resolve rider names in card (from their hashed ID)
-    React.useEffect(() => {
+    useEffect(() => {
         async function run() {
             const lis = [];
             for (const passengerName of passengers) {
