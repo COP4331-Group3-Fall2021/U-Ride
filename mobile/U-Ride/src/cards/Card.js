@@ -1,5 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, Dimensions, Linking } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Button, Dimensions, Linking, TouchableHighlight } from 'react-native';
+
+// const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+const googleAPIKey = 'AIzaSyAcVbxyIm2QkSoGrmVjGpWcoaJF7n_M1ys';
 
 /* Component properties:
  *                    name (required) - driver's name
@@ -12,16 +15,91 @@ import { StyleSheet, Text, View, Button, Dimensions, Linking } from 'react-nativ
  *              passengers (required) - list of passengers
  *              buttonName (required) - name for the button, leave/disband
  */
-export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers = ["me", "you", "what"], cardClick = (origin, destination) => { } }) {
-    const passengerLIs = () => {
-        return passengers.map((passengerName) => {
-            return (
-                <View>
-                    <Text>- {passengerName}</Text>
-                </View>
-            );
-        });
-    };
+export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers = [] }) {
+    const [passengerLIs, setPassengerLIs] = useState(<></>);
+    const [originAddr, setOriginAddr] = useState(latLongToStr(origin));
+    const [destinAddr, setDestinAddr] = useState(latLongToStr(destination));
+
+    // resolve rider names in card (from their hashed ID)
+    useEffect(() => {
+        async function run() {
+            const lis = [];
+            for (const passengerName of passengers) {
+                const res = await fetch(`https://u-ride-cop4331.herokuapp.com/auth/getUser/${passengerName}`, {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                if (!res.ok) {
+                    console.error(`Failed to get name for ${passengerName}`);
+                    lis.push(<View key={passengerName}><Text>- {passengerName}</Text></View>);
+                }
+
+                const json = await res.json();
+                lis.push(<View key={passengerName}><Text>- {`${json.name?.firstName} ${json.name?.lastName}`}</Text></View>);
+            };
+
+            setPassengerLIs(lis);
+
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${origin.lat},${origin.lng}&key=${googleAPIKey}`)
+                .then(response => response.json())
+                .then(res => {
+                    if (res.status !== 'OK') {
+                        console.warn(`Bad request or zero results for origin=${origin}`, res);
+                        return;
+                    }
+
+                    if (!res.results[0]) {
+                        console.error(`No address results for origin=${origin}.`);
+                        return;
+                    }
+
+                    for (const place of res.results) {
+                        if (!place.types.includes('plus_code')) {
+                            setOriginAddr(place.formatted_address);
+                            break;
+                        }
+                    }
+                })
+                .catch(e => console.error(`Request to get address of ${origin} failed\n`, e));
+
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${destination.lat},${destination.lng}&key=${googleAPIKey}`)
+                .then(response => response.json())
+                .then(res => {
+                    if (res.status !== 'OK') {
+                        console.warn(`Bad request or zero results for destination=${destination}`, res);
+                        return;
+                    }
+
+                    if (!res.results[0]) {
+                        console.error(`No address results for destination=${destination}.`);
+                        return;
+                    }
+
+                    for (const place of res.results) {
+                        if (!place.types.includes('plus_code')) {
+                            setDestinAddr(place.formatted_address);
+                            break;
+                        }
+                    }
+                })
+                .catch(e => console.error(`Request to get address of ${destination} failed\n`, e));
+        }
+        run();
+    }, []);
+
+    // const passengerLIs = () => {
+    //     return passengers.map((passengerName) => {
+    //         return (
+    //             <View>
+    //                 <Text>- {passengerName}</Text>
+    //             </View>
+    //         );
+    //     });
+    // };
 
     // this is a temporary solution to make the application not break
     function latLongToStr(latLongObj) {
@@ -30,36 +108,31 @@ export default function Card({ name, date, time, origin, destination, currentPas
     }
 
     return (
-        <View style={styles.joincard} onClick={() => cardClick(origin, destination)}>
-            <View style={styles.joincardheader}>
-                <Text style={{ fontWeight: 'bold' }}>🚘 {name}</Text>
-                <Text style={{ fontWeight: 'bold' }}>{date} @ {time}</Text>
-            </View>
-            <View style={styles.joincardcontent}>
-                <View style={styles.leftcol}>
-                    <Text style={styles.lefttext}>📍 <Text style={{ fontWeight: 'bold' }}>To: </Text> {latLongToStr(origin)}</Text>
-                    <Text style={styles.lefttext}>📍 <Text style={{ fontWeight: 'bold' }}>From: </Text> {latLongToStr(destination)}</Text>
-                    <View style={styles.cardButton}>
-                        <Button
-                            buttonStyle={{ color: '#003459', borderRadius: 15, height: 45 }}
-                            title="Find Route"
-                            onPress={() => Linking.openURL('https://www.google.com/maps/dir/28.559116553406053,+-81.3652749539658/28.6040377,-81.20254/')}
-                        />
+        <TouchableHighlight onPress={() => Linking.openURL(`https://www.google.com/maps/dir/${origin.lat},${origin.lng}/${destination.lat},${destination.lng}/`)}>
+
+            <View style={styles.joincard} >
+                <View style={styles.joincardheader}>
+                    <Text style={{ fontWeight: 'bold' }}>🚘 {name}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{date} @ {time}</Text>
+                </View>
+                <View style={styles.joincardcontent}>
+                    <View style={styles.leftcol}>
+                        <Text style={styles.lefttext}>📍 <Text style={{ fontWeight: 'bold' }}>To: </Text> {originAddr}</Text>
+                        <Text style={styles.lefttext}>📍 <Text style={{ fontWeight: 'bold' }}>From: </Text> {destinAddr}</Text>
                     </View>
 
-                </View>
-
-                <View style={styles.rightcol}>
-                    <Text style={{ fontWeight: 'bold' }}>🚗 {currentPassengerCount}/{passengerCap} passengers</Text>
-                    <View style={styles.passengerlist}>
-                        {passengerLIs()}
+                    <View style={styles.rightcol}>
+                        <Text style={{ fontWeight: 'bold' }}>🚗 {currentPassengerCount}/{passengerCap} passengers</Text>
+                        <View style={styles.passengerlist}>
+                            {passengerLIs}
+                        </View>
                     </View>
+
+
+
                 </View>
-
-
-
             </View>
-        </View>
+        </TouchableHighlight>
     );
 }
 
@@ -75,6 +148,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'column',
         marginTop: Dimensions.get('window').height * .02,
+        //marginLeft: Dimensions.get('window').width * .03,
         //paddingTop: Dimensions.get('window').height * .03,
         //paddingBottom: Dimensions.get('window').height * .03,
         //marginBottom: Dimensions.get('window').height * .02,
@@ -132,22 +206,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         //alignItems: 'center',
         alignSelf: 'center',
-        //sjustifyContent: 'top',
+        // justifyContent: 'top',
         width: Dimensions.get('window').width / 2,
         paddingRight: Dimensions.get('window').width * .04,
         paddingLeft: Dimensions.get('window').width * .14,
         //height: Dimensions.get('window').height/4,
         //marginBottom: Dimensions.get('window').height * .02
-    },
-
-    cardButton: {
-        //backgroundColor: "#003459",
-        //color: "#FFFFFF",
-        //alignItems: 'center',
-        //width: 6em;
-        //width: Dimensions.get('window').width / 4,
-        //height: Dimensions.get('window').height * .2,
-        paddingTop: Dimensions.get('window').height * .05
     },
 
     passengerlist: {

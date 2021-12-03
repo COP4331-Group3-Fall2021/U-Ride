@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, TextInput, View, Text, Image } from 'react-native';
+import { StyleSheet, TextInput, View, Text, Image, AsyncStorage } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Input, Button } from 'react-native-elements';
 
@@ -122,26 +122,23 @@ function validateInput (input) {
               }
               else if(result === "TOO_MANY_ATTEMPTS_TRY_LATER")
               {
-                  setMessage("Google says: f*** you.");
+                  setMessage("Too many attempts, please try again later.");
               }
               // Handle success
               else {
-                  
                   let responseBody = JSON.parse(result);
 
-                  
-                  let userInfo = {firstName:responseBody.name.firstName, lastName:responseBody.name.lastName, userID:responseBody._id}
+                  let userInfo = {firstName: responseBody.name.firstName, lastName: responseBody.name.lastName, userID: responseBody._id}
                   setError("");
 
-                  
                   // Set user info into local storage
-                  // localStorage.setItem('user_data', JSON.stringify(userInfo));
+                  AsyncStorage.setItem('user_data', JSON.stringify(userInfo)).then(() => {
+                    // log
+                    console.log("Login Sucessful");
 
-                  console.log("Login Sucessful");
-
-                  navigation.navigate('Map');
-                  
-                  // Navigate to map
+                    // Navigate to map
+                    navigation.navigate('Map');
+                  }).catch(error => console.warn('remove this', error));
               }
           })
           .catch(error => console.error('error', error)); 

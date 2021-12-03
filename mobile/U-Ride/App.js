@@ -19,31 +19,31 @@ const AppNavigator = createStackNavigator({
   Splash: {
     screen: SplashScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   },
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   },
   PostRegister: {
     screen: PostRegisterScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   },
   Map: {
     screen: MapScreen,
     navigationOptions: {
-      header: null // Will hide header for HomePage
+      headerShown: false // Will hide header for HomePage
     }
   }
 },{
