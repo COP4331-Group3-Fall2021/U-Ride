@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/Card.css';
 import Button from './Button';
 
+const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+
 /* Component properties:
  *                    name (required) - driver's name
  *                    date (required) - date of the carpool; format MM/DD/YY
@@ -15,6 +17,8 @@ import Button from './Button';
  */
 export default function Card({ name, date, time, origin, destination, currentPassengerCount, passengerCap, buttonName, passengers, cardClick = (origin, destination) => {}, buttonClick = () => {} }) {
     const [passengerLIs, setPassengerLIs] = React.useState(<></>);
+    const [originAddr, setOriginAddr] = React.useState(latLongToStr(origin));
+    const [destinAddr, setDestinAddr] = React.useState(latLongToStr(destination));
 
     // this is a temporary solution to make the application not break
     function latLongToStr(latLongObj) {
@@ -45,6 +49,50 @@ export default function Card({ name, date, time, origin, destination, currentPas
             };
 
             setPassengerLIs(lis);
+
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${origin.lat},${origin.lng}&key=${googleAPIKey}`)
+            .then(response => response.json())
+            .then(res => {
+                if (res.status !== 'OK') {
+                    console.warn(`Bad request or zero results for origin=${origin}`, res);
+                    return;
+                }
+
+                if (!res.results[0]) {
+                    console.error(`No address results for origin=${origin}.`);
+                    return;
+                }
+
+                for (const place of res.results) {
+                    if (!place.types.includes('plus_code')) {
+                        setOriginAddr(place.formatted_address);
+                        break;
+                    }
+                }
+            })
+            .catch(e => console.error(`Request to get address of ${origin} failed\n`, e));
+
+            fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${destination.lat},${destination.lng}&key=${googleAPIKey}`)
+            .then(response => response.json())
+            .then(res => {
+                if (res.status !== 'OK') {
+                    console.warn(`Bad request or zero results for destination=${destination}`, res);
+                    return;
+                }
+
+                if (!res.results[0]) {
+                    console.error(`No address results for destination=${destination}.`);
+                    return;
+                }
+
+                for (const place of res.results) {
+                    if (!place.types.includes('plus_code')) {
+                        setDestinAddr(place.formatted_address);
+                        break;
+                    }
+                }
+            })
+            .catch(e => console.error(`Request to get address of ${destination} failed\n`, e));
         }
         run();
     }, []);
@@ -57,8 +105,8 @@ export default function Card({ name, date, time, origin, destination, currentPas
             </div>
             <div className="join-card-content">
                 <div className="left-col">
-                    <span className="left-text">📍 <b>To:</b> {latLongToStr(origin)}</span>
-                    <span className="left-text">📍 <b>From: </b> {latLongToStr(destination)}</span>
+                    <span className="left-text">📍 <b>To:</b> {originAddr}</span>
+                    <span className="left-text">📍 <b>From: </b> {destinAddr}</span>
                     <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
                 </div>
                 <div className="right-col">
