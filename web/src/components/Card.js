@@ -20,10 +20,10 @@ export default function Card({ name, date, time, origin, destination, currentPas
     const [originAddr, setOriginAddr] = useState(latLongToStr(origin));
     const [destinAddr, setDestinAddr] = useState(latLongToStr(destination));
 
-    // this is a temporary solution to make the application not break
+    // this is a fallback solution to make the application not break if for what ever reason they dont have internet when we go to ping the google maps api
     function latLongToStr(latLongObj) {
         let present = latLongObj && latLongObj.lat !== undefined && latLongObj.lng !== undefined;
-        return present ? `${latLongObj.lat} x ${latLongObj.lng}` : JSON.stringify(latLongObj);
+        return present ? `${latLongObj.lat.toFixed(7)} x ${latLongObj.lng.toFixed(7)}` : JSON.stringify(latLongObj);
     }
 
     // resolve rider names in card (from their hashed ID)
