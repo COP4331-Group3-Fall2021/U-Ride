@@ -3,6 +3,7 @@ import '../styles/Card.css';
 import Button from './Button';
 
 const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+const validButtonNames = ['Join', 'Leave', 'Edit'];
 
 /* Component properties:
  *                    name (required) - driver's name
@@ -49,7 +50,12 @@ export default function Card({ name, date, time, origin, destination, currentPas
             };
 
             setPassengerLIs(lis);
+        }
+        run();
+    }, [passengers]);
 
+    useEffect(() => {
+        async function run() {
             fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${origin.lat},${origin.lng}&key=${googleAPIKey}`)
             .then(response => response.json())
             .then(res => {
@@ -71,7 +77,12 @@ export default function Card({ name, date, time, origin, destination, currentPas
                 }
             })
             .catch(e => console.error(`Request to get address of ${origin} failed\n`, e));
-
+        };
+        run();
+    }, [origin]);
+    
+    useEffect(() => {
+        async function run() {
             fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${destination.lat},${destination.lng}&key=${googleAPIKey}`)
             .then(response => response.json())
             .then(res => {
@@ -93,9 +104,9 @@ export default function Card({ name, date, time, origin, destination, currentPas
                 }
             })
             .catch(e => console.error(`Request to get address of ${destination} failed\n`, e));
-        }
+        };
         run();
-    }, []);
+    }, [destination]);
 
     return (
         <div className="join-card" onClick={() => cardClick(origin, destination)}>
@@ -107,7 +118,7 @@ export default function Card({ name, date, time, origin, destination, currentPas
                 <div className="left-col">
                     <span className="left-text">📍 <b>To:</b> {originAddr}</span>
                     <span className="left-text">📍 <b>From: </b> {destinAddr}</span>
-                    <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick}/>
+                    <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick} disabled={!validButtonNames.includes(buttonName)}/>
                 </div>
                 <div className="right-col">
                     <span>🚗 <b>{currentPassengerCount}/{passengerCap} passengers</b></span>

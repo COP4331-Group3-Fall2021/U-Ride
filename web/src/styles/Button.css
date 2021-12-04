@@ -15,3 +15,13 @@ button:hover {
     cursor: pointer;
     box-shadow: 0 0 4px #000000;
 }
+
+button:disabled {
+    filter: grayscale(100%);
+}
+
+button:disabled:hover {
+    box-shadow: 0 0 4px #FFFFFF;
+    text-decoration: none;
+    cursor: not-allowed;
+}

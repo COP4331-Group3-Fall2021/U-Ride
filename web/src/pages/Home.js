@@ -78,12 +78,12 @@ const HomePage = () => {
         console.log("rider: ", dataArray);
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
-            
+
             let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = {lat: data.origin[0], lng: data.origin[1]};
-            let destination = {lat: data.destination[0], lng: data.destination[1]};
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let origin = { lat: data.origin[0], lng: data.origin[1] };
+            let destination = { lat: data.destination[0], lng: data.destination[1] };
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Leave";
@@ -116,12 +116,12 @@ const HomePage = () => {
         console.log("driver: ", dataArray);
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
-         
+
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = {lat: data.origin[0], lng: data.origin[1]};
-            let destination = {lat: data.destination[0], lng: data.destination[1]};
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let origin = { lat: data.origin[0], lng: data.origin[1] };
+            let destination = { lat: data.destination[0], lng: data.destination[1] };
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
             let buttonName = "Edit";
@@ -151,24 +151,40 @@ const HomePage = () => {
         )
     }
 
-    function searchDataToReact(dataArray) {
+    // Set join button text based on pool data
+    function getButtonName(data) {
+        let user = JSON.parse(localStorage.getItem('user_data'));
+
+        if (data.riders.includes(user.userID)) {
+            return "Joined";
+        }
+
+        if (data.isFull) {
+            return "Full";
+        }
+
+        return "Join";
+    }
+
+    function searchDataToReact(dataArray, regenCards) {
         console.log("search results: ", dataArray);
 
         let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
             let isoDate = new Date(data.poolDate);
-         
+
             let name = `${data.driver.name.first} ${data.driver.name.last}`;
             let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : '' }${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = {lat: data.origin[0], lng: data.origin[1]};
-            let destination = {lat: data.destination[0], lng: data.destination[1]};
+            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            let origin = { lat: data.origin[0], lng: data.origin[1] };
+            let destination = { lat: data.destination[0], lng: data.destination[1] };
             let currPassCount = data.numParticipants;
             let passCap = data.maxParticipants;
-            let buttonName = "Join";
+            let buttonName = getButtonName(data);
             let passengers = data.riders; // TODO
 
             let join = () => {
                 joinPool(data._id);
+                setTimeout(regenCards, 250);
             }
 
             return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={join} cardClick={(origin, destination) => updateMap(origin, destination)} />
@@ -253,8 +269,8 @@ const HomePage = () => {
         <div className="container">
             <TitleLogo />
             <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData} />
-            <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={(data) => setSearchData(searchDataToReact(data))} />
-            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit} refreshDriverData={loadDriverData}/>
+            <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={(data, regenCards) => setSearchData(searchDataToReact(data, regenCards))} />
+            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit} refreshDriverData={loadDriverData} />
             <div className="row">
                 <div className="left-column-home">
                     <div className="mapDiv">
