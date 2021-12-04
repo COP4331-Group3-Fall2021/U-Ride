@@ -62,18 +62,21 @@ export default function SearchPoolWindow({closeModal, showSearch, setSearchData}
         body.destination = [destination.lat, destination.lng];
         body.poolDate = new Date(document.getElementById("searchStart").value).toUTCString();
 
-        // api call, update the pool
-        fetch(`https://u-ride-cop4331.herokuapp.com/carpool/search`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        })
+        async function runSearch() {
+            // api call, update the pool
+            fetch(`https://u-ride-cop4331.herokuapp.com/carpool/search`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
             .then(res => res.json())
-            .then(json => setSearchData(json))
+            .then(json => setSearchData(json, runSearch))
             .then(() => { clearForm(); closeModal() })
             .catch(error => { console.error(error); setMessage('A network error occurred.') })
+        }
+        runSearch();
     }
 
     return (
