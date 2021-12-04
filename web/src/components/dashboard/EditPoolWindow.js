@@ -14,6 +14,15 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
 
     let style = showEdit ? { display: 'flex' } : { display: 'none' }
 
+    function leadingZero(number) {
+        return number < 10 ? `0${number}` : `${number}`;
+    }
+
+    function isoStringToLocalString(dateString) {
+        const date = new Date(dateString);
+        return `${date.getFullYear()}-${leadingZero(date.getMonth())}-${leadingZero(date.getDate())}T${leadingZero(date.getHours())}:${leadingZero(date.getMinutes())}`
+    }
+
     // variable references for each input
     let maxPass;
     let dateTime;
@@ -78,7 +87,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         body.origin = [origin.lat, origin.lng];
         body.destination = [destination.lat, destination.lng];
         body.maxParticipants = parseInt(document.getElementById("editMaxPassengers").value);
-        body.poolDate = new Date(document.getElementById("editStart").value).toUTCString();
+        body.poolDate = new Date(document.getElementById("editStart").value).toISOString();
 
         // api call, update the pool
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/update`, {
@@ -97,7 +106,8 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
         document.getElementById("editOrigin").value = latLongToStr(originalInfo.origin);
         document.getElementById("editDest").value = latLongToStr(originalInfo.destination);
         document.getElementById("editMaxPassengers").value = `${originalInfo.maxParticipants}`;
-        document.getElementById("editStart").value = originalInfo.poolDate;
+        document.getElementById("editStart").value = isoStringToLocalString(originalInfo.poolDate);
+        console.log(isoStringToLocalString(originalInfo.poolDate));
     }, [originalInfo]);
 
     function latLongToStr(latLongObj) {
