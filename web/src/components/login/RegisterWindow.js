@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button';
-import { useHistory } from 'react-router-dom';
 
-export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
+export default function RegisterWindow ({goToLogin, goToForgotPassword, goToVerifyEmail}) {
 
     var firstName;
     var lastName;
@@ -97,10 +96,9 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword}) {
                 }
                 // Handle success
                 else {
-                    let responseBody = JSON.parse(result);
                     setMessage('');
-                    // Return user to login window
-                    goToLogin();
+                    // Return user to Verify Email window
+                    goToVerifyEmail();
                 }
             })
             .catch(error => console.error('error', error));

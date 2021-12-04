@@ -74,7 +74,7 @@ export default function LoginWindow ({goToRegister, goToForgotPassword}) {
                 }
                 else if(result === "TOO_MANY_ATTEMPTS_TRY_LATER")
                 {
-                    setMessage("Google says: f*** you.");
+                    setMessage("Too many attempts, please try again later.");
                 }
                 // Handle success
                 else {
