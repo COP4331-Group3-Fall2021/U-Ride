@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import Button from '../Button';
 import '../../styles/Modal.css';
-
+import Autocomplete from "react-google-autocomplete";
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 export default function CreatePoolWindow({ closeModal, showCreate, refreshDriverData }) {
 
+    const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+
     // use UseState
     const [message, setMessage] = useState('');
+    const [origin, setOrigin] = useState({});
+    const [destination, setDestination] = useState({});
 
     let style = showCreate ? { display: 'flex' } : { display: 'none' }
 
     // variable references for each input
-    let origin;
-    let dest;
     let maxPass;
     let dateTime;
+
+    // Clear all form inputs
+    function clearForm() {
+        document.getElementById("createForm").reset();
+    }
 
     // validate the fields
     function validateForm() {
@@ -27,15 +35,15 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
         setMessage('');
 
         // if any fields invalid, set message
-        if (!validInput(origin.value) || !validInput(dest.value) || !validInput(maxPass.value) || !validInput(dateTime.value)) {
+        if (isObjectEmpty(origin) || isObjectEmpty(destination) || !validInput(maxPass.value) || !validInput(dateTime.value)) {
             setMessage('Missing a field.');
 
             // draw red border on missing fields
-            if (!validInput(origin.value)) {
+            if (isObjectEmpty(origin)) {
                 document.getElementById("createOrigin").classList.add('input-invalid');
             }
 
-            if (!validInput(dest.value)) {
+            if (isObjectEmpty(destination)) {
                 document.getElementById("createDest").classList.add('input-invalid');
             }
 
@@ -65,10 +73,10 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             },
             body: JSON.stringify({
                 "numParticipants": 0,
-                "maxParticipants": maxPass.value,
-                "poolDate": dateTime.value,
-                "origin": [0, 0], // TODO, convert to latitude and longitude
-                "destination": [0, 0], // TODO, convert to latitude and longitude
+                "maxParticipants": parseInt(maxPass.value),
+                "poolDate": new Date(dateTime.value).toUTCString(),
+                "origin": [origin.lat, origin.lng],
+                "destination": [destination.lat, destination.lng],
                 "riders": [],
                 "driver": {
                     "_id": user.userID,
@@ -77,7 +85,7 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
                 "isFull": false
             })
         })
-            .then(res => res.ok && (closeModal() || refreshDriverData()))
+            .then(res => res.ok && (clearForm() || closeModal() || refreshDriverData()))
             .catch(error => { console.error(error); setMessage('A network error occurred.') })
     }
 
@@ -86,43 +94,29 @@ export default function CreatePoolWindow({ closeModal, showCreate, refreshDriver
             <div className="modal-content">
                 <h2 className="modal-header">Create Pool</h2>
                 <hr className="separator" />
-                <form className="modal-form">
+                <form className="modal-form" id="createForm">
                     <span id="form-result">{message}</span>
                     <label htmlFor="createOrigin" className="input-headers">Origin:</label>
-                    <input type="text" id="createOrigin" placeholder="Origin" ref={(c) => origin = c} />
+                    {/* Reference for place obj: https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult.geometry */}
+                    <Autocomplete
+                        apiKey={googleAPIKey}
+                        onPlaceSelected={(place) => setOrigin({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()})}
+                        options={{types: ['address'], componentRestrictions: {country: 'us'}, fields: ['geometry.location']}}
+                        id="createOrigin" />
                     <label htmlFor="createDest" className="input-headers">Destination:</label>
-                    <input type="text" id="createDest" placeholder="Destination" ref={(c) => dest = c} />
+                    <Autocomplete
+                        apiKey={googleAPIKey}
+                        onPlaceSelected={(place) => setDestination({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()})}
+                        options={{types: ['address'], componentRestrictions: {country: 'us'}, fields: ['geometry.location']}}
+                        id="createDest" />
                     <label htmlFor="maxPassengers" className="input-headers">Max Passengers:</label>
                     <input type="number" id="maxPassengers" placeholder="Max Passengers" min="1" max="7" ref={(c) => maxPass = c} />
                     <label htmlFor="createStart" className="input-headers">Day &amp; Time:</label>
                     <input type="datetime-local" id="createStart" ref={(c) => dateTime = c} />
 
-                    {/* check boxes */}
-                    {/* <div class="checkDiv">
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Monday" id="mondayCheck" className="check" />
-                            <label htmlFor="mondayCheck">M</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Tuesday" id="tuesdayCheck" className="check" />
-                            <label htmlFor="tuesdayCheck">T</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Wednesday" id="wednesdayCheck" className="check" />
-                            <label htmlFor="wednesdayCheck">W</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Thursday" id="thursdayCheck" className="check" />
-                            <label htmlFor="thursdayCheck">Th</label>
-                        </div>
-                        <div className="checkboxes">
-                            <input type="checkbox" value="Friday" id="fridayCheck" className="check" />
-                            <label htmlFor="fridayCheck">F</label>
-                        </div>
-                    </div> */}
                     <div className="modal-buttons">
                         <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Create" bgcolor="" color="" />
-                        <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
+                        <Button onClick={(e) => { e.preventDefault(); clearForm(); closeModal() }} text="Cancel" bgcolor="" color="" />
                     </div>
                 </form>
             </div>
@@ -140,4 +134,9 @@ function validInput(input) {
         // Valid input
         return true;
     }
+}
+
+// Check if an object is empty
+function isObjectEmpty(input) {
+    return input && Object.keys(input).length === 0 && Object.getPrototypeOf(input) === Object.prototype;
 }
