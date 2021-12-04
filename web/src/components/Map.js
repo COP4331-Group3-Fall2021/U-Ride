@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Marker, GoogleMap, DirectionsService, DirectionsRenderer, LoadScript } from '@react-google-maps/api'
+import { GoogleMap, DirectionsService, DirectionsRenderer, LoadScript } from '@react-google-maps/api'
 
 
 // Prevents a Google Map API warning

@@ -20,12 +20,76 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
 
     function isoStringToLocalString(dateString) {
         const date = new Date(dateString);
-        return `${date.getFullYear()}-${leadingZero(date.getMonth())}-${leadingZero(date.getDate())}T${leadingZero(date.getHours())}:${leadingZero(date.getMinutes())}`
+        return `${date.getFullYear()}-${leadingZero(date.getMonth() + 1)}-${leadingZero(date.getDate())}T${leadingZero(date.getHours())}:${leadingZero(date.getMinutes())}`
     }
 
     // variable references for each input
     let maxPass;
     let dateTime;
+
+    //
+    async function originToAddress(coordinate) {
+        let latitude = coordinate[0];
+        let longitude = coordinate[1];
+        try {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}`);
+            
+            if (!response.ok) {
+                throw new Error(`Bad request or zero results for coordinate: [${latitude}, ${longitude}].`);
+            }
+
+            const json = await response.json();
+
+            if (!response.ok) {
+                throw new Error(`Bad request or zero results for coordinate: [${latitude}, ${longitude}].`);
+            }
+            
+            if (!json.results[0]) {
+                throw new Error(`No address results for [${latitude}, ${longitude}].`);
+            }
+
+            for (const place of json.results) {
+                if (!place.types.includes('plus_code')) {
+                    return place.formatted_address;
+                }
+            }
+        } catch (e) {
+            console.error(`Request to get address of [${latitude}, ${longitude}] failed\n`, e);
+            return 'An error occured';
+        }
+    }
+
+    //
+    async function destinationToAddress(coordinate) {
+        let latitude = coordinate[0];
+        let longitude = coordinate[1];
+        try {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}`);
+            
+            if (!response.ok) {
+                throw new Error(`Bad request or zero results for coordinate: [${latitude}, ${longitude}].`);
+            }
+
+            const json = await response.json();
+
+            if (!response.ok) {
+                throw new Error(`Bad request or zero results for coordinate: [${latitude}, ${longitude}].`);
+            }
+            
+            if (!json.results[0]) {
+                throw new Error(`No address results for [${latitude}, ${longitude}].`);
+            }
+
+            for (const place of json.results) {
+                if (!place.types.includes('plus_code')) {
+                    return place.formatted_address;
+                }
+            }
+        } catch (e) {
+            console.error(`Request to get address of [${latitude}, ${longitude}] failed\n`, e);
+            return 'An error occured';
+        }
+    }
 
     // api call, delete the pool
     function deletePool() {
@@ -102,12 +166,13 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
     }
 
     // initialize pool data on component load
-    useEffect(() => {
-        document.getElementById("editOrigin").value = latLongToStr(originalInfo.origin);
-        document.getElementById("editDest").value = latLongToStr(originalInfo.destination);
+    useEffect(async () => {
+        const originAddress = await originToAddress(originalInfo.origin);
+        const destinationAddress = await destinationToAddress(originalInfo.destination);
+        document.getElementById("editOrigin").value = originAddress;
+        document.getElementById("editDest").value = destinationAddress;
         document.getElementById("editMaxPassengers").value = `${originalInfo.maxParticipants}`;
         document.getElementById("editStart").value = isoStringToLocalString(originalInfo.poolDate);
-        console.log(isoStringToLocalString(originalInfo.poolDate));
     }, [originalInfo]);
 
     function latLongToStr(latLongObj) {
