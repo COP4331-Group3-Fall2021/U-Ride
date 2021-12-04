@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button';
-import { useHistory } from 'react-router-dom';
-const sha256 = require('js-sha256');
 
 export default function RegisterWindow ({goToLogin, goToForgotPassword, goToVerifyEmail}) {
-    // Used to redirect to pages
-    const history = useHistory();
 
     var firstName;
     var lastName;
@@ -100,7 +96,6 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword, goToVeri
                 }
                 // Handle success
                 else {
-                    let responseBody = JSON.parse(result);
                     setMessage('');
                     // Return user to Verify Email window
                     goToVerifyEmail();

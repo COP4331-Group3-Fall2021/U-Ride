@@ -4,7 +4,6 @@ import LoginWindow from '../components/login/LoginWindow';
 import RegisterWindow from '../components/login/RegisterWindow';
 import '../styles/Splash.css';
 import { ReactComponent as Car } from '../images/car.svg';
-import Star from '../images/decoration-star.svg';
 import ForgotPasswordWindow from '../components/login/ForgotPasswordWindow';
 import VerifyEmailWindow from '../components/login/VerifyEmailWindow';
 
