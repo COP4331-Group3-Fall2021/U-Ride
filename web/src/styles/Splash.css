@@ -88,7 +88,6 @@ body {
     }
 }
 
-
 .login {
     display: flex;
     flex-direction: column;
@@ -196,7 +195,6 @@ input{
     justify-content: center;
     align-items: center;
     background-color: #003459;
-    
     border-radius: 17.3039px;
     padding-bottom: 1em;
     text-align: center;
@@ -215,8 +213,8 @@ input{
     padding-bottom: 1em;
     text-align: center;
     font-family: 'Nunito', sans-serif;
-    width: 90vw;
-    max-width: 400px;
+    width: 80%;
+
 }
 
 #form-result {
@@ -224,7 +222,6 @@ input{
     font-size: 1.1em;
     margin-bottom: 0em;
 }
-
 
 .input-headers {
     color: #FFFFFF;
