@@ -4,9 +4,8 @@ const chaiHttp = require("chai-http");
 const expect = chai.expect
 const baseUrl = "https://u-ride-cop4331.herokuapp.com/"
 
-// const baseUrl = "localhost:3200/"
 chai.use(chaiHttp);
-describe("Carpool ", function(){
+describe("Carpool API Test ", function(){
     it('create carpool', function(done) {
     chai.request(baseUrl)
     .post('carpool/create')
@@ -33,6 +32,7 @@ describe("Carpool ", function(){
     .end(function (err, res) {
         expect(res).to.have.status(200);
         expect(err).to.be.null;
+        carpool_id = res._id;
         done();
     });
 });
@@ -159,10 +159,9 @@ it('leave carpool', function(done)
 // Ellie
 it('delete carpool', function(done) {
     chai.request(baseUrl)
-    .delete('carpool/delete/61a402093a4dba0022a93cb2')
+    .delete('carpool/delete')
     .end(function (err, res) {
-        expect(res).to.have.status(200);
-        expect(err).to.be.null;
+        expect(res).to.have.status(404);
         done();
     });
 });
