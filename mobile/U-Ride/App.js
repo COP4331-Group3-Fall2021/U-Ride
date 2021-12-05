@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, LogBox, Text, View, Image } from 'react-native';
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import SplashScreen from './src/screens/SplashScreen';
@@ -9,6 +9,7 @@ import MapScreen from './src/screens/MapScreen';
 import PostRegisterScreen from './src/screens/PostRegisterScreen';
 import image from 'react-native'
 
+LogBox.ignoreAllLogs(true)
 
 export default class App extends React.Component {
   render() {
