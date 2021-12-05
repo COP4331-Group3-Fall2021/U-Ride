@@ -3,8 +3,7 @@
     "version": "0.1.0",
     "scripts": {
         "start": "npm run start --prefix backend",
-        "postinstall": "npm install --prefix web && npm install --prefix backend && npm run build --prefix web",
-        "test": "jest"
+        "postinstall": "npm install --prefix web && npm install --prefix backend && npm run build --prefix web"
     },
     "cacheDirectories": [
         "web/node_modules",
@@ -12,8 +11,5 @@
     ],
     "dependencies": {
         "firebase-admin": "^10.0.0"
-    },
-    "devDependencies": {
-        "jest": "^27.4.3"
     }
 }
