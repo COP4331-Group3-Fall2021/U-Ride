@@ -206,7 +206,7 @@ router.put('/join/:carpool/:user', async (req, res) => {
 
       if (result === null || result === undefined)
       {
-        res.status(400).send("Carpool does not expist");
+        res.status(400).send("Carpool does not exist");
         return;
       }
 
@@ -295,7 +295,7 @@ router.put('/leave/:carpool/:user', async (req, res) => {
 
       if (result === null || result === undefined)
       {
-        res.status(400).send("Carpool does not expist");
+        res.status(400).send("Carpool does not exist");
         return;
       }
 
