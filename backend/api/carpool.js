@@ -189,7 +189,6 @@ router.post('/search', async (req, res) => {
     });
 
 });
-
 // Allows a user to join a carpool
 router.put('/join/:carpool/:user', async (req, res) => {
   db = mongoUtil.get();
@@ -203,13 +202,6 @@ router.put('/join/:carpool/:user', async (req, res) => {
         res.status(400).send(err);
         throw err;
       }
-
-      if (result === null || result === undefined)
-      {
-        res.status(400).send("Carpool does not expist");
-        return;
-      }
-
 
       // Updating the carpool
       db.db('root').collection('uride').updateOne({
@@ -291,12 +283,6 @@ router.put('/leave/:carpool/:user', async (req, res) => {
       if (err) {
         res.status(400).send(err);
         throw err;
-      }
-
-      if (result === null || result === undefined)
-      {
-        res.status(400).send("Carpool does not expist");
-        return;
       }
 
       // Updating the carpool
