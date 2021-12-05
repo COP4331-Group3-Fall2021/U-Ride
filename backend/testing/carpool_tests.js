@@ -40,44 +40,19 @@ describe("Carpool ", function(){
 // Ellie
 it('find carpool', function(done) {
     chai.request(baseUrl)
-    .post('carpool/find')
-    .send({
-        "_id": "string",
-        "numParticipants": 2,
-        "maxParticipants": 3,
-        "poolDate": "2021-11-18T21:27:12+0000",
-        "origin": [
-          [
-            "longitude",
-            "latitude"
-          ]
-        ],
-        "destination": [
-          [
-            "longitude",
-            "latitude"
-          ]
-        ],
-        "riders": [
-          [
-            "6196c6217dcae90022e067e8",
-            "6196c6457dcae90022e067e9"
-          ]
-        ],
-        "driver": {
-          "_id": "6196c6627dcae90022e067ea",
-          "name": {
-            "firstName": "test",
-            "lastName": "user"
-          }
-        },
-        "isFull": false
-      })
-    .end(function (err, res) {
-        expect(res).to.have.status(200);
-        expect(err).to.be.null;
-        done();
-    });
+    .get('carpool/find')
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            expect(err).to.be.null;
+            expect(res.body[0]).to.have.property("numParticipants");
+            expect(res.body[0]).to.have.property("maxParticipants");
+            expect(res.body[0]).to.have.property("origin");
+            expect(res.body[0]).to.have.property('destination');
+            expect(res.body[0]).to.have.property("riders");
+            expect(res.body[0]).to.have.property("driver");
+            expect(res.body[0]).to.have.property('isFull');
+            done();
+        });
 });
 
 // Vic
@@ -102,45 +77,20 @@ it('find rides', function(done){
 it('find drives', function(done)
 {
     chai.request(baseUrl)
-    .post('carpool/findDrives')
-    .send( {
-        "_id": "string",
-        "numParticipants": 2,
-        "maxParticipants": 3,
-        "poolDate": "2021-11-18T21:27:12+0000",
-        "origin": [
-          [
-            "longitude",
-            "latitude"
-          ]
-        ],
-        "destination": [
-          [
-            "longitude",
-            "latitude"
-          ]
-        ],
-        "riders": [
-          [
-            "6196c6217dcae90022e067e8",
-            "6196c6457dcae90022e067e9"
-          ]
-        ],
-        "driver": {
-          "_id": "6196c6627dcae90022e067ea",
-          "name": {
-            "firstName": "test",
-            "lastName": "user"
-          }
-        },
-        "isFull": false
-      })
-    .end(function (err, res) {
-        expect(res).to.have.status(200);
-        expect(err).to.be.null;
-        done();
-    });
-})
+    .get('carpool/findDrives/61a402093a4dba0022a93cb2')
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            expect(err).to.be.null;
+            expect(res.body[0]).to.have.property("numParticipants");
+            expect(res.body[0]).to.have.property("maxParticipants");
+            expect(res.body[0]).to.have.property("origin");
+            expect(res.body[0]).to.have.property('destination');
+            expect(res.body[0]).to.have.property("riders");
+            expect(res.body[0]).to.have.property("driver");
+            expect(res.body[0]).to.have.property('isFull');
+            done();
+        });
+});
 
 // Vic
 it('join carpool', function(done)
@@ -160,37 +110,30 @@ it('join carpool', function(done)
 it('update carpool', function(done)
 {
     chai.request(baseUrl)
-    .post('carpool/update')
+    .put('carpool/update')
     .send( {
-        "_id": "string",
+        "_id": "61a402093a4dba0022a93cb2",
         "numParticipants": 2,
         "maxParticipants": 3,
         "poolDate": "2021-11-18T21:27:12+0000",
-        "origin": [
-          [
-            "longitude",
-            "latitude"
-          ]
-        ],
-        "destination": [
-          [
-            "longitude",
-            "latitude"
-          ]
-        ],
+        "origin": [ 0,0],
+        "destination": [ 0,0],
         "riders": [
           [
             "6196c6217dcae90022e067e8",
             "6196c6457dcae90022e067e9"
           ]
         ],
-        "driver": {
-          "_id": "6196c6627dcae90022e067ea",
-          "name": {
-            "firstName": "test",
-            "lastName": "user"
-          }
-        },
+        "driver": 
+              {
+                  "_id": "61a402093a4dba0022a93cb2",
+                  "name":
+                      {
+          
+                          "first": "Victoria",
+                          "last": "Williamson"
+                      }
+              },
         "isFull": false
       })
     .end(function (err, res) {
@@ -216,10 +159,7 @@ it('leave carpool', function(done)
 // Ellie
 it('delete carpool', function(done) {
     chai.request(baseUrl)
-    .post('carpool/delete')
-    .send( {
-        "_id": "string"
-      })
+    .delete('carpool/delete/61a402093a4dba0022a93cb2')
     .end(function (err, res) {
         expect(res).to.have.status(200);
         expect(err).to.be.null;
