@@ -10,10 +10,6 @@
         "backend/node_modules"
     ],
     "dependencies": {
-        "chai-http": "^4.3.0",
-        "firebase-admin": "^10.0.0",
-        "install": "^0.13.0",
-        "mocha": "^9.1.3",
-        "npm": "^8.2.0"
+        "firebase-admin": "^10.0.0"
     }
 }
