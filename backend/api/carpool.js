@@ -203,6 +203,13 @@ router.put('/join/:carpool/:user', async (req, res) => {
         throw err;
       }
 
+      if (result === null || result === undefined)
+      {
+        res.status(400).send("Carpool does not exist");
+        return;
+      }
+
+
       // Updating the carpool
       db.db('root').collection('uride').updateOne({
         _id: ObjectId(req.params.carpool),
@@ -283,6 +290,12 @@ router.put('/leave/:carpool/:user', async (req, res) => {
       if (err) {
         res.status(400).send(err);
         throw err;
+      }
+
+      if (result === null || result === undefined)
+      {
+        res.status(400).send("Carpool does not exist");
+        return;
       }
 
       // Updating the carpool
