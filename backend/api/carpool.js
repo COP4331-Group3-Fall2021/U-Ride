@@ -189,7 +189,6 @@ router.post('/search', async (req, res) => {
     });
 
 });
-
 // Allows a user to join a carpool
 router.put('/join/:carpool/:user', async (req, res) => {
   db = mongoUtil.get();
