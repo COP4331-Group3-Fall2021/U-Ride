@@ -118,7 +118,7 @@ export default function Card({ name, date, time, origin, destination, currentPas
                 <div className="left-col">
                     <span className="left-text">📍 <b>To:</b> {originAddr}</span>
                     <span className="left-text">📍 <b>From: </b> {destinAddr}</span>
-                    <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={buttonClick} disabled={!validButtonNames.includes(buttonName)}/>
+                    <Button text={buttonName} bgcolor="#007EA7" color="#FFFFFF" className="cardButton" onClick={e => { e.stopPropagation(); buttonClick(); }} disabled={!validButtonNames.includes(buttonName)}/>
                 </div>
                 <div className="right-col">
                     <span>🚗 <b>{currentPassengerCount}/{passengerCap} passengers</b></span>
