@@ -60,6 +60,7 @@ export default function RegisterWindow ({goToLogin, goToForgotPassword, goToVeri
         if (password.value.length < 6) {
             setMessage('Password should be at least 6 characters.');
             document.getElementById("registerPassword").classList.add('input-invalid');
+            return; 
         } else {
             setMessage('');
             document.getElementById("registerPassword").classList.remove('input-invalid');

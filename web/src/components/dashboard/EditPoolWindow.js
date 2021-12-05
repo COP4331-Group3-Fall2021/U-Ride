@@ -3,7 +3,7 @@ import Button from '../Button';
 import '../../styles/Modal.css';
 import Autocomplete from "react-google-autocomplete";
 
-export default function EditPoolWindow({closeModal, showEdit, originalInfo, refreshDriverData}) {
+export default function EditPoolWindow({closeModal, showEdit, onConfirm, originalInfo, refreshDriverData}) {
 
     const googleAPIKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
@@ -207,7 +207,7 @@ export default function EditPoolWindow({closeModal, showEdit, originalInfo, refr
                     <div className="modal-buttons">
                         <Button onClick={(e) => { e.preventDefault(); validateForm() }} text="Save" bgcolor="" color="" />
                         <Button onClick={(e) => { e.preventDefault(); closeModal() }} text="Cancel" bgcolor="" color="" />
-                        <Button onClick={(e) => { e.preventDefault(); deletePool() }} text="Delete" bgcolor="#FF7575 " color="#000000" />
+                        <Button onClick={(e) => { e.preventDefault(); onConfirm('delete', deletePool) }} text="Delete" bgcolor="#FF7575 " color="#000000" />
                     </div>
                 </form>
             </div>

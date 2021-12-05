@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import TitleLogo from '../components/TitleLogo'
-import CreatePoolWindow from '../components/dashboard/CreatePoolWindow'
-import SearchPoolWindow from '../components/dashboard/SearchPoolWindow'
-import EditPoolWindow from '../components/dashboard/EditPoolWindow'
-import Button from '../components/Button'
-import Card from '../components/Card'
+import React, { useEffect, useState } from 'react';
+import TitleLogo from '../components/TitleLogo';
+import CreatePoolWindow from '../components/dashboard/CreatePoolWindow';
+import SearchPoolWindow from '../components/dashboard/SearchPoolWindow';
+import EditPoolWindow from '../components/dashboard/EditPoolWindow';
+import ConfirmModal from '../components/dashboard/ConfirmModal';
+import Button from '../components/Button';
+import Card from '../components/Card';
 import { useHistory } from 'react-router-dom';
-import Map from '../components/Map'
+import Map from '../components/Map';
 import '../styles/Home.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCar, faSearch, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCar, faSearch, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 
 const HomePage = () => {
@@ -26,6 +27,7 @@ const HomePage = () => {
     const [showCreate, setShowCreate] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
     const [currEdit, setCurrEdit] = useState({
         _id: "0",
         numParticipants: 0,
@@ -47,10 +49,14 @@ const HomePage = () => {
     const [riderData, setRiderData] = useState(<></>);
     const [driverData, setDriverData] = useState(<></>);
     const [searchData, setSearchData] = useState(<></>);
+    const [confirmData, setConfirmData] = useState({
+        text: '', 
+        action: () => {}
+    });
 
     // PUT for joining pool
     function joinPool(poolID) {
-        let user = JSON.parse(localStorage.getItem('user_data'));
+        const user = JSON.parse(localStorage.getItem('user_data'));
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/join/${poolID}/${user.userID}`, {
             method: 'PUT',
             headers: {
@@ -63,7 +69,7 @@ const HomePage = () => {
 
     // PUT for leaving pool
     function leavePool(poolID) {
-        let user = JSON.parse(localStorage.getItem('user_data'));
+        const user = JSON.parse(localStorage.getItem('user_data'));
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/leave/${poolID}/${user.userID}`, {
             method: 'PUT',
             headers: {
@@ -76,21 +82,21 @@ const HomePage = () => {
 
     function riderDataToReact(dataArray) {
         console.log("rider: ", dataArray);
-        let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
-            let isoDate = new Date(data.poolDate);
+        const cards = dataArray?.length > 0 && dataArray.map((data, i) => {
+            const isoDate = new Date(data.poolDate);
 
-            let name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = { lat: data.origin[0], lng: data.origin[1] };
-            let destination = { lat: data.destination[0], lng: data.destination[1] };
-            let currPassCount = data.numParticipants;
-            let passCap = data.maxParticipants;
-            let buttonName = "Leave";
-            let passengers = data.riders; // TODO
+            const name = `${data.driver.name?.first} ${data.driver.name?.last}`; // TODO
+            const date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
+            const time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            const origin = { lat: data.origin[0], lng: data.origin[1] };
+            const destination = { lat: data.destination[0], lng: data.destination[1] };
+            const currPassCount = data.numParticipants;
+            const passCap = data.maxParticipants;
+            const buttonName = "Leave";
+            const passengers = data.riders; // TODO
 
-            let leave = () => {
-                leavePool(data._id); // TODO
+            const leave = () => {
+                showConfirmModal('leave', () => leavePool(data._id));
             }
 
             return <Card key={data._id} name={name} date={date} time={time} origin={origin} destination={destination} currentPassengerCount={currPassCount} passengerCap={passCap} buttonName={buttonName} passengers={passengers} buttonClick={leave} cardClick={(origin, destination) => updateMap(origin, destination)} />
@@ -114,20 +120,20 @@ const HomePage = () => {
 
     function driverDataToReact(dataArray) {
         console.log("driver: ", dataArray);
-        let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
-            let isoDate = new Date(data.poolDate);
+        const cards = dataArray?.length > 0 && dataArray.map((data, i) => {
+            const isoDate = new Date(data.poolDate);
 
-            let name = `${data.driver.name.first} ${data.driver.name.last}`;
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = { lat: data.origin[0], lng: data.origin[1] };
-            let destination = { lat: data.destination[0], lng: data.destination[1] };
-            let currPassCount = data.numParticipants;
-            let passCap = data.maxParticipants;
-            let buttonName = "Edit";
-            let passengers = data.riders; // TODO
+            const name = `${data.driver.name.first} ${data.driver.name.last}`;
+            const date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
+            const time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            const origin = { lat: data.origin[0], lng: data.origin[1] };
+            const destination = { lat: data.destination[0], lng: data.destination[1] };
+            const currPassCount = data.numParticipants;
+            const passCap = data.maxParticipants;
+            const buttonName = "Edit";
+            const passengers = data.riders; // TODO
 
-            let edit = () => {
+            const edit = () => {
                 setCurrEdit(data);
                 setShowEdit(true);
             }
@@ -153,7 +159,7 @@ const HomePage = () => {
 
     // Set join button text based on pool data
     function getButtonName(data) {
-        let user = JSON.parse(localStorage.getItem('user_data'));
+        const user = JSON.parse(localStorage.getItem('user_data'));
 
         if (data.riders.includes(user.userID)) {
             return "Joined";
@@ -169,20 +175,20 @@ const HomePage = () => {
     function searchDataToReact(dataArray, regenCards) {
         console.log("search results: ", dataArray);
 
-        let cards = dataArray?.length > 0 && dataArray.map((data, i) => {
-            let isoDate = new Date(data.poolDate);
+        const cards = dataArray?.length > 0 && dataArray.map((data, i) => {
+            const isoDate = new Date(data.poolDate);
 
-            let name = `${data.driver.name.first} ${data.driver.name.last}`;
-            let date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
-            let time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
-            let origin = { lat: data.origin[0], lng: data.origin[1] };
-            let destination = { lat: data.destination[0], lng: data.destination[1] };
-            let currPassCount = data.numParticipants;
-            let passCap = data.maxParticipants;
-            let buttonName = getButtonName(data);
-            let passengers = data.riders; // TODO
+            const name = `${data.driver.name.first} ${data.driver.name.last}`;
+            const date = `${isoDate.getMonth() + 1}/${isoDate.getDate()}/${isoDate.getFullYear()}`;
+            const time = `${isoDate.getHours() % 12 == 0 ? 12 : isoDate.getHours() % 12}:${isoDate.getMinutes() < 10 ? 0 : ''}${isoDate.getMinutes()}${isoDate.getHours() >= 12 ? 'pm' : 'am'}`;
+            const origin = { lat: data.origin[0], lng: data.origin[1] };
+            const destination = { lat: data.destination[0], lng: data.destination[1] };
+            const currPassCount = data.numParticipants;
+            const passCap = data.maxParticipants;
+            const buttonName = getButtonName(data);
+            const passengers = data.riders; // TODO
 
-            let join = () => {
+            const join = () => {
                 joinPool(data._id);
                 setTimeout(regenCards, 250);
             }
@@ -224,7 +230,7 @@ const HomePage = () => {
     }
 
     function loadRiderData() {
-        let user = JSON.parse(localStorage.getItem('user_data'));
+        const user = JSON.parse(localStorage.getItem('user_data'));
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/findRides/${user.userID}`, {
             method: 'GET',
             headers: {
@@ -239,7 +245,7 @@ const HomePage = () => {
     }
 
     function loadDriverData() {
-        let user = JSON.parse(localStorage.getItem('user_data'));
+        const user = JSON.parse(localStorage.getItem('user_data'));
         fetch(`https://u-ride-cop4331.herokuapp.com/carpool/findDrives/${user.userID}`, {
             method: 'GET',
             headers: {
@@ -265,12 +271,21 @@ const HomePage = () => {
         history.push('/');
     }
 
+    function showConfirmModal(text, confirmAction) {
+        setConfirmData({
+            text: text,
+            action: confirmAction
+        });
+        setShowConfirm(true);
+    }
+
     return (
         <div className="container">
             <TitleLogo />
             <CreatePoolWindow closeModal={closeModal} showCreate={showCreate} refreshDriverData={loadDriverData} />
             <SearchPoolWindow closeModal={closeModal} showSearch={showSearch} setSearchData={(data, regenCards) => setSearchData(searchDataToReact(data, regenCards))} />
-            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} originalInfo={currEdit} refreshDriverData={loadDriverData} />
+            <EditPoolWindow closeModal={closeModal} showEdit={showEdit} onConfirm={showConfirmModal} originalInfo={currEdit} refreshDriverData={loadDriverData} />
+            <ConfirmModal closeModal={() => setShowConfirm(false)} showConfirm={showConfirm} data={confirmData} />
             <div className="row">
                 <div className="left-column-home">
                     <div className="mapDiv">
