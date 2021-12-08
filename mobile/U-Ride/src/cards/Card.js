@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Button, Dimensions, Linking, TouchableHighlight } from 'react-native';
-import getEnv from '../../env.example';
+import getEnv from '../../env';
 
 const googleAPIKey = getEnv().GOOGLE_MAPS_API_KEY;
 
