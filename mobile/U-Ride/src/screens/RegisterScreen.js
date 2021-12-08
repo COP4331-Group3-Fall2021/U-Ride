@@ -152,7 +152,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
           }
           else if (result === "INVALID_EMAIL")
           {
-            setMessage("Account cannot be found.");
+            setMessage("Invalid Email.");
           }
           // Handle success
           else {
@@ -166,9 +166,7 @@ if (!validateInput(userCreds.firstName) ||!validateInput(userCreds.lastName) ||!
 }
     return (
       <View style={{ backgroundColor:'#FFFFFF', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text> 
-          {userCreds.firstName}
-          </Text>
+        
         <View style={{alignItems: 'flex-end', }}>
         
 
