@@ -1,20 +1,20 @@
 const mongoClient = require('mongodb').MongoClient;
 
-
 var _db;
 
-function connect(callback){
+function connect(callback) {
     mongoClient.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
         _db = db;
+        console.log("mongo connected");
         callback();
     });
-        
 }
-function get(){
+
+function get() {
     return _db;
 }
 
-function close(){
+function close() {
     _db.close();
 }
 

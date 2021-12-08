@@ -1,0 +1,105 @@
+body {
+    background-color: #FFFFFF;
+    height: 100%;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: left;
+    width: auto;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.left-column-home {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    height: 100%;
+    width: 60%;
+    margin-right: 2%;
+}
+
+.right-column-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    margin-right: 4%;
+    border-left: 2px dotted black;
+
+}
+
+@media only screen and (max-width: 800px) {
+    .poolsDiv
+    {
+        display: none;
+    }
+}
+
+.poolsDiv {
+    background-color: #003459;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    overflow-y: auto;
+    height: 63vh;
+    width: 70%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+#navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 70%;
+    border-bottom: 3px solid #333232;
+    margin-bottom: 3%;
+}
+
+.navButton {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    padding-bottom: 5px;
+    font-size: 30px;
+    color: #2B2B2B;
+}
+
+.navButton:hover {
+    box-shadow: none;
+}
+
+.navButton.selected {
+    color: #007EA7;
+}
+
+.mapDiv {
+    background-color: lightgray;
+    margin-left: 10%;
+    margin-right: 7%;
+    margin-top: 3%;
+}
+
+.no-results {
+    color: #A1DBF2;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+}
